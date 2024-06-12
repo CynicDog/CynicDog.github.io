@@ -209,6 +209,13 @@ Let's go through each step in detail:
       --file pom.xml
   ```
 
+### 5. The complete code 
+
+Find the complete code at the link below: 
+
+https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml
+
+
 ### Conclusion
 
 By following this GitHub Actions workflow, you can achieve continuous deployment of your Quarkus application to GKE. This setup ensures that every time you manually trigger the workflow, your application is built, containerized, and deployed to your Kubernetes cluster seamlessly. This approach automates the deployment process, reducing the potential for human error and speeding up the deployment cycle.
