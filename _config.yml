@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: CynicDog # the main title
 
-tagline: A cornucopia of miscellaneous  # it will display as the sub-title
+tagline: # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
