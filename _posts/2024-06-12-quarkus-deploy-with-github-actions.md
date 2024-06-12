@@ -6,9 +6,7 @@ categories: [DevOps, GKE]
 tags: [quarkus, java, gke, githubaction, jib]                    
 ---
 
-# Continuous Deployment on Quarkus Application using Github Actions
-
-In this post, we will explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE). This guide will walk you through each step of the GitHub Actions configuration, ensuring your Quarkus application is seamlessly deployed to GKE.
+> In this post, we will explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE). This guide will walk you through each step of the GitHub Actions configuration, ensuring your Quarkus application is seamlessly deployed to GKE.
 
 ## Workflow Configuration Overview
 
