@@ -1,20 +1,20 @@
 ---
 layout: post
-title: Continuous Deployment on Quarkus Application using Github Actions
+title: Continuous Deployment of a Quarkus Application Using GitHub Actions
 date: 2024-06-12 21:46:01 +09:00
 categories: [DevOps, GKE]
 tags: [quarkus, java, gke, githubaction, jib]                    
 ---
 
-> In this post, we will explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE). This guide will walk you through each step of the GitHub Actions configuration, ensuring your Quarkus application is seamlessly deployed to GKE.
+> In this post, we'll explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE). This guide will walk you through each step of the configuration process, ensuring that your Quarkus application is seamlessly deployed to GKE.
 
 ## Workflow Configuration Overview
 
-The GitHub Actions workflow is defined in a YAML file. Here’s a breakdown of the key components and steps involved in the workflow:
+The GitHub Actions workflow is defined in a YAML file. Here’s a breakdown of the key components and steps involved:
 
 ### 1. Triggering the Workflow
 
-The workflow is triggered manually using the `workflow_dispatch` event. This allows you to start the deployment process on demand.
+The workflow is triggered manually using the `workflow_dispatch` event, allowing you to start the deployment process on demand.
 
 ```yaml
 on:
@@ -23,7 +23,7 @@ on:
 
 ### 2. Setting Environment Variables
 
-Environment variables are set to store project-specific information such as the GCP project ID, GKE cluster name, zone, and the deployment name.
+Environment variables store project-specific information such as the GCP project ID, GKE cluster name, zone, and deployment name.
 
 ```yaml
 env: 
@@ -53,171 +53,162 @@ jobs:
 
 Let's go through each step in detail:
 
-- **Checkout the Code**
+#### Checkout the Code
 
-  The first step checks out the code from the repository.
+The first step checks out the code from the repository.
 
-  ```yaml
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v4
-  ```
+```yaml
+steps:
+- name: Checkout
+  uses: actions/checkout@v4
+```
 
-- **Setup Java Environment**
+#### Setup Java Environment
 
-  The Java environment is set up using the `actions/setup-java` action.
+The Java environment is set up using the `actions/setup-java` action.
 
-  ```yaml
-  - uses: actions/setup-java@v4.2.1
-    with:
-      distribution: 'temurin'
-      java-version: '17'
-  ```
+```yaml
+- uses: actions/setup-java@v4.2.1
+  with:
+    distribution: 'temurin'
+    java-version: '17'
+```
 
-- **Authenticate with Google Cloud**
+#### Authenticate with Google Cloud
 
-  This step uses the `google-github-actions/auth` action to authenticate with Google Cloud using a service account key stored in GitHub secrets.
+This step uses the `google-github-actions/auth` action to authenticate with Google Cloud using a service account key stored in GitHub secrets.
 
-  ```yaml
-  - id: 'auth'
-    uses: 'google-github-actions/auth@v2'
-    with:
-      credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-  ```
+```yaml
+- id: 'auth'
+  uses: 'google-github-actions/auth@v2'
+  with:
+    credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+```
 
-  In order to get the credential json, you need to run following commands in terminal:
+To get the credentials JSON, run the following commands in your terminal:
 
-  ```bash
-  gcloud init 
-  
-  gcloud iam service-accounts create {A_SERVICE_ACCOUNT_NAME}
-  ```
+```bash
+gcloud init 
+gcloud iam service-accounts create {A_SERVICE_ACCOUNT_NAME}
+gcloud iam service-accounts list
+```
 
-  Then see the generated service account email address by running:
+This will return an address in the format of `{A_SERVICE_ACCOUNT_NAME}@{YOUR_PROJECT_ID}.iam.gserviceaccount.com`. Next, grant permissions:
 
-  ```bash
-  gcloud iam service-accounts list
-  ```
+```bash
+gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID} --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/container.admin
+gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID} --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/storage.admin
+gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID} --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/container.clusterViewer
+gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID} --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/artifactregistry.writer
+```
 
-  This will return an address in the format of `{A_SERVICE_ACCOUNT_NAME}@{YOUR_PROJECT_ID}.iam.gserviceaccount.com`
+Fetch the credentials secret:
 
-  Next, grant permissions to write and register an image of the application:
+```bash
+gcloud iam service-accounts keys create "key.json" --iam-account "{SERVICE_ACCOUNT_ADDRESS}"
+```
 
-  ```bash
-  gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/container.admin
-  
-  gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/storage.admin
-  
-  gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/container.clusterViewer
-  
-  gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/artifactregistry.writer
-  ```
+Convert the JSON file into a `base64` string and register it in GitHub action secrets:
 
-  Then fetch the credentials secret by running:
+```bash
+$GKE_SA_KEY = [Convert]::ToBase64String([IO.File]::ReadAllBytes("key.json"))    
+```
 
-  ```bash
-  gcloud iam service-accounts keys create "key.json"  --iam-account "{SERVICE_ACCOUNT_ADDRESS}"
-  ```
+#### Get GKE Cluster Credentials
 
-  Next step is convert the json file into `base64` string and register the converted string on GitHub repository action secret.
+Fetch the GKE cluster credentials to interact with the cluster.
 
-  ```bash
-  $GKE_SA_KEY = [Convert]::ToBase64String([IO.File]::ReadAllBytes("key.json"))    
-  ```
+```yaml
+- id: 'get-credentials'
+  uses: 'google-github-actions/get-gke-credentials@v2'
+  with:
+    cluster_name: ${{ env.GKE_CLUSTER }}
+    location: ${{ env.GKE_ZONE }}
+    project_id: ${{ env.PROJECT_ID }}
+```
 
-- **Get GKE Cluster Credentials**
+#### Setup gcloud CLI
 
-  Fetch the GKE cluster credentials to interact with the cluster.
+Install the `kubectl` component using the `google-github-actions/setup-gcloud` action. `kubectl` is needed to create a ConfigMap.
 
-  ```yaml
-  - id: 'get-credentials'
-    uses: 'google-github-actions/get-gke-credentials@v2'
-    with:
-      cluster_name: ${{ env.GKE_CLUSTER }}
-      location: ${{ env.GKE_ZONE }}
-      project_id: ${{ env.PROJECT_ID }}
-  ```
+```yaml
+- uses: google-github-actions/setup-gcloud@v2.1.0
+  with:
+    project_id: ${{ env.PROJECT_ID }}
+    install_components: 
+      kubectl
+```
 
-- **Setup gcloud CLI**
+#### Configure Docker Authentication
 
-  Install the `kubectl` component using the `google-github-actions/setup-gcloud` action. `kubectl` is needed to create a ConfigMap.
+Configure Docker to use the gcloud command-line tool for authentication.
 
-  ```yaml
-  - uses: google-github-actions/setup-gcloud@v2.1.0
-    with:
-      project_id: ${{ env.PROJECT_ID }}
-      install_components: 
-        kubectl
-  ```
+```yaml
+- name: Configure Docker authentication
+  run: |
+    gcloud auth configure-docker
+```
 
-- **Configure Docker Authentication**
+#### Create Kubernetes ConfigMap
 
-  Configure Docker to use the gcloud command-line tool for authentication.
+Create a Kubernetes ConfigMap for storing sensitive information, such as GitHub app credentials. This addresses the Quarkus static initialization issue, ensuring necessary services are available without encountering the chicken-egg problem during static initialization.
 
-  ```yaml
-  - name: Configure Docker authentication
-    run: |
-      gcloud auth configure-docker
-  ```
+```yaml
+- name: Create Kubernetes ConfigMap
+  run: |
+    if ! kubectl get configmap {A_CONFIG_MAP_NAME}; then
+      kubectl create configmap {A_CONFIG_MAP_NAME} \
+        --from-literal={A_CONFIG_PROPERTY_1}=${{ secrets.SOME_CONFIG_VALUE_YOU_WANT_TO_INJECT }} \
+        --from-literal={A_CONFIG_PROPERTY_2}=${{ secrets.ANOTHER_CONFIG_VALUE_YOU_WANT_TO_INJECT }};
+    else
+      echo "ConfigMap {A_CONFIG_MAP_NAME} already exists. Skipping creation.";
+    fi
+```
 
-- **Create Kubernetes ConfigMap**
+Ensure the following options are configured in `application.properties` for the Quarkus app to recognize the Kubernetes ConfigMap:
 
-  Create a Kubernetes ConfigMap for storing sensitive information, such as GitHub app credentials. The workaround of injecting credentials via Kubernetes ConfigMap addresses the Quarkus static initialization issue, where certain services, such as custom `ConfigSource` requiring dependencies like database access, cannot be initialized early on. By using a ConfigMap, credentials are dynamically injected at runtime, ensuring the necessary services are available without encountering the chicken-egg problem during static initialization.
+```properties
+%prod.quarkus.kubernetes-config.enabled=true
+%prod.quarkus.kubernetes-config.config-maps={A_CONFIG_MAP_NAME}
+A_CONFIG_PROPERTY_1=
+A_CONFIG_PROPERTY_2=
+```
 
-  ```yaml
-  - name: Create Kubernetes ConfigMap
-    run: |
-      if ! kubectl get configmap {A_CONFIG_MAP_NAME}; then
-        kubectl create configmap {A_CONFIG_MAP_NAME} \
-          --from-literal={A_CONFIG_PROPERTY_1}=${{ secrets.SOME_CONFIG_VALUE_YOU_WANT_TO_INJECT }} \
-          --from-literal={A_CONFIG_PROPERTY_2}=${{ secrets.ANOTHER_CONFIG_VALUE_YOU_WANT_TO_INJECT }};
-      else
-        echo "ConfigMap {A_CONFIG_MAP_NAME} already exists. Skipping creation.";
-      fi
-  ```
+#### Build and Push Quarkus App Image
 
-  In order for the quarkus app to recognize the Kubernetes ConfigMap, make sure the following options is configured in `application.properties` :
+Build the Quarkus application and push the Docker image to the image registry.
 
-  ```properties
-  %prod.quarkus.kubernetes-config.enabled=true
-  %prod.quarkus.kubernetes-config.config-maps={A_CONFIG_MAP_NAME}
-  A_CONFIG_PROPERTY_1=
-  A_CONFIG_PROPERTY_2=
-  ```
+```yaml
+- name: Build Quarkus App and Push to Image Registry 
+  run: |
+    mvn clean package -Dquarkus.container-image.build=true \
+    -Dquarkus.container-image.push=true \
+    -Dquarkus.jib.platforms=linux/arm64/v8 \
+    --file pom.xml
+```
 
-- **Build and Push Quarkus App Image**
+#### Deploy Quarkus App to GKE
 
-  Build the Quarkus application and push the Docker image to the image registry.
+Deploy the built Quarkus application to GKE.
 
-  ```yaml
-  - name: Build Quarkus App and Push to Image Registry 
-    run: |
-      mvn clean package -Dquarkus.container-image.build=true \
-      -Dquarkus.container-image.push=true \
-      -Dquarkus.jib.platforms=linux/arm64/v8 \
-      --file pom.xml
-  ```
+```yaml
+- name: Deploy Quarkus App to GKE
+  run: | 
+    mvn clean package -Dquarkus.kubernetes.deploy=true \
+    --file pom.xml
+```
 
-- **Deploy Quarkus App to GKE**
+### 5. Complete Workflow Code
 
-  Deploy the built Quarkus application to GKE.
+Find the complete code at the link below:
 
-  ```yaml
-  - name: Deploy Quarkus App to GKE
-    run: | 
-      mvn clean package -Dquarkus.kubernetes.deploy=true \
-      --file pom.xml
-  ```
-
-### 5. The complete code 
-
-Find the complete code at the link below: 
-
-https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml
-
+[GitHub Repository](https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml)
 
 ### Conclusion
 
 By following this GitHub Actions workflow, you can achieve continuous deployment of your Quarkus application to GKE. This setup ensures that every time you manually trigger the workflow, your application is built, containerized, and deployed to your Kubernetes cluster seamlessly. This approach automates the deployment process, reducing the potential for human error and speeding up the deployment cycle.
 
 #quarkus #gke #kubernetes #configuration
+```
+
+This version maintains the original content's technical accuracy while enhancing readability and flow.
