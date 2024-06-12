@@ -87,7 +87,7 @@ Let's go through each step in detail:
 
   In order to get the credential json, you need to run following commands in terminal:
 
-  ```
+  ```bash
   gcloud init 
   
   gcloud iam service-accounts create {A_SERVICE_ACCOUNT_NAME}
@@ -95,7 +95,7 @@ Let's go through each step in detail:
 
   Then see the generated service account email address by running:
 
-  ```
+  ```bash
   gcloud iam service-accounts list
   ```
 
@@ -103,7 +103,7 @@ Let's go through each step in detail:
 
   Next, grant permissions to write and register an image of the application:
 
-  ```
+  ```bash
   gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/container.admin
   
   gcloud projects add-iam-policy-binding {YOUR_PROJECT_ID}  --member=serviceAccount:{SERVICE_ACCOUNT_ADDRESS} --role=roles/storage.admin
@@ -115,13 +115,13 @@ Let's go through each step in detail:
 
   Then fetch the credentials secret by running:
 
-  ```
+  ```bash
   gcloud iam service-accounts keys create "key.json"  --iam-account "{SERVICE_ACCOUNT_ADDRESS}"
   ```
 
   Next step is convert the json file into `base64` string and register the converted string on GitHub repository action secret.
 
-  ```
+  ```bash
   $GKE_SA_KEY = [Convert]::ToBase64String([IO.File]::ReadAllBytes("key.json"))    
   ```
 
@@ -178,7 +178,7 @@ Let's go through each step in detail:
 
   In order for the quarkus app to recognize the Kubernetes ConfigMap, make sure the following options is configured in `application.properties` :
 
-  ```
+  ```properties
   %prod.quarkus.kubernetes-config.enabled=true
   %prod.quarkus.kubernetes-config.config-maps={A_CONFIG_MAP_NAME}
   A_CONFIG_PROPERTY_1=
