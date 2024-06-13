@@ -27,10 +27,10 @@ Environment variables store project-specific information such as the GCP project
 
 ```yaml
 env: 
-  PROJECT_ID: 'encoded-etching-425009-t7'
-  GKE_CLUSTER: 'autopilot-cluster-1'
-  GKE_ZONE: 'us-central1'
-  DEPLOYMENT_NAME: 'quarkus-gke-deploy'
+  PROJECT_ID: '{YOUR_PROJECT_ID}'
+  GKE_CLUSTER: '{YOUR_CLUSTER_NAME}'
+  GKE_ZONE: '{YOUR_ZONE}'
+  DEPLOYMENT_NAME: '{SOME_NAME_FOR_DEPLOYMENT}'
 ```
 
 ### 3. Job Definition
@@ -118,7 +118,7 @@ $GKE_SA_KEY = [Convert]::ToBase64String([IO.File]::ReadAllBytes("key.json"))
 #### Get GKE Cluster Credentials
 
 Fetch the GKE cluster credentials to interact with the cluster.
-
+{% raw %} 
 ```yaml
 - id: 'get-credentials'
   uses: 'google-github-actions/get-gke-credentials@v2'
@@ -127,11 +127,13 @@ Fetch the GKE cluster credentials to interact with the cluster.
     location: ${{ env.GKE_ZONE }}
     project_id: ${{ env.PROJECT_ID }}
 ```
+{% endraw %}
 
 #### Setup gcloud CLI
 
 Install the `kubectl` component using the `google-github-actions/setup-gcloud` action. `kubectl` is needed to create a ConfigMap.
 
+{% raw %} 
 ```yaml
 - uses: google-github-actions/setup-gcloud@v2.1.0
   with:
@@ -139,6 +141,7 @@ Install the `kubectl` component using the `google-github-actions/setup-gcloud` a
     install_components: 
       kubectl
 ```
+{% endraw %}
 
 #### Configure Docker Authentication
 
@@ -154,6 +157,7 @@ Configure Docker to use the gcloud command-line tool for authentication.
 
 Create a Kubernetes ConfigMap for storing sensitive information, such as GitHub app credentials. This addresses the Quarkus static initialization issue, ensuring necessary services are available without encountering the chicken-egg problem during static initialization.
 
+{% raw %} 
 ```yaml
 - name: Create Kubernetes ConfigMap
   run: |
@@ -165,6 +169,7 @@ Create a Kubernetes ConfigMap for storing sensitive information, such as GitHub 
       echo "ConfigMap {A_CONFIG_MAP_NAME} already exists. Skipping creation.";
     fi
 ```
+{% endraw %}
 
 Ensure the following options are configured in `application.properties` for the Quarkus app to recognize the Kubernetes ConfigMap:
 
