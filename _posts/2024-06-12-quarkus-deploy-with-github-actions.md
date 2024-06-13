@@ -77,13 +77,14 @@ The Java environment is set up using the `actions/setup-java` action.
 #### Authenticate with Google Cloud
 
 This step uses the `google-github-actions/auth` action to authenticate with Google Cloud using a service account key stored in GitHub secrets.
-
+{% raw %} 
 ```yaml
 - id: 'auth'
   uses: 'google-github-actions/auth@v2'
   with:
     credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 ```
+{% endraw %}
 
 To get the credentials JSON, run the following commands in your terminal:
 
