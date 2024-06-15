@@ -224,3 +224,5 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+google_site_verification: GD3HKs5zKhkhe6-ASjBuKz0PG0bARZ4KzMSs8y3sBRM
