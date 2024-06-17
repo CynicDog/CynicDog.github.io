@@ -213,6 +213,3 @@ Find a sample code at the link below:
 ### Conclusion
 
 By following this GitHub Actions workflow, you can achieve continuous deployment of your Quarkus application to GKE. This setup ensures that every time you manually trigger the workflow, your application is built, containerized, and deployed to your Kubernetes cluster seamlessly. This approach automates the deployment process, reducing the potential for human error and speeding up the deployment cycle.
-
-
-This version maintains the original content's technical accuracy while enhancing readability and flow.
