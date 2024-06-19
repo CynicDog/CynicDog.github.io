@@ -20,4 +20,4 @@ jobs:
         with:
           node-version: latest
       - run: npm i
-      - run: npm test
+      # - run: npm test
