@@ -39,6 +39,14 @@
         </li>
         <!-- .nav-item -->
       {% endfor %}
+      <!-- custom tabs start -->
+      <li class="nav-item{% if page.layout == 'home' %}{{ " active" }}{% endif %}">
+        <a href="https://cynicdog.github.io/euro-2024-d3/" class="nav-link">
+          <i class="fa-fw fas fa-home"></i>
+          <span>Data Viz. (Euro 2024 in D3.js)</span>
+        </a>
+      </li>
+      <!-- custom tabs end -->
     </ul>
   </nav>
 
