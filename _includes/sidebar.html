@@ -33,17 +33,16 @@
           <a href="{{ tab.url | relative_url }}" class="nav-link">
             <i class="fa-fw {{ tab.icon }}"></i>
             {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
-
             <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
           </a>
         </li>
         <!-- .nav-item -->
       {% endfor %}
       <!-- custom tabs start -->
-      <li class="nav-item{% if page.layout == 'home' %}{{ " active" }}{% endif %}">
+      <li class="nav-item">
         <a href="https://cynicdog.github.io/euro-2024-d3/" class="nav-link">
-          <i class="fa-fw fas fa-home"></i>
-          <span>Data Viz. (Euro 2024 in D3.js)</span>
+          <i class="fa-fw fas fa-futbol-o"></i>
+          <span>Data Viz.<br>(Euro 2024 in D3.js)</span>
         </a>
       </li>
       <!-- custom tabs end -->
