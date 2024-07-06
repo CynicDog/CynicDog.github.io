@@ -4,4 +4,4 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<iframe width="850" height="350" src="https://cynicdog.github.io/commits-spread/" frameborder="0"></iframe>
+<iframe width="100%" height="220" src="https://cynicdog.github.io/commits-spread/" style="border-radius: 10px;"></iframe>
