@@ -53,7 +53,7 @@ What's happening behind the UI is a bit more complicated, and that's where the a
 
 One of the most striking advantages I came across in Azure Aspire is its networking support. Simply put, it helps multiple projects communicate seamlessly with each other through automated configuration. Aspire simplifies the integration of multiple projects by injecting endpoint information, such as URLs or connection strings, directly into the configuration of each project. This allows different services to easily connect and interact with each other. 
 
-Okay, that's basically what service discovery means, and there have been numerous solutions on this topic. But Aspire stands out because we can write such a service discovery system directly in our .NET host project. Coming up with a robust implementation of such system is no longer a real bother with Aspire, since we are 'declaring' how they will be discovered in the deployed environment using C# code lines. 
+Okay, that's basically what service discovery is, and there have been numerous solutions on this topic. But Aspire stands out because we can write such a service discovery system directly in our .NET host project. Coming up with a robust implementation of such system is no longer a real bother with Aspire, since we are 'declaring' how they will be discovered in the deployed environment using C# code lines. 
 
 Let's look into what it means in actual code of this project. 
 
