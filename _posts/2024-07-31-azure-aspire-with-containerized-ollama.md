@@ -21,6 +21,8 @@ mermaid: true
 
 ## Architecture of the application and a first look 
 
+Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/Aspiring-Ollama)
+
 ``` mermaid
 flowchart TD
     
@@ -39,8 +41,10 @@ flowchart TD
 
     linkStyle 4,5,6,7,8 stroke-width:.3px,color:grey;
 ```
-The application features a straightforward architecture designed, since my purpose in this project is to explore the full development experience in Azure Aspire with multiple polyglot services.
+The application features a straightforward architecture designed to explore the full development experience in Azure Aspire with multiple polyglot services.
 
-You will find codes of the application and how the app looks like in: [GitHub Repository](https://github.com/CynicDog/Aspiring-Ollama)
+The React project provides a UI client where users can send requests to pull LLM models to the Python server, where the requests are simply propagated to the containerized Ollama. After successfully pulling models, users can interact with these LLM models by sending prompts, again, to the Python server. The Python server retrieves generated answers from Ollama and delivers the data in the form of a stream.
+
+The React UI client also has a simple visual representation of weather data that is stored in PostgreSQL in its own container and fetched through the .NET API server. The weather business logic here is textbook material in .NET projects that you'd often find in any other sample codes in the .NET frameworks ecosystem. I made slight modifications to how they are implemented in the application, but the purpose of the domain remains the same: to provide a quick look at how the apps communicate with each other.
 
 ## Okay what is Azure Aspire though? 
