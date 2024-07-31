@@ -18,7 +18,7 @@ tags: [azure, aspire, ollama, microservices, docker]
 > 
 > So, let's get started!
 
-
+```mermaid
 flowchart TD
     A[React UI Client] --> B[Python Ollama server]
     B --> E[Containerized Ollama]
@@ -27,3 +27,4 @@ flowchart TD
    
     classDef container stroke:#333,stroke-width:1px;
     class A,B,C,D,E,F container;
+```
