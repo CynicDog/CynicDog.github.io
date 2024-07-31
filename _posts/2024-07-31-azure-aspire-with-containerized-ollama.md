@@ -19,7 +19,9 @@ mermaid: true
 > 
 > So, let's get started!
 
-```mermaid
+## Architecture of the application and a first look 
+
+``` mermaid
 flowchart TD
     A[React UI Client] --> B[Python Ollama server]
     B --> E[Containerized Ollama]
@@ -29,3 +31,6 @@ flowchart TD
     classDef container stroke:#333,stroke-width:1px;
     class A,B,C,D,E,F container;
 ```
+The application features a straightforward architecture designed, since my purpose in this project is to explore the full development experience in Azure Aspire with multiple polyglot services.
+
+## Okay what is Azure Aspire though? 
