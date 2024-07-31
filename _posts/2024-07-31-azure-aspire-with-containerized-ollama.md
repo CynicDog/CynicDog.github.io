@@ -129,5 +129,9 @@ export default defineConfig({
 })
 ```
 
-In the Vite-React project’s [configuration file](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/vite.config.js), the location information for the Python service is passed into the Vite project in the name of `services__ollamaservice__http__0`, as designated by Aspire. This time, the `ollamaservice` selector, which is we passed in as the first argument to the method of `AddPythonProject` before in app modelling, is prefixed with `services__` and suffixed with `http__0`. Any request (for example, a request to get the list of downloaded LLM models on Ollama. See usages [here](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/src/component/OllamaAPI.jsx)) with a URL that starts with '/ollama' will be intercepted by this proxy information and will ultimately be sent to the right place. 
+In the Vite-React project’s [configuration file](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/vite.config.js), the location information for the Python service is passed into the Vite project in the name of `services__ollamaservice__http__0`, as designated by Aspire. This time, the `ollamaservice` selector, which is we passed in as the first argument to the method of `AddPythonProject` before in app modelling, is prefixed with `services__` and suffixed with `http__0`. 
+
+Any request (for example, a request to get the list of downloaded LLM models on Ollama. See usages [here](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/src/component/OllamaAPI.jsx)) with a URL that starts with '/ollama' will be intercepted by this proxy information and will ultimately be sent to the right place. 
+
+
 
