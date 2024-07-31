@@ -17,3 +17,15 @@ tags: [azure, aspire, ollama, microservices, docker]
 > I hope this article provides insights into the development of such microservices and what it's like to work with Azure Aspire. In my experience, Azure Aspire is a real boon for building and composing a microservices application.
 > 
 > So, let's get started!
+
+
+```mermaid 
+flowchart TD
+    A[React UI Client] --> B[Python Ollama server]
+    B --> E[Containerized Ollama]
+    A --> C[.NET weather API server]
+    C --> D[Containerized PostgreSQL]
+   
+    classDef container stroke:#333,stroke-width:1px;
+    class A,B,C,D,E,F container;
+```
