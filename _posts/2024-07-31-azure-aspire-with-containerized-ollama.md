@@ -3,7 +3,8 @@ layout: post
 title: Weaving up Microservices with Azure Aspire (Part 1, local Kubernetes deployment) 
 date: 2024-07-31 00:00:00 +09:00
 categories: [.NET, Aspire]
-tags: [azure, aspire, ollama, microservices, docker]                    
+tags: [azure, aspire, ollama, microservices, docker]            
+mermaid: true
 ---
 
 > In this post, we will learn how to create a microservices application using Azure Aspire, a code-level orchestrator tool. I built and deployed a microservices application on a local Kubernetes context, which includes:
