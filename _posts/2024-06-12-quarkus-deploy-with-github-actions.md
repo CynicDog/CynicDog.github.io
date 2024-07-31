@@ -2,7 +2,7 @@
 layout: post
 title: Continuous Deployment of a Quarkus Application Using GitHub Actions
 date: 2024-06-12 21:46:01 +09:00
-categories: [DevOps, GKE]
+categories: [Cloud, GKE]
 tags: [quarkus, java, gke, githubaction, jib]                    
 ---
 
