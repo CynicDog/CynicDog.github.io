@@ -34,7 +34,7 @@ flowchart TD
     F --- |apiservice.bindings.http.targetPort| A
     F --- |connectionString| C
     F --- |ollama.bindings.ollama-uri.url| B
-    F --- |db credentials| D
+    F --- |db credentials, init.d| D
      
     classDef container stroke:#333,stroke-width:1px;
     class A,B,C,D,E container;
