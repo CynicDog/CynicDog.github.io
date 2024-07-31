@@ -47,6 +47,27 @@ The React project provides a UI client where users can send requests to pull LLM
 
 The React UI client also has a simple visual representation of weather data that is stored in PostgreSQL in its own container and fetched through the .NET API server. The weather business logic here is textbook material in .NET projects that you'd often find in any other sample codes in the .NET frameworks ecosystem. I made slight modifications to how they are implemented in the application, but the purpose of the domain remains the same: to provide a quick look at how the apps communicate with each other.
 
-What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in.  A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
+What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in. **A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
 
 ## Charms of Azure Aspire.  
+
+One of the most striking advantages I came across in Azure Aspire is its networking support. Simply put, it helps multiple projects communicate seamlessly with each other through automated configuration, a process the Aspire team calls the "inner loop." From what I understood and experienced so far, Aspire simplifies the integration of multiple projects by injecting endpoint information, such as URLs or connection strings, directly into the configuration of each project. This allows different services to easily connect and interact with each other. 
+
+Okay, that's basically what service discovery means, and there have been numerous solutions on this topic. But Aspire stands out because we can write such a service discovery system directly in our .NET host project. Identifying the location of services is no longer a real bother with Aspire, since we declare how they will be discovered in the deployed environment using C# code lines.
+
+Let's look into what it means in actual code of this project. 
+```C#
+var ollama = builder
+    .AddContainer("ollama", "ollama/ollama")
+    .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-uri");
+
+var ollamaService = builder
+    .AddPythonProject("ollamaservice", "../aspiring-ollama-service", "main.py")
+    .WithHttpEndpoint(env: "PORT", port: 8000)  
+    .WithEnvironment("ollama-uri", ollama.GetEndpoint("ollama-uri"));
+
+builder.AddNpmApp("react", "../aspiring-react")
+    .WithExternalHttpEndpoints()
+    .WithReference(ollamaService)
+    // ... 
+```
