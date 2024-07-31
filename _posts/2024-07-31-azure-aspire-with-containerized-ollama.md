@@ -56,7 +56,8 @@ One of the most striking advantages I came across in Azure Aspire is its network
 Okay, that's basically what service discovery means, and there have been numerous solutions on this topic. But Aspire stands out because we can write such a service discovery system directly in our .NET host project. Identifying the location of services is no longer a real bother with Aspire, since we declare how they will be discovered in the deployed environment using C# code lines.
 
 Let's look into what it means in actual code of this project. 
-```C#
+
+```csharp
 var ollama = builder
     .AddContainer("ollama", "ollama/ollama")
     .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-uri");
