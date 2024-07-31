@@ -47,7 +47,7 @@ The React project provides a UI client where users can send requests to pull LLM
 
 The React UI client also has a simple visual representation of weather data that is stored in PostgreSQL in its own container and fetched through the .NET API server. The weather business logic here is textbook material in .NET projects that you'd often find in any other sample codes in the .NET frameworks ecosystem. I made slight modifications to how they are implemented in the application, but the purpose of the domain remains the same: to provide a quick look at how the apps communicate with each other.
 
-What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in. **A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
+What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in. A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
 
 ## Charms of Azure Aspire.  
 
