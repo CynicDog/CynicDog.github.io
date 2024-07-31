@@ -101,7 +101,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
 ```
 
-Here in the Python Flask server set up [code](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-ollama-service/main.py), you can see that the network information for the Ollama container is passed in as environment variables, using the names specified in the stage of Aspire's app modeling. Now that the service is wired up with Ollama, let's see how the python server is exposed to the final destination: the React UI.  
+Here in the [Python Flask server set up](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-ollama-service/main.py), you can see that the network information for the Ollama container is passed in as environment variables, using the names specified in the stage of Aspire's app modeling. Now that the service is wired up with Ollama, let's see how the python server is exposed to the final destination: the React UI.  
 
 ```javascript
 import { defineConfig } from 'vite'
