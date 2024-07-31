@@ -33,4 +33,6 @@ flowchart TD
 ```
 The application features a straightforward architecture designed, since my purpose in this project is to explore the full development experience in Azure Aspire with multiple polyglot services.
 
+You will find codes of the application and how the app looks like in: [GitHub Repository](https://github.com/CynicDog/Aspiring-Ollama)
+
 ## Okay what is Azure Aspire though? 
