@@ -77,7 +77,7 @@ builder.AddNpmApp("react", "../aspiring-react")
 
 The code above can be found in the [Program.cs](https://github.com/CynicDog/Aspiring-Ollama/blob/master/AspireReact.AppHost/Program.cs) file within the AppHost project directory. Here, we are seeing the code-level orchestration of microservices, a concept the Aspire team refers to as "app modeling." 
 
-This code effectively composes a containerized Ollama application, a Python Flask server application, and a Vite-React project. While Docker Compose is an excellent, well-abstracted, and declarative tool, I must admit that the C# code above feels much more fluent and expressive. 
+This code effectively composes a containerized Ollama application, a Python Flask server application, and a Vite-React project. Speaking of composing, Docker Compose is an excellent, well-abstracted, and declarative tool, but I must admit that the C# code above feels much more fluent and expressive. 
 
 Let's see how the Aspire-configured network information is used in each project.    
 
