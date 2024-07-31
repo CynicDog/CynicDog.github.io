@@ -84,7 +84,7 @@ Let's see how the Aspire-configured network information is used in each project.
 ```python
 app = flask.Flask(__name__)
 
-raw_base_url = os.environ.get('ollama-uri') 
+base_url = os.environ.get('ollama-uri') 
 
 @app.route('/api/tags', methods=['GET'])
 def get_models():
