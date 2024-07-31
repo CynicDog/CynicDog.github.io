@@ -15,7 +15,7 @@ mermaid: true
 >
 > 3) a React UI client.
 > 
-> I hope this article provides insights into the development of such microservices and what it's like to work with Azure Aspire. In my experience, Azure Aspire is a real boon for building and composing a microservices application.
+> I hope this article provides insights into the development of such microservices and what it's like to work with Azure Aspire. In my experience, Azure Aspire is a real boon for building and composing a microservices application, and I would definitely keep following up the project features and updates. 
 > 
 > So, let's get started!
 
