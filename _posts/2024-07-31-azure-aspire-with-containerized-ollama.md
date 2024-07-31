@@ -77,4 +77,53 @@ builder.AddNpmApp("react", "../aspiring-react")
 
 The code above can be found in the [Program.cs](https://github.com/CynicDog/Aspiring-Ollama/blob/master/AspireReact.AppHost/Program.cs) file within the AppHost project directory. Here, we are seeing the code-level orchestration of microservices, a concept the Aspire team refers to as "app modeling." This code effectively composes a containerized Ollama application, a Python Flask server application, and a Vite-React project. While Docker Compose is an excellent, well-abstracted, and declarative tool, I must admit that the C# code above feels much more fluent and expressive. 
 
-Let's see how the Aspire-configured network information in each project.    
+Let's see how the Aspire-configured network information is used in each project.    
+
+```python
+app = flask.Flask(__name__)
+
+raw_base_url = os.environ.get('ollama-uri') 
+
+@app.route('/api/tags', methods=['GET'])
+def get_models():
+    try:
+        url = f'{base_url}/api/tags'
+        response = requests.get(url)
+
+        return response.json(), 200
+
+    except Exception as e:
+        return str(e), 500
+
+if __name__ == '__main__':
+    
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port)
+```
+
+Here in the Python Flask server set up [code](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-ollama-service/main.py), you can see that the network information for the Ollama container is passed in as environment variables, using the names specified in the stage of Aspire's app modeling. Now that the service is wired up with Ollama, let's see how the python server is exposed to the final destination: the React UI.  
+
+```javascript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
+    proxy: {
+      // ... 
+      '/ollama': {
+        target: process.env.services__ollamaservice__https__0 || process.env.services__ollamaservice__http__0,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/ollama/, ''),
+        secure: false,
+      }
+    },
+  },
+})
+```
+
+In the Vite-React project’s [configuration file](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/vite.config.js), the location information for the Python service is passed into the Vite project in the name of `services__ollamaservice__http__0`, as designated by Aspire. This time, the environment name is prefixed and suffixed with the `ollamaservice` selector. Any request (for example, a request to get the list of downloaded LLM models on Ollama. See usages [here](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/src/component/OllamaAPI.jsx)) with a URL that starts with '/ollama' will be intercepted by this proxy information and will ultimately be sent to the right place. 
+
