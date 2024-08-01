@@ -185,7 +185,7 @@ dotnet run --project ./AspireReact.AppHost.csproj --publisher manifest --output-
 ```
 
 The command will generates the [artifact](https://github.com/CynicDog/Aspiring-Ollama/blob/master/AspireReact.AppHost/manifest.json) that contains resources metadata as below: 
-```json
+```jsonc
 // ... 
 "resources": {
   // ...
