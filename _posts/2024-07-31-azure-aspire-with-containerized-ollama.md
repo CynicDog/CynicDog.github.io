@@ -19,7 +19,7 @@ mermaid: true
 > 
 > So, let's get started!
 
-## Architecture of the application and a first look.  
+# 0. Architecture of the application and a first look.  
 
 Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/Aspiring-Ollama)
 
@@ -58,7 +58,7 @@ The React UI client also has a simple visual representation of weather data that
 
 What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in. A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
 
-## Charms of Azure Aspire.  
+# 1. Development phase: Charms of Azure Aspire.  
 
 One of the most striking advantages I came across in Azure Aspire is its networking support. Simply put, it helps multiple projects communicate seamlessly with each other through automated configuration. Aspire simplifies the integration of multiple projects by injecting endpoint information, such as URLs or connection strings, directly into the configuration of each project. This allows different services to easily connect and interact with each other. 
 
@@ -176,3 +176,4 @@ In the local deployment context, the React UI service is exposed to users as a N
 
 Once the reverse proxy receives requests, it hands them over to the final receiver, a service. If there are replica sets of pods (which is not the case in this project), random ports will be assigned accordingly, and the proxy will perform load balancing over the replicas.
 
+# 2. Deployment phase: Standing on the shoulders of Giants.
