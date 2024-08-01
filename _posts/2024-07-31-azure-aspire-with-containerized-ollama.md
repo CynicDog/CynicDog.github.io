@@ -146,7 +146,10 @@ flowchart TD
     C --> |localhost:RANDOM_PORT| D([Containerized PostgreSQL])
     F(Kubernetes) -. NodePort .- A 
     F -. NodePort .- D
-    F -. NodePort .- E 
+    F -. NodePort .- E
+
+    classDef container stroke:#333,stroke-width:1px;
+    class B,C container;
 
     linkStyle 4,5,6 stroke-width:.2px,color:grey;
 ```
