@@ -135,5 +135,19 @@ Any request with a URL that starts with '/ollama' (for example, a request to get
 
 Wait, the next place? Is there another step for a request from React UI to finally get to the other services? 
 
-Yes. A lightweight reverse proxy on a specified port that manages routing and load balancing for requests from an app to various services. The proxy is a .NET Aspire implementation detail, meaning that you don't need to be concerned about its internal implementation since it's hidden to the end-user such as me, writing code lines in Aspire. At most we only need to understand how it works in the context of ensuring our applications communicate.  
+Yes. A lightweight reverse proxy on a specified port that manages routing and load balancing for requests from an app to various services. This proxy is a .NET Aspire implementation detail, meaning that you don't need to be concerned about its internal implementation since it's hidden to the end-user such as me, writing code lines in Aspire. At most we only need to understand how it works in the context of ensuring our applications communicate. The following graph shows how the service binding works with such reverse proxies involved between NodePort services deployed on local Kubernetes context. 
+
+```mermaid
+flowchart TD
+    
+    A([React UI Client]) --> |ollamaservice:8000| B(Reverse Proxy)
+    B --> |localhost:RANDOM_PORT| E([Python Ollama server])
+    A --> |apiservice:8080| C(Reverse Proxy)
+    C --> |localhost:RANDOM_PORT| D([Containerized PostgreSQL])
+    F(Kubernetes) -. NodePort .- A 
+    F -. NodePort .- D
+    F -. NodePort .- E 
+
+    linkStyle 4,5,6 stroke-width:.2px,color:green;
+```
 
