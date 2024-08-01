@@ -189,16 +189,6 @@ The command will generates the [artifact](https://github.com/CynicDog/Aspiring-O
 // ... 
 "resources": {
   // ...
-  "apiservice": {
-      "type": "project.v0",
-      "path": "../AspireReact.ApiService/AspireReact.ApiService.csproj",
-      "env": {
-        // ... 
-      },
-      "bindings": {
-        // ... 
-      }
-  },
   "ollama": {
       "type": "container.v0",
       "image": "ollama/ollama:latest",
