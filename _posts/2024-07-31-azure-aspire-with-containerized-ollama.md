@@ -131,7 +131,9 @@ export default defineConfig({
 
 In the Vite-React project’s [configuration file](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/vite.config.js), the location information for the Python service is passed into the Vite project in the name of `services__ollamaservice__http__0`, as designated by Aspire. This time, the `ollamaservice` selector, which is we passed in as the first argument to the method of `AddPythonProject` before in app modelling, is prefixed with `services__` and suffixed with `http__0`. 
 
-Any request with a URL that starts with '/ollama' (for example, a request to get the list of downloaded LLM models on Ollama. See usages [here](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/src/component/OllamaAPI.jsx)) will be intercepted by this proxy information and will ultimately be sent to the right place. 
+Any request with a URL that starts with '/ollama' (for example, a request to get the list of downloaded LLM models on Ollama. See usages [here](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/src/component/OllamaAPI.jsx)) will be intercepted by this proxy information and will ultimately be sent to the next place. 
 
+Wait, the next place? Is there another step for a request from React UI to finally get to the other services? 
 
+Yes. A lightweight reverse proxy on a specified port that manages routing and load balancing for requests from an app to various services. The proxy is a .NET Aspire implementation detail, meaning that you don't need to be concerned about its internal implementation since it's hidden to the end-user such as me, writing code lines in Aspire. At most we only need to understand how it works in the context of ensuring our applications communicate.  
 
