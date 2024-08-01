@@ -172,3 +172,7 @@ flowchart TD
     linkStyle 4,5,6 stroke-width:.2px,color:grey;
 ```
 
+In the local deployment context, the React UI service is exposed to users as a NodePort service, accessible via localhost. (We will soon explore the local deployment process in detail.) The React client uses the proxy we configured in the Vite project [file](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/vite.config.js). Host ports are always assigned to proxies that sit in front of service, and we have enough information to pin point their locations with the help of Aspire's app modelling. 
+
+Once the reverse proxy receives requests, it hands them over to the final receiver. If there are replica sets of pods (which is not the case in this demo project), random ports are assigned accordingly, and the proxy will perform load balancing over the replicas.
+
