@@ -231,5 +231,5 @@ The command will generates the [artifact](https://github.com/CynicDog/Aspiring-O
 }
 ```
 
-The attributes of `env` and `bindings` for each resource are familiar to us, as we've seen how they are used in the development stage. The `type`, however, is quite notable, not just because it serves as a building block of Aspire app modeling, but also because it determines how an application gets captured and containerized.
+The attributes of `env` and `bindings` for each resource are familiar to us, as we've seen how they are used in the development stage. The `type`, however, is quite notable because it determines how an application gets captured and containerized.
 
