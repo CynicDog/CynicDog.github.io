@@ -148,6 +148,6 @@ flowchart TD
     F -. NodePort .- D
     F -. NodePort .- E 
 
-    linkStyle 4,5,6 stroke-width:.2px,color:green;
+    linkStyle 4,5,6 stroke-width:.2px,color:grey;
 ```
 
