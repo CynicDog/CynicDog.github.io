@@ -177,3 +177,59 @@ In the local deployment context, the React UI service is exposed to users as a N
 Once the reverse proxy receives requests, it hands them over to the final receiver, a service. If there are replica sets of pods (which is not the case in this project), random ports will be assigned accordingly, and the proxy will perform load balancing over the replicas.
 
 ## 2. Deployment: Standing on the shoulders of Giants.
+
+As we've been discussing, the project of this article is deployed on Kubernetes within local context. There are many options when it comes to deployment on local environment, such as K3s, Kind, Minikube and list goes on. I chose to go with Docker Desktop's standalone Kubernetes server, because of the easy access and its built-in set up. Kubernetes manifests for the projects are generated using [Aspirate](https://prom3theu5.github.io/aspirational-manifests/getting-started.html), an open-source tool that creates deployment YAML files based on the .NET Aspire app host manifest, which is created by running the next command in the AppHost project directory:
+
+```bash 
+dotnet run --project ./AspireReact.AppHost.csproj --publisher manifest --output-path ./manifest.json  
+```
+
+The command will generates the [artifact](https://github.com/CynicDog/Aspiring-Ollama/blob/master/AspireReact.AppHost/manifest.json) that contains resources metadata as below: 
+```json
+// ... 
+"resources": {
+  // ...
+  "apiservice": {
+      "type": "project.v0",
+      "path": "../AspireReact.ApiService/AspireReact.ApiService.csproj",
+      "env": {
+        // ... 
+      },
+      "bindings": {
+        // ... 
+      }
+  },
+  "ollama": {
+      "type": "container.v0",
+      "image": "ollama/ollama:latest",
+      "bindings": {
+        // ... 
+      }
+  },
+  "ollamaservice": {
+      "type": "dockerfile.v0",
+      "path": "../aspiring-ollama-service/Dockerfile",
+      "context": "../aspiring-ollama-service",
+      "env": {
+        // ... 
+      },
+      "bindings": {
+        // ... 
+      }
+  },
+  "react": {
+      "type": "dockerfile.v0",
+      "path": "../aspiring-react/Dockerfile",
+      "context": "../aspiring-react",
+      "env": {
+        // ... 
+      },
+      "bindings": {
+        // ... 
+      }
+   }
+}
+```
+
+The attributes of `env` and `bindings` for each resource are familiar to us, as we've seen how they are used in the development stage. The `type`, however, is quite notable, not just because it serves as a building block of Aspire app modeling, but also because it determines how an application gets captured and containerized.
+
