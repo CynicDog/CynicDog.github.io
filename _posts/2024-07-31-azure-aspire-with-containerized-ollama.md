@@ -265,3 +265,13 @@ If deployed successfully, the following report will be shown. Note that the Node
 │ react            │ NodePort     │ 10.98.14.171  │ 5173  │ 31488     │ http://localhost:31488 │
 └──────────────────┴──────────────┴───────────────┴───────┴───────────┴────────────────────────┘
 ```
+
+Now that the microservices are bound and running on Docker Desktop's Kubernetes server, you can navigate to the `react` address to view the interface for the Ollama service and the weather service.
+
+## 3. Closing 
+
+Deploying microservices with Azure Aspire provides a streamlined approach to orchestrating complex applications in any target environment. We explored how Azure Aspire simplifies service discovery and networking over diverse services, whether they are containerized applications, .NET projects, Python applications, or Node projects and so on. We’ve highlighted Aspire's capability for code-level orchestration, showcasing its ease in managing microservices architectures.
+
+I hope this article inspires you to experiment with Azure Aspire. Stay tuned for further explorations as we continue to enhance and expand upon this foundational setup!
+
+
