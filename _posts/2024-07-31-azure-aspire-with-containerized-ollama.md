@@ -234,25 +234,34 @@ aspirate init
 aspirate build -m ./manifest.json
 ```
 
-You will be asked to set the password to secure secrets and deployment process, and the list of components (individual services we've been seeing in this project) to deploy.  
+During this process, you’ll need to set a password to secure secrets and the deployment process, as well as specify the components (individual services we've been seeing in this project) to deploy.  
 
-The following command is to generate the deployment YAML files. This will create  
+The following command generates the deployment YAML files:
 
 ```bash
 aspirate generate --skip-build 
 ```
 
-You will be asked to set the image pull policy and custom namespace. This command generates the directory with the name of `aspirate-output` and all the deployment specifications along within it. 
+At this point, you'll need to set the image pull policy and custom namespace. This command creates a directory named `aspirate-output` containing all the deployment specifications. 
 
-Final step is to run the next:
+The final step is to run the next command:
 
 ```bash
 aspirate run -m ./manifest.json --skip-build
 ```
 
-You will be asked to select Kubernetes context to deploy, I chose `docker-desktop` option. And if `default` namespace is not empty, it needs to be cleared with the 'y' option which is the only option that is not default during the whole interaction with Aspire CLI commands. 
+You’ll choose the Kubernetes context for deployment, and I selected the `docker-desktop` option. If the `default` namespace isn’t empty, it needs to be cleared by confirming with the 'y' option, which is the only option that isn’t the default throughout the whole interaction with Aspire CLI commands. 
 
-If successfully deployed, the following report will be shown. NodePorts and IPs are dynamically set values, so it can be different 
+If deployed successfully, the following report will be shown. Note that the NodePorts and IPs are dynamically set values. 
 
 ```bash
+── Deployment completion: Outputting service details ───────────────────────────────────────────
+┌──────────────────┬──────────────┬───────────────┬───────┬───────────┬────────────────────────┐
+│ Service Name     │ Service Type │ Cluster IP    │ Port  │ Node Port │ Address                │
+├──────────────────┼──────────────┼───────────────┼───────┼───────────┼────────────────────────┤
+│ apiservice       │ NodePort     │ 10.99.48.221  │ 8080  │ 32659     │ http://localhost:32659 │
+│ aspire-dashboard │ NodePort     │ 10.97.75.21   │ 18888 │ 32553     │ http://localhost:32553 │
+│ ollamaservice    │ NodePort     │ 10.97.221.178 │ 8000  │ 30728     │ http://localhost:30728 │
+│ react            │ NodePort     │ 10.98.14.171  │ 5173  │ 31488     │ http://localhost:31488 │
+└──────────────────┴──────────────┴───────────────┴───────┴───────────┴────────────────────────┘
 ```
