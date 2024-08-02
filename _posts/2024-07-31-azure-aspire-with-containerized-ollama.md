@@ -19,7 +19,7 @@ mermaid: true
 > 
 > So, let's get started!
 
-## 0. Architecture of the application and a first look.  
+## 0. A first look: Architecture of the application.  
 
 Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/Aspiring-Ollama)
 
