@@ -7,7 +7,7 @@ tags: [azure, aspire, ollama, microservices, docker]
 mermaid: true
 ---
 
-> In this post, we will learn how to create a microservices application using Azure Aspire, a code-level orchestrator tool. I built and deployed a microservices application on a local Kubernetes context, which includes:
+> In this article, we will learn how to create a microservices application using Azure Aspire, a code-level orchestrator tool. I built and deployed a microservices application on a local Kubernetes context, which includes:
 > 
 > 1) a containerized Ollama service with a Python wrapper server,
 >
@@ -223,3 +223,36 @@ The command will generates the [artifact](https://github.com/CynicDog/Aspiring-O
 
 The attributes of `env` and `bindings` for each resource are familiar to us, as we've seen how they are used in the development stage. The `type`, however, is quite notable because it determines how an application gets captured and containerized.
 
+For the service `ollama`, the manifest states that it will fetch the latest version of the Ollama Docker image. This is good news because all we need to do is run this image in a container during the deployment step. 
+
+Things get a little more bothersome for the cases of `ollamaservice` (the Python server) and `react` services, since they require building their Docker images from the specified Dockerfiles and contexts. This means we need to ensure that their build environments are properly set up and all dependencies are in place before deployment. So I had to come up with basic Dockerfiles for both the [Python](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-ollama-service/Dockerfile) and [Node](https://github.com/CynicDog/Aspiring-Ollama/blob/master/aspiring-react/Dockerfile) projects. These Dockerfiles are quite simple, yet they get the job done, and for now that's all we need.
+
+Now that we have .NET Aspire app host manifest and all the required deployment instructions, it's time to generate Kubernetes manifests with the help of Aspirate with running the following commands:
+
+```bash
+aspirate init
+aspirate build -m ./manifest.json
+```
+
+You will be asked to set the password to secure secrets and deployment process, and the list of components (individual services we've been seeing in this project) to deploy.  
+
+The following command is to generate the deployment YAML files. This will create  
+
+```bash
+aspirate generate --skip-build 
+```
+
+You will be asked to set the image pull policy and custom namespace. This command generates the directory with the name of `aspirate-output` and all the deployment specifications along within it. 
+
+Final step is to run the next:
+
+```bash
+aspirate run -m ./manifest.json --skip-build
+```
+
+You will be asked to select Kubernetes context to deploy, I chose `docker-desktop` option. And if `default` namespace is not empty, it needs to be cleared with the 'y' option which is the only option that is not default during the whole interaction with Aspire CLI commands. 
+
+If successfully deployed, the following report will be shown. NodePorts and IPs are dynamically set values, so it can be different 
+
+```bash
+```
