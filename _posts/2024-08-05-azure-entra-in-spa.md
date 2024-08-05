@@ -57,9 +57,9 @@ C4Deployment
     UpdateElementStyle(appRegistrations, $borderColor="gray")
     UpdateElementStyle(publishingOrganization, $borderColor="gray")
     
-    UpdateRelStyle(helloworld_app, Enterprise_Application, $textColor="white", $lineColor="white", ,$offsetX="5")
-    UpdateRelStyle(Teams, Service_Principal, $textColor="white", $lineColor="white")
-    UpdateRelStyle(React, Teams, $textColor="white", $lineColor="white", $offsetY="-15", $offsetX="-40")
-    UpdateRelStyle(Service_Principal, Organizational_Resources, $textColor="white", $lineColor="white", $offsetY="-15", $offsetX="-40")
-    UpdateRelStyle(Teams, Organizational_Resources, $textColor="white", $lineColor="white", $offsetY="-15", $offsetX="-40")
+    UpdateRelStyle(helloworld_app, Enterprise_Application, $textColor="white", $lineColor="gray", ,$offsetX="5")
+    UpdateRelStyle(Teams, Service_Principal, $textColor="white", $lineColor="gray")
+    UpdateRelStyle(React, Teams, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
+    UpdateRelStyle(Service_Principal, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
+    UpdateRelStyle(Teams, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
 ```
