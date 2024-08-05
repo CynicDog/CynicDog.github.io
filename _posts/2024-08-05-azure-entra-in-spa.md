@@ -25,6 +25,10 @@ C4Deployment
         Container(React, "React", "", "")
     }
 
+    Deployment_Node(teams, "Teams") {
+        Container(Teams, "Teams", "", "")
+    }
+
     Deployment_Node(azure, "Azure") {
         Deployment_Node(organizationalResources, "Organizational Resources") {
         ContainerDb(Organizational_Resources, "Organizational Resources", "")
@@ -38,10 +42,6 @@ C4Deployment
                 Container(helloworld_app, "helloworld-app", "Graph API permissions", "User.ReadWrite, Presence.ReadWrite")
             }
         }
-    }
-        
-    Deployment_Node(teams, "Teams") {
-        Container(Teams, "Teams", "", "")
     }
     
     Rel(helloworld_app, Enterprise_Application, "Exposes as")
