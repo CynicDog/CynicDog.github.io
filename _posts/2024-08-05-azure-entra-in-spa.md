@@ -29,18 +29,18 @@ C4Deployment
         Container(Teams, "Teams", "", "")
     }
 
-    Deployment_Node(azure, "Azure") {
-        Deployment_Node(organizationalResources, "Organizational Resources") {
-        ContainerDb(Organizational_Resources, "Organizational Resources", "")
-        
-        Deployment_Node(publishingOrganization, "Publishing Organization") {
-            Container(Service_Principal, "Service Principal", "", "")
-            Container(Enterprise_Application, "Enterprise Application", "", "")        
+    Deployment_Node(azure, "Azure / Entra ID") {
+        Deployment_Node(organizationalResources, "Publishing Organization") {
+            ContainerDb(Organizational_Resources, "Organizational Resources", "")
+            
+            Deployment_Node(publishingOrganization, "Identity / Access Management Unit") {
+                Container(Service_Principal, "Service Principal", "", "")
+                Container(Enterprise_Application, "Enterprise Application", "", "")        
+            }
         }
 
         Deployment_Node(appRegistrations, "App Registrations") {
-                Container(helloworld_app, "helloworld-app", "Graph API permissions", "User.ReadWrite, Presence.ReadWrite")
-            }
+                    Container(helloworld_app, "helloworld-app", "Graph API permissions", "User.ReadWrite, Presence.ReadWrite")
         }
     }
     
