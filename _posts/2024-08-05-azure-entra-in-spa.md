@@ -29,14 +29,14 @@ C4Deployment
         Deployment_Node(organizationalResources, "Organizational Resources") {
         ContainerDb(Organizational_Resources, "Organizational Resources", "")
         
-        Deployment_Node(appRegistrations, "App Registrations") {
-                Container(helloworld_app, "helloworld-app", "Graph API permissions", "User.ReadWrite, Presence.ReadWrite")
-            }
-        }
-
         Deployment_Node(publishingOrganization, "Publishing Organization") {
             Container(Service_Principal, "Service Principal", "", "")
             Container(Enterprise_Application, "Enterprise Application", "", "")        
+        }
+        
+        Deployment_Node(appRegistrations, "App Registrations") {
+                Container(helloworld_app, "helloworld-app", "Graph API permissions", "User.ReadWrite, Presence.ReadWrite")
+            }
         }
     }
         
@@ -58,8 +58,9 @@ C4Deployment
     UpdateElementStyle(publishingOrganization, $borderColor="gray")
     
     UpdateRelStyle(helloworld_app, Enterprise_Application, $textColor="white", $lineColor="gray", ,$offsetX="5")
-    UpdateRelStyle(Teams, Service_Principal, $textColor="white", $lineColor="gray", $offsetX="-110")
+    UpdateRelStyle(Teams, Service_Principal, $textColor="white", $lineColor="gray")
     UpdateRelStyle(React, Teams, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
     UpdateRelStyle(Service_Principal, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
     UpdateRelStyle(Teams, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
+      
 ```
