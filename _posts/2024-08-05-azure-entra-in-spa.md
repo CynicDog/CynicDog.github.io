@@ -15,7 +15,7 @@ mermaid: true
 >
 > To keep the cost of implementation and deployment at lowest, the application is deployed on GitHub Pages as Single Page Application, and yes, it's a static web application, so naturally its features are limited. But it serves to demonstrate the development process of an application that sits on Microsoft identity platform, so let's get started.
 
-## 0. A Warm Welcome 
+## 0. Deployment Architecture 
 
 Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/azure-entra-in-spa)
 
@@ -83,3 +83,26 @@ To sum up, an application registration has:
 Now that we have set up the configuration for accessing our organizational resources, MSAL in our React application will handle the authentication flow. Since it's a hosted web application, a user can directly navigate to the entry [endpoint](https://cynicdog.github.io/azure-entra-in-spa/) and sign in. With the access token retrieved via MSAL, the application will then fetch the user's profile and presence status. 
 
 A web application on a browser is fine, but we can take it a step further by integrating it directly into the organizational workplace on Teams. Since a Teams tab application is essentially a wrapper around an embedded web display, we need to make a slight modification to the authentication flow. The Teams client blocks the login popup and does not allow for authentication redirection within the tab, so we're going to authenticate users with SSO.  
+
+## 1. Head-first: MSAL in React. 
+
+Explanation in reverse perspective. From development to application registration on Azure Entra ID.   
+
+initial config, 
+api abstraction, 
+component,
+hash routing, 
+logic for Teams with SSO  
+
+## 2. A Rare Giving Spirit: GitHub Actions and GitHub Pages. 
+
+run gh-pages locally with hardcoded values, 
+providing credentials via github actions. 
+
+## 3. Can the Service Principal Speak? 
+
+Roles and types of service principal,
+relationship between Service Principal and App Registrations, 
+Graph API permission types (delegated / application) 
+
+## 4. Closing. 
