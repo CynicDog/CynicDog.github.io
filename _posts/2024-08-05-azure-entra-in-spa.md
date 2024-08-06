@@ -86,13 +86,101 @@ A web application on a browser is fine, but we can take it a step further by int
 
 ## 1. Head-first: MSAL in React. 
 
-Explanation in reverse perspective. From development to application registration on Azure Entra ID.   
+That was a bit of an explanation! With many abstract concepts in the context, they can seem quite hazy. Whereas the deployment architecture was explained starting with App Registrations, usage explanations and detail implementation from now on will be explained in reverse way. 
 
-initial config, 
-api abstraction, 
-component,
-hash routing, 
-logic for Teams with SSO  
+So it's time to see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our React application code.    
+
+Microsoft Authentication library (MSAL) is a set of well abstracted APIs, with support for multiple languages and platforms. Single Page Application in React is one of the supported platforms.   
+
+The first [configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) to come up with after installing the `@azure/msal-react` package, is to create the instance of MSAL client in React application context. 
+
+```js
+const config = {
+    auth: {
+        clientId: "your-generated-client-id-on-app-registrations",  
+    },
+};
+
+const publicClientApplication = new PublicClientApplication(config);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <MsalProvider instance={publicClientApplication}>
+    <App />
+  </MsalProvider>
+);
+```
+
+With the authentication client properly configured and integrated into the React project's context, you are ready to use MSAL APIs for tasks such as triggering the login process, acquiring access tokens, and fetching user account information as [follows](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfile.jsx): 
+
+```js
+const UserProfile = () => {
+    const { instance, inProgress, accounts } = useMsal();
+    // ...
+
+    useEffect(() => {
+        const accessTokenRequest = {
+            scopes: ["User.Read", "User.ReadWrite", "Presence.Read", "Presence.Read.All"],
+            account: accounts[0],
+        };
+
+        instance
+          .acquireTokenSilent(accessTokenRequest)
+          .then((accessTokenResponse) => {
+            const accessToken = accessTokenResponse.accessToken;
+
+            // make remote call with the access token ... 
+    }
+}
+```
+The `useMsal` hook provides access to the MSAL instance, the progress state of authentication processes (`inProgress`), and the user accounts (`accounts`) that MSAL knows about. 
+
+The list of scopes specifies the API permissions that the Graph API will acts on. These permissions outline the specific data and functionalities that the application can access on behalf of the user, and the user will need to provide consent for these permissions during the authentication process.
+
+The remote call to Graph API to fetch user information is done by REST API with access token we just retrieved by MSAL. For example, a logged-in user's profile photo of Microsoft account can be fetched as below:  
+```js
+fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  }
+})
+```
+
+Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components, which make conditional rendering based on authentication status extremely straightforward. For example, to render a sign-in button only when the user is unauthenticated, you would place it inside the UnauthenticatedTemplate component:
+```js
+<UnauthenticatedTemplate>
+  <button className="btn btn-outline-primary btn-sm" onClick={handleSignIn}>Sign In</button>
+</UnauthenticatedTemplate>
+```
+
+Considering the application will be published on the organization’s Teams, it's important to note that the Teams client doesn't allow authentication redirection within tabs or the use of login popups. To address this limitation, I’ve opted for Single Sign-On (SSO) to handle the authentication process in a separate [component](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfileOnTeams.jsx) with a mapped routing path. 
+
+The separate endpoint will be provided to Teams as a single tab entry, with user's login hint (an email address) passed in as query parameter, in the format of following example. It's also the exact tab URL that we register on [Developer Portal](https://dev.teams.microsoft.com/home) for the application.
+```url 
+https://cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}
+``` 
+
+When a user accesses the application in Teams, the Teams client references the URL above. The React [router](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/App.jsx) captures this URL, extracts the login hint, and initiates the SSO process as below: 
+```
+
+const UserProfileOnTeams = () => {
+    const { instance } = useMsal();
+
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            const urlParams = new URLSearchParams(hash.split('?')[1]);
+            const nameParam = urlParams.get("name");
+        }
+
+        let loginHint = "";
+        if (nameParam) {
+          loginHint = nameParam; // This is the full email
+        }
+
+        // MSAL performs authentication with the parsed loginHint ...
+```
+
+These are the key points of using MSAL with React in a Single Page Application. Now, let’s deploy and host the application!
 
 ## 2. A Rare Giving Spirit: GitHub Actions and GitHub Pages. 
 
