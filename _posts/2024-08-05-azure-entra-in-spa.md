@@ -9,7 +9,7 @@ mermaid: true
 
 > In this article, we will explore the the vast field of **Microsoft Entra identity platform**, with highlighting key concepts such as **Entra ID**, **Microsoft Authentication library(MSAL)**, **multi-tenant App Registrations**, **Service Principal**, **Graph API**, and exposing the application in organization's **Teams**.
 > 
-> To understand the complete development process of an application that leverages organizational resources using Entra ID and Graph API, and ultimately gets published on the organization's Teams, I've created a simple [project](https://github.com/CynicDog/azure-entra-in-spa) with minimum implementation. The application's features include displaying the logged-in user's profile picture and presence, fetched by Graph API, after signing in with a Microsoft account email.
+> To understand the complete development process of an application that leverages organizational resources using Entra ID and Graph API, and ultimately gets published on the organization's Teams, I've created a simple project with minimum implementation. The application's features include displaying the logged-in user's profile picture and presence, fetched by Graph API, after signing in with a Microsoft account email.
 >
 > The application is registered on the Microsoft identity platform to be exposed as an Enterprise Application to my own tenant, and with that, the application will be published in my organization's Teams.
 >
@@ -17,12 +17,14 @@ mermaid: true
 
 ## 0. A Warm Welcome 
 
+Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/azure-entra-in-spa)
+
 ```mermaid
 C4Deployment
     title  
     
     Deployment_Node(github, "GitHub SPA host") {
-        Container(React, "React", "", "")
+        Container(React, "React", "Single Page Application", "")
     }
 
     Deployment_Node(teams, "Teams") {
@@ -65,3 +67,6 @@ C4Deployment
     UpdateRelStyle(Teams, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
     UpdateRelStyle(Enterprise_Application, Service_Principal, $textColor="white", $lineColor="gray")
 ```
+
+The diagram above illustrates the process of registering an application on the Microsoft identity platform, configuring it for exposure to the publishing organization, and ultimately publishing the app within the Teams client.
+
