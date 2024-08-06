@@ -70,11 +70,11 @@ C4Deployment
 
 The diagram above illustrates the process of registering an application on the Microsoft identity platform, configuring it for exposure to the publishing organization, and ultimately publishing the app within the Teams client.
 
-Registering your application on Entra ID establishes its identity configuration, allowing it to integrate with the Microsoft identity platform. This registration means your app trusts the Microsoft identity platform to handle identity and access management tasks. 
+**Registering your application** on Entra ID establishes its identity configuration, allowing it to integrate with the Microsoft identity platform. This registration means your app trusts the Microsoft identity platform to handle identity and access management tasks. 
 
-Following registration, an application object is created. It serves as a global identity configuration template, functioning as a tenant-wide, or even as a cross-tenant interface. Again, it's an one-and-only global configuration template for the registered application, not a run-time instance of the application. 
+Following registration, an **application object** is created. It serves as a global identity configuration template, functioning as a tenant-wide, or even as a cross-tenant interface. Again, it's an one-and-only global configuration template for the registered application, not a run-time instance of the application. 
 
-So, for an organization that wants to utilize identity resources within an application (whether it's an SPA or a server-endorsed application), it needs a local representation of the registered application, ultimately to be configured with rich features of identity platform. That's exactly what a service principal is for: a local representation of the registration. The tenant where the app is registered has a service principal for the application, and any other tenants that grant access to the registered app will have their own service principals. 
+So, for an organization that wants to utilize identity resources within an application (whether it's an SPA or a server-endorsed application), it needs a local representation of the registered application, ultimately to be configured with rich features of identity platform. That's exactly what a **service principal** is for: a local representation of the registration. The tenant where the app is registered has a service principal for the application, and any other tenants that grant access to the registered app will have their own service principals. 
 
 To sum up, an application registration has:
 - A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL) 
