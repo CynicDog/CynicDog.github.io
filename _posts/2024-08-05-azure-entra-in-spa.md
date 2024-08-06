@@ -92,7 +92,7 @@ So let's see things from a coder's perspective, get our hands dirty, and transla
 
 Microsoft Authentication library (MSAL) is a set of well abstracted APIs, with support for multiple languages and platforms. Single Page Application in React is one of the supported platforms.   
 
-The first [configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) to come up with after installing the `@azure/msal-react` package, is to create the instance of MSAL client in React application context. 
+The first [configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/main.jsx) to come up with after installing the `@azure/msal-react` package, is to create the instance of MSAL client in React application context. 
 
 ```jsx
 const config = {
@@ -177,6 +177,23 @@ const UserProfileOnTeams = () => {
         }
 
         // MSAL performs authentication with the parsed loginHint ...
+```
+
+When using SSO, the MSAL requires an application to explicitly initialize the MSAL instance before calling any APIs, so we need to implement such logic in our [main entry file](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/main.jsx) as below: 
+
+```jsx
+// create PublicClientApplication instance
+const publicClientApplication = new PublicClientApplication(config);
+
+const initializeMSAL = async () => {
+    await publicClientApplication.initialize();            // let's explicitly initialize the MSAL client here!  
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+        <MsalProvider instance={publicClientApplication}>
+            <App />
+        </MsalProvider>
+    );
+};
 ```
 
 These are the key points of using MSAL with React in a Single Page Application. Now, let’s deploy and host the application!
