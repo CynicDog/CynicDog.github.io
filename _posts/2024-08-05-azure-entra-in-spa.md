@@ -72,5 +72,10 @@ The diagram above illustrates the process of registering an application on the M
 
 Registering your application on Entra ID establishes its identity configuration, allowing it to integrate with the Microsoft identity platform. This registration means your app trusts the Microsoft identity platform to handle identity and access management tasks. 
 
-Following registration, an application object is created. It serves as a global identity configuration template, functioning as a tenant-wide, or a cross-tenant interface. Again, it's an one-and-only global configuration template for the registered application, not a run-time instance of the application. 
+Following registration, an application object is created. It serves as a global identity configuration template, functioning as a tenant-wide, or even as a cross-tenant interface. Again, it's an one-and-only global configuration template for the registered application, not a run-time instance of the application. 
 
+So, for an organization that wants to utilize identity resources within an application (whether it's an SPA or a server-endorsed application), it needs a local representation of the registered application—a global identity template equipped with the rich features of the identity platform. That's exactly what a service principal is for: a local representation of an application. The tenant where the app is registered has a service principal for the application, and any other tenants that grant access to the registered app will have their own service principals. 
+
+An application registration has:
+- A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL), and
+- A one-to-many relationship with its corresponding service principal object(s) 
