@@ -94,7 +94,7 @@ Microsoft Authentication library (MSAL) is a set of well abstracted APIs, with s
 
 The first [configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) to come up with after installing the `@azure/msal-react` package, is to create the instance of MSAL client in React application context. 
 
-```js
+```jsx
 const config = {
     auth: {
         clientId: "your-generated-client-id-on-app-registrations",  
@@ -112,7 +112,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 With the authentication client properly configured and integrated into the React project's context, you are ready to use MSAL APIs for tasks such as triggering the login process, acquiring access tokens, and fetching user account information as [follows](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfile.jsx): 
 
-```js
+```jsx
 const UserProfile = () => {
     const { instance, inProgress, accounts } = useMsal();
     // ...
@@ -137,7 +137,7 @@ The `useMsal` hook provides access to the MSAL instance, the progress state of a
 The list of scopes specifies the API permissions that the Graph API will acts on. These permissions outline the specific data and functionalities that the application can access on behalf of the user, and the user will need to provide consent for these permissions during the authentication process.
 
 The remote call to Graph API to fetch user information is done by REST API with access token we just retrieved by MSAL. For example, a logged-in user's profile photo of Microsoft account can be fetched as below:  
-```js
+```jsx
 fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
     headers: {
         Authorization: `Bearer ${accessToken}`
@@ -146,7 +146,7 @@ fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
 ```
 
 Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components, which make conditional rendering based on authentication status extremely straightforward. For example, to render a sign-in button only when the user is unauthenticated, you would place it inside the UnauthenticatedTemplate component:
-```js
+```jsx
 <UnauthenticatedTemplate>
     <button className="btn btn-outline-primary btn-sm" onClick={handleSignIn}>Sign In</button>
 </UnauthenticatedTemplate>
@@ -160,7 +160,7 @@ https://cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}
 ``` 
 
 When a user accesses the application in Teams, the Teams client references the URL above. The React [router](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/App.jsx) captures this URL, extracts the login hint, and initiates the SSO process as below: 
-```js 
+```jsx
 const UserProfileOnTeams = () => {
     const { instance } = useMsal();
 
