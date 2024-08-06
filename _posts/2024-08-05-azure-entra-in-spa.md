@@ -86,9 +86,9 @@ A web application on a browser is fine, but we can take it a step further by int
 
 ## 1. Head-first: MSAL in React. 
 
-That was a bit of an explanation! With many abstract concepts in the context, they can seem quite hazy. Whereas the deployment architecture was explained starting with App Registrations, usage explanations and detail implementation from now on will be explained in reverse way. 
+That was a bit of an explanation! With many abstract concepts and vague names in the context, it all seems quite hazy. 
 
-So it's time to see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our React application code.    
+So let's see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our React application code.    
 
 Microsoft Authentication library (MSAL) is a set of well abstracted APIs, with support for multiple languages and platforms. Single Page Application in React is one of the supported platforms.   
 
