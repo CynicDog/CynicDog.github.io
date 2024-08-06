@@ -86,7 +86,7 @@ A web application on a browser is fine, but we can take it a step further by int
 
 That was a bit of an explanation! With many abstract concepts and vague names in the context, it all seems quite hazy. 
 
-So let's see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our React application code.   
+So let's see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our application code.   
 
 ## 1. Head-first: MSAL in React. 
 
