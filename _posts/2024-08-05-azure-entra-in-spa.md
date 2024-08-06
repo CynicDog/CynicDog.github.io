@@ -145,7 +145,7 @@ fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
 })
 ```
 
-Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components, which make conditional rendering based on authentication status extremely straightforward. For example, to render a sign-in button only when the user is unauthenticated, you would place it inside the UnauthenticatedTemplate component:
+Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components, which make conditional rendering based on authentication status extremely straightforward. For example, to render a sign-in button only when the user is unauthenticated, you would place it inside the `UnauthenticatedTemplate` component:
 ```jsx
 <UnauthenticatedTemplate>
     <button className="btn btn-outline-primary btn-sm" onClick={handleSignIn}>Sign In</button>
