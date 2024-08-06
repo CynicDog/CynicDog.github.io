@@ -78,4 +78,4 @@ So, for an organization that wants to utilize identity resources within an appli
 
 To sum up, an application registration has:
 - A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL), and
-- A one-to-many relationship with its corresponding service principal object(s) 
+- A one-to-many relationship with its corresponding service principal object(s) for tenants. 
