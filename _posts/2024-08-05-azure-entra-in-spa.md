@@ -77,5 +77,5 @@ Following registration, an application object is created. It serves as a global 
 So, for an organization that wants to utilize identity resources within an application (whether it's an SPA or a server-endorsed application), it needs a local representation of the registered application—a global identity template equipped with the rich features of the identity platform. That's exactly what a service principal is for: a local representation of an application. The tenant where the app is registered has a service principal for the application, and any other tenants that grant access to the registered app will have their own service principals. 
 
 To sum up, an application registration has:
-- A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL), and
+- A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL) 
 - A one-to-many relationship with its corresponding service principal object(s) for tenants. 
