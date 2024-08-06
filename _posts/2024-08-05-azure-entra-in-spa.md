@@ -79,3 +79,6 @@ So, for an organization that wants to utilize identity resources within an appli
 To sum up, an application registration has:
 - A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL) 
 - A one-to-many relationship with its corresponding service principal object(s) for tenants. 
+
+Now that we have set up the configuration for accessing our organizational resources, MSAL in our React application will handle the authentication flow. Since it's a hosted web application, a user can directly navigate to the entry [endpoint](https://cynicdog.github.io/azure-entra-in-spa/) and sign in. With the access token retrieved via MSAL, the application will then fetch the user's profile and presence status. 
+
