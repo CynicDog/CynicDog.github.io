@@ -160,8 +160,7 @@ https://cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}
 ``` 
 
 When a user accesses the application in Teams, the Teams client references the URL above. The React [router](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/App.jsx) captures this URL, extracts the login hint, and initiates the SSO process as below: 
-```
-
+```js 
 const UserProfileOnTeams = () => {
     const { instance } = useMsal();
 
