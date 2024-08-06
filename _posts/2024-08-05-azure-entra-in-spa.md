@@ -84,9 +84,7 @@ Now that we have set up the configuration for accessing our organizational resou
 
 A web application on a browser is fine, but we can take it a step further by integrating it directly into the organizational workplace on Teams. Since a Teams tab application is essentially a wrapper around an embedded web display, we need to make a slight modification to the authentication interaction. The Teams client blocks the login popup and does not allow for authentication redirection within the tab, so we're going to authenticate users with SSO.  
 
-That was a bit of an explanation! With many abstract concepts and vague names in the context, it all seems quite hazy. 
-
-So let's see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our application code.   
+That was a bit of an explanation! With many abstract concepts and vague names in the context, it all sounds quite hazy. So let's see things from a coder's perspective, get our hands dirty, and translate these cloudy concepts of the Microsoft identity platform into our application code.   
 
 ## 1. Head-first: MSAL in React. 
 
