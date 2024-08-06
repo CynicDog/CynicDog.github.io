@@ -104,9 +104,9 @@ const config = {
 const publicClientApplication = new PublicClientApplication(config);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <MsalProvider instance={publicClientApplication}>
-    <App />
-  </MsalProvider>
+    <MsalProvider instance={publicClientApplication}>
+        <App />
+    </MsalProvider>
 );
 ```
 
@@ -124,9 +124,9 @@ const UserProfile = () => {
         };
 
         instance
-          .acquireTokenSilent(accessTokenRequest)
-          .then((accessTokenResponse) => {
-            const accessToken = accessTokenResponse.accessToken;
+            .acquireTokenSilent(accessTokenRequest)
+            .then((accessTokenResponse) => {
+                const accessToken = accessTokenResponse.accessToken;
 
             // make remote call with the access token ... 
     }
@@ -139,16 +139,16 @@ The list of scopes specifies the API permissions that the Graph API will acts on
 The remote call to Graph API to fetch user information is done by REST API with access token we just retrieved by MSAL. For example, a logged-in user's profile photo of Microsoft account can be fetched as below:  
 ```js
 fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
-  headers: {
-    Authorization: `Bearer ${accessToken}`
-  }
+    headers: {
+        Authorization: `Bearer ${accessToken}`
+    }
 })
 ```
 
 Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `UnauthenticatedTemplate` components, which make conditional rendering based on authentication status extremely straightforward. For example, to render a sign-in button only when the user is unauthenticated, you would place it inside the UnauthenticatedTemplate component:
 ```js
 <UnauthenticatedTemplate>
-  <button className="btn btn-outline-primary btn-sm" onClick={handleSignIn}>Sign In</button>
+    <button className="btn btn-outline-primary btn-sm" onClick={handleSignIn}>Sign In</button>
 </UnauthenticatedTemplate>
 ```
 
@@ -174,7 +174,7 @@ const UserProfileOnTeams = () => {
 
         let loginHint = "";
         if (nameParam) {
-          loginHint = nameParam; // This is the full email
+            loginHint = nameParam; // This is the full email
         }
 
         // MSAL performs authentication with the parsed loginHint ...
