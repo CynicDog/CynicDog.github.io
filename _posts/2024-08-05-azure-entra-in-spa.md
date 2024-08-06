@@ -82,7 +82,7 @@ To sum up, an application registration has:
 
 Now that we have set up the configuration for accessing our organizational resources, it's time for MSAL in our React application to perform the authentication flow. Since it's a hosted web application, a user can directly navigate to the entry [endpoint](https://cynicdog.github.io/azure-entra-in-spa/) and sign in. With the access token retrieved via MSAL, the application will then fetch the user's profile and presence status. 
 
-A web application on a browser is fine, but we can take it a step further by integrating it directly into the organizational workplace on Teams. Since a Teams tab application is essentially a wrapper around an embedded web display, we need to make a slight modification to the authentication flow. The Teams client blocks the login popup and does not allow for authentication redirection within the tab, so we're going to authenticate users with SSO.  
+A web application on a browser is fine, but we can take it a step further by integrating it directly into the organizational workplace on Teams. Since a Teams tab application is essentially a wrapper around an embedded web display, we need to make a slight modification to the authentication interaction. The Teams client blocks the login popup and does not allow for authentication redirection within the tab, so we're going to authenticate users with SSO.  
 
 ## 1. Head-first: MSAL in React. 
 
