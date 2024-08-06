@@ -23,12 +23,12 @@ Codes of the application are at: [GitHub Repository](https://github.com/CynicDog
 C4Deployment
     title  
     
-    Deployment_Node(github, "GitHub SPA host") {
-        Container(React, "React", "Single Page Application", "")
-    }
-
     Deployment_Node(teams, "Teams") {
         Container(Teams, "Teams", "", "")
+    }
+
+    Deployment_Node(github, "GitHub SPA host") {
+        Container(React, "React with MSAL", "Single Page Application", "")
     }
 
     Deployment_Node(azure, "Azure / Entra ID") {
@@ -47,10 +47,10 @@ C4Deployment
     }
     
     Rel(helloworld_app, Enterprise_Application, "Exposes as")
-    Rel(Teams, Service_Principal, "Delegates to")
-    Rel(React, Teams, "Provides endpoint")
+    Rel(React, Service_Principal, "Delegates to")
+    Rel(Teams, React, "Provides endpoint with loginHint")
     BiRel(Service_Principal, Organizational_Resources, "Accesses")
-    BiRel(Teams, Organizational_Resources, "On behalf of user")
+    BiRel(React, Organizational_Resources, "On behalf of user")
     BiRel(Enterprise_Application, Service_Principal, "")
 
     UpdateElementStyle(azure, $borderColor="gray")
@@ -61,10 +61,10 @@ C4Deployment
     UpdateElementStyle(publishingOrganization, $borderColor="gray")
     
     UpdateRelStyle(helloworld_app, Enterprise_Application, $textColor="white", $lineColor="gray", ,$offsetX="5")
-    UpdateRelStyle(Teams, Service_Principal, $textColor="white", $lineColor="gray", $offsetX="-40")
-    UpdateRelStyle(React, Teams, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
+    UpdateRelStyle(React, Service_Principal, $textColor="white", $lineColor="gray", $offsetX="-40")
+    UpdateRelStyle(Teams, React, $textColor="white", $lineColor="gray", $offsetY="-20", $offsetX="-90")
     UpdateRelStyle(Service_Principal, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
-    UpdateRelStyle(Teams, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
+    UpdateRelStyle(React, Organizational_Resources, $textColor="white", $lineColor="gray", $offsetY="-15", $offsetX="-40")
     UpdateRelStyle(Enterprise_Application, Service_Principal, $textColor="white", $lineColor="gray")
 ```
 
