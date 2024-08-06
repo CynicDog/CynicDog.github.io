@@ -153,7 +153,8 @@ Another useful feature of the MSAL library is the `AuthenticatedTemplate` and `U
 Considering the application will be published on the organization’s Teams, it's important to note that the Teams client doesn't allow authentication redirection within tabs or the use of login popups. To address this limitation, I’ve opted for Single Sign-On (SSO) to handle the authentication process in a separate [component](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfileOnTeams.jsx) with a mapped routing path. 
 
 The separate endpoint will be provided to Teams as a single tab entry, with user's login hint (an email address) passed in as query parameter, in the format of following example. It's also the exact tab URL that we register on [Developer Portal](https://dev.teams.microsoft.com/home) for the application.
-```url 
+
+```bash   
 https://cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}
 ``` 
 
