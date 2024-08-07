@@ -289,7 +289,7 @@ Another thing to address in the workflow is to specify user identity and authent
 
 This command set the remote repository URL to include an access token, allowing the workflow to authenticate when pushing changes. 
 
-We can run the workflow manually on repository Actions tab. Upon completion, you will see a workflow run named `pages-build-deployment` will follow up the workflow we triggered. That's a called workflow by `gh-pages` command, and once it completes successfully, you will see the application deployed on GitHub Pages. Below is the embedded view of deployed application: 
+We can run the workflow manually on repository Actions tab. Upon completion, you will see a workflow run named `pages-build-deployment` will follow up the workflow we triggered. That's a called workflow by `gh-pages` command, and once it completes successfully, you will see the application deployed on GitHub Pages. Below is the embedded view of the deployed application: 
 
 <iframe width="100%" height="360" src="https://cynicdog.github.io/azure-entra-in-spa/" style="border-radius: 10px;"></iframe>
 
