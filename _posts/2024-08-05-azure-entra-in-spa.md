@@ -230,7 +230,7 @@ const App = () => {
 export default App
 ```
 
-`HashRouter` makes it possible to store the current location in the hash portion of the current URL, so it is never sent to the server. For example, when handling a URL entry of `cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}`, everything after the hash (`#/teams?name={loginHint}`) is processed by React, ultimately rendering `UserProfileOnTeams` [component](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfileOnTeams.jsx). 
+`HashRouter` makes it possible to store the current location in the hash portion of the current URL, so it is never sent to the server. For example, when handling a URL entry of `cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}`, everything after the hash is processed by React, ultimately rendering `UserProfileOnTeams` [component](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfileOnTeams.jsx). 
 
 Then we set a full URL of our application home page deployed on GitHub Pages in [package.json](https://github.com/CynicDog/azure-entra-in-spa/blob/main/package.json) file and also add scripts to run `gh-pages` commands as below:
 
