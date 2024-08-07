@@ -276,6 +276,8 @@ const config = {
 ```
 
 Another thing to address in the workflow is to specify user identity and authentication details on Git context inside the workflow: 
+
+{% raw %} 
 ```yml
 - name: Configure git to use HTTPS and set credentials
   run: |
@@ -283,6 +285,8 @@ Another thing to address in the workflow is to specify user identity and authent
     git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
     git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 ```
+{% endraw %}
+
 This command set the remote repository URL to include an access token, allowing the workflow to authenticate when pushing changes. 
 
 
