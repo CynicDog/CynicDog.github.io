@@ -326,10 +326,9 @@ flowchart TD
     B -. Provides endpoint with login hint .-> C
     C <--> D
     D <--> F
-    E --> F
-    F --> E
-
-    linkStyle 0,2,3,4,5,6,7 stroke-width:.3px;
+    E <--> F
+    
+    linkStyle 0,2,3,4,5,6 stroke-width:.3px;
 ```
 
 One important note is that when you define an Application ID URI in App Registrations on the Azure Portal, you need to register a client identifier `5e3ce6c0-2b1f-4285-8d4b-75ee78787346`, which is a unique value for Teams web client (see the full list of client IDs [here](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-register-aad#to-configure-authorized-client-application)). Additionally, the format of the Application ID URI should be `api://{fully-qualified-domain-name.com}/{your-client-id-of-app-registrations}`, where the domain is, in our case, `{github-username}.github.io/{repository-name}`. 
