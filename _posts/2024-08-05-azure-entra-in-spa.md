@@ -199,7 +199,7 @@ These are the key points of using MSAL with React in a Single Page Application. 
 
 ## 2. A Rare Giving Spirit: GitHub Actions and GitHub Pages. 
 
-There is a perfect fit for hosting our static SPA project: GitHub Pages, a static site hosting service provided by GitHub. The goal is to deploy our Vite-React project on GitHub Pages using GitHub Actions. A key reason for using GitHub Actions is to securely provide credentials, such as the application identifier (client id) generated during the application registration on Azure Entra ID, as runtime environment variables within the GitHub Actions workflow commands.  
+There is a perfect fit for hosting our static SPA project: GitHub Pages, a static site hosting service provided by GitHub. The goal is to deploy our Vite-React project on GitHub Pages using GitHub Actions. GitHub Actions enables the automation of CI/CD pipelines, allowing for efficient build, test, and deployment processes. Another key reason for using GitHub Actions is to securely provide credentials, such as the application identifier (client id) generated during the application registration on Azure Entra ID, as runtime environment variables within the GitHub Actions workflow commands.  
 
 But let's start with local deployment and set aside GitHub Actions for now.  
 
