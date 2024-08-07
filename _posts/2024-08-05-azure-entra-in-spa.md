@@ -291,7 +291,7 @@ This command set the remote repository URL to include an access token, allowing 
 
 We can run the workflow manually on repository Actions tab. Upon completion, you will see a workflow run named `pages-build-deployment` will follow up the workflow we triggered. That's a called workflow by `gh-pages` command, and once it completes successfully, you will see the application deployed on GitHub Pages. Below is the embedded view of deployed application: 
 
-<iframe width="100%" height="300" src="https://cynicdog.github.io/azure-entra-in-spa/" style="border-radius: 10px;"></iframe>
+<iframe width="100%" height="360" src="https://cynicdog.github.io/azure-entra-in-spa/" style="border-radius: 10px;"></iframe>
 
 That’s a well-functioning web application, and now we’re set to integrate it into the Teams client. One important takeaway is that the Teams client blocks the login popup initiated by MSAL, as well as any authentication redirection within the tab. To address this limitation, I came up with Single-Sign-On for the authentication. Ultimately, using SSO for authentication within Teams makes much more sense, as users are already signed in to the client. 
 
