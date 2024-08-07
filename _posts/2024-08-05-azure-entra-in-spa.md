@@ -293,6 +293,8 @@ We can run the workflow manually on repository Actions tab. Upon completion, you
 
 <iframe width="100%" height="360" src="https://cynicdog.github.io/azure-entra-in-spa/" style="border-radius: 10px;"></iframe>
 
+(For the first time a user from an organization accesses the application, it requires an administrator's consent, otherwise the information of the user will not be available.)
+
 That’s a well-functioning web application, and now we’re set to integrate it into the Teams client. One important takeaway is that the Teams client blocks the login popup initiated by MSAL, as well as any authentication redirection within the tab. To address this limitation, I came up with Single-Sign-On for the authentication. Ultimately, using SSO for authentication within Teams makes much more sense, as users are already signed in to the client. 
 
 There are two handshake points between systems in the scenario of publishing an app on Teams. The first handshake occurs between the published application on Teams and the hosted React web application, where the user's login information from the Teams client is passed to the React app as a URL query parameter (i.e. `?name={loginHint}`), as we’ve seen earlier.
