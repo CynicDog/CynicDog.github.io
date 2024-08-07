@@ -77,7 +77,7 @@ Following registration, an **application object** is created. It serves as a glo
 So, for an organization that wants to utilize identity resources within an application (whether it's an SPA or a server-endorsed application), it needs a local representation of the registered application, ultimately to be configured with rich features of identity platform. That's exactly what a **service principal** is for. The tenant where the app is registered has a service principal for the application, and any other tenants that grant access to the registered app will have their own service principals. 
 
 To sum up, an application registration has:
-- A one-to-one relationship with the software application (in our case, a React SPA application that uses MSAL) 
+- A one-to-one relationship with the software application (in our case, a vite-React SPA application that uses MSAL) 
 - A one-to-many relationship with its corresponding service principal object(s) for tenants. 
 
 Now that we have set up the configuration for accessing our organizational resources, it's time for MSAL in our React application to perform the authentication flow. Since it's a hosted web application, a user can directly navigate to the entry [endpoint](https://cynicdog.github.io/azure-entra-in-spa/) and sign in. With the access token retrieved via MSAL, the application will then fetch the user's profile and presence status. 
@@ -198,6 +198,16 @@ const initializeMSAL = async () => {
 These are the key points of using MSAL with React in a Single Page Application. Now, let’s deploy and host the application!
 
 ## 2. A Rare Giving Spirit: GitHub Actions and GitHub Pages. 
+
+There is a perfect fit for hosting our static SPA project: GitHub Pages, a static site hosting service provided by GitHub. The goal is to deploy our Vite-React project on GitHub Pages using GitHub Actions. A key reason for using GitHub Actions is to securely provide credentials, such as the application identifier (client id) generated during the application registration on Azure Entra ID, as runtime environment variables within the GitHub Actions workflow commands.  
+
+But let's start with local deployment and set aside GitHub Actions for now.  
+
+The Node package [gh-pages](https://www.npmjs.com/package/gh-pages) is a great tool that simplifies the process of publishing static files to GitHub Pages, so let's set up the publishing environment for vite-React project locally.  
+
+When deployed on GitHub Pages, the base URL of for the web application is set to `http(s)://<username>.github.io/<repository>` by default, so we need to specify the base URL in our [vite configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) accordingly, using `/{PROJECT_REPOSITORY}/#` as the value for the base URL attribute. 
+
+
 
 run gh-pages locally with hardcoded values, 
 providing credentials via github actions. 
