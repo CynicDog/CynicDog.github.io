@@ -325,7 +325,7 @@ flowchart TD
     A -. Sends Access Token at Runtime (SSO) .-> B
     B -. Provides endpoint with login hint .-> C
     C <--> D
-    D <--> F
+    D <-- Graph API remote calls --> F
     E <--> F
     
     linkStyle 0,2,3,4,5,6 stroke-width:.3px;
@@ -335,8 +335,53 @@ One important note is that when you define an Application ID URI in App Registra
 
 ## 3. Can the Service Principal Speak? 
 
-Roles and types of service principal,
-relationship between Service Principal and App Registrations, 
-Graph API permission types (delegated / application) 
+On the publishing organization's side in the flowchart above, there's an entity that handles incoming Graph API requests for organizational resources: the service principal. We've previously discussed that a service principal is a local instance of the registered application. But what does 'local' mean in this context?
+
+It refers to the tenant that grants permissions to the app and ultimately uses it. This tenant could be the one that originally registered the application in their Entra ID (which we'll refer to as the 'owning tenant'), or it could be other tenants that want to use the application (which we'll refer to as 'borrowing tenants'). Each one of these tenant will have their own service principal for the application. Let's look into the following graph. 
+
+```mermaid
+flowchart TD
+    subgraph App Owning Tenant 
+        A(App Registrations) 
+
+        subgraph Local representation of registration
+            I(Service \nPrincipal)
+        end 
+        H(Organizational \nResources)
+        B[Teams \npublished for Organization]
+        G([user]) ----> |email login hint|B
+    end
+    
+    subgraph GitHub Pages
+        C([React web app])
+        D([MSAL])
+    end 
+
+    subgraph App Borrowing Tenant
+        L[Enterprise Application]
+        
+        subgraph Local representation of registration
+            F(Service \nPrincipal)
+        end 
+
+        J[Teams \npublished for Organization]
+        K([user]) ---> J
+        E(Organizational \nResources)
+    end 
+
+    
+    A --- |A trust over Application ID URI \nSends Access Token at Runtime via SSO|B
+    B --> |Provides endpoint with login hint|C
+    C <--> D
+    D <-- Graph API remote calls --> F
+    F <--> E
+    D <-- Graph API remote calls --> I
+    J --> |Provides endpoint with login hint|C
+    A --- |Exposes as multi-tenant app|L
+    L --- |A trust over Application ID URI \nSends Access Token at Runtime via SSO|J
+    I <--> H
+
+    linkStyle 0,1,3,4,5,6,7,8,11 stroke-width:.3px;
+```
 
 ## 4. Closing. 
