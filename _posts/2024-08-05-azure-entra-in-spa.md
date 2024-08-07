@@ -333,55 +333,12 @@ flowchart TD
 
 One important note is that when you define an Application ID URI in App Registrations on the Azure Portal, you need to register a client identifier `5e3ce6c0-2b1f-4285-8d4b-75ee78787346`, which is a unique value for Teams web client (see the full list of client IDs [here](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-register-aad#to-configure-authorized-client-application)). Additionally, the format of the Application ID URI should be `api://{fully-qualified-domain-name.com}/{your-client-id-of-app-registrations}`, where the domain is, in our case, `{github-username}.github.io/{repository-name}`. 
 
-## 3. Can the Service Principal Speak? 
+On the publishing organization's side in the flowchart above, there's an entity that handles incoming Graph API requests for organizational resources: the service principal. We've previously discussed that a service principal is a local instance of the registered application. 
 
-On the publishing organization's side in the flowchart above, there's an entity that handles incoming Graph API requests for organizational resources: the service principal. We've previously discussed that a service principal is a local instance of the registered application. But what does 'local' mean in this context?
+The publishing organization is a tenant that grants permissions to the application and ultimately uses it. This tenant could be the one that originally registered the application in their Entra ID or it could be other tenants that want to use the application Each one of these tenant will have their own service principal for the application. 
 
-It refers to the tenant that grants permissions to the app and ultimately uses it. This tenant could be the one that originally registered the application in their Entra ID (which we'll refer to as the 'owning tenant'), or it could be other tenants that want to use the application (which we'll refer to as 'borrowing tenants'). Each one of these tenant will have their own service principal for the application. Let's look into the following graph. 
+## 3. Closing. 
 
-```mermaid
-flowchart TD
-    subgraph App Owning Tenant 
-        A(App Registrations) 
+This article has provided an in-depth exploration of integrating Azure Entra ID and the Microsoft Authentication Library (MSAL) in a React Single Page Application (SPA) hosted on GitHub Pages and published on Microsoft Teams. By using Azure's identity management capabilities, we can authenticate users and access organizational resources via the Graph API. 
 
-        subgraph Local representation of registration
-            I(Service \nPrincipal)
-        end 
-        H(Organizational \nResources)
-        B[Teams \npublished for Organization]
-        G([user]) ----> |email login hint|B
-    end
-    
-    subgraph GitHub Pages
-        C([React web app])
-        D([MSAL])
-    end 
-
-    subgraph App Borrowing Tenant
-        L[Enterprise Application]
-        
-        subgraph Local representation of registration
-            F(Service \nPrincipal)
-        end 
-
-        J[Teams \npublished for Organization]
-        K([user]) ---> J
-        E(Organizational \nResources)
-    end 
-
-    
-    A --- |A trust over Application ID URI \nSends Access Token at Runtime via SSO|B
-    B --> |Provides endpoint with login hint|C
-    C <--> D
-    D <-- Graph API remote calls --> F
-    F <--> E
-    D <-- Graph API remote calls --> I
-    J --> |Provides endpoint with login hint|C
-    A --- |Exposes as multi-tenant app|L
-    L --- |A trust over Application ID URI \nSends Access Token at Runtime via SSO|J
-    I <--> H
-
-    linkStyle 0,1,3,4,5,6,7,8,11 stroke-width:.3px;
-```
-
-## 4. Closing. 
+The deployment of our SPA using GitHub Actions demonstrates a practical approach to continuous integration and secure deployment. As we integrate the application into Teams, the user experience with Single Sign-On (SSO) shows the effectiveness and flexibility of Microsoft's identity platform.
