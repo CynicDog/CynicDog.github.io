@@ -264,6 +264,7 @@ First thing to point out in the workflow file is that we prefix all the environm
  env:
       VITE_AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
 ```
+{% endraw %}
 
 These variables will then retrieved in the code like below:
 ```jsx
@@ -273,7 +274,6 @@ const config = {
     },
 };
 ```
-{% endraw %}
 
 Another thing to address in the workflow is to specify user identity and authentication details on Git context inside the workflow: 
 ```yml
