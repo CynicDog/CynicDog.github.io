@@ -301,6 +301,37 @@ There are two handshake points between systems in the scenario of publishing an 
 
 The second handshake takes place between the published application on Teams and the application object on Entra ID. The bridge here is the **Application ID URI**, which serves as a globally unique identifier for the web API exposed by our application object to access through scopes. We need to link the Application ID URI with the Teams application on Developer Portal, so that a trust between them can be established, which is essential for ensuring SSO authentication flow. 
 
+```mermaid
+flowchart TD
+    subgraph Azure 
+        A(App Registrations) 
+    end 
+    
+    B[Teams]
+    
+    subgraph GitHub Pages
+        C([React web app])
+        D([MSAL])
+    end 
+
+    subgraph Publishing Organization 
+        E(Organizational \nResources)
+        F(Service \nPrincipal)
+    end 
+
+    G([user]) --> |email login hint|B
+
+    A --- |A trust over Application ID URI|B
+    A -. Sends Access Token at Runtime (SSO) .-> B
+    B -. Provides endpoint with login hint .-> C
+    C <--> D
+    D <--> F
+    E --> F
+    F --> E
+
+    linkStyle 0,2,3,4,5,6,7 stroke-width:.3px;
+```
+
 One important note is that when you define an Application ID URI in App Registrations on the Azure Portal, you need to register a client identifier `5e3ce6c0-2b1f-4285-8d4b-75ee78787346`, which is a unique value for Teams web client (see the full list of client IDs [here](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-register-aad#to-configure-authorized-client-application)). Additionally, the format of the Application ID URI should be `api://{fully-qualified-domain-name.com}/{your-client-id-of-app-registrations}`, where the domain is, in our case, `{github-username}.github.io/{repository-name}`. 
 
 ## 3. Can the Service Principal Speak? 
