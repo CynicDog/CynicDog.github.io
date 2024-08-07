@@ -207,7 +207,9 @@ The Node package [gh-pages](https://www.npmjs.com/package/gh-pages) is a great t
 
 When deployed on GitHub Pages, the base URL of for the web application is set to `http(s)://<username>.github.io/<repository>` by default, so we need to specify the base URL in our [vite configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) accordingly, using `/{PROJECT_REPOSITORY}/#` as the value for the base URL attribute. 
 
-Notice that I suffixed the hash sign on the base URL. Routing in single-page applications (SPAs) can be a bit tricky, especially when deploying on static site hosts like GitHub Pages which is built for static sites, where every HTML, CSS, JS, image, etc., file is expected to be an actual file. On receiving the request of `cynicdog.github.io/azure-entra-in-spa/teams?name={loginHint}`, GitHub Pages will look for an `index.html` file in a directory called `./teams` which doesn't exist. 
+Notice that I suffixed the hash sign on the base URL.
+
+Routing in single-page applications (SPAs) can be a bit tricky, especially when deploying on static site hosts like GitHub Pages which is built for static sites, where every HTML, CSS, JS, image, etc., file is expected to be an actual file. On receiving the request of `cynicdog.github.io/azure-entra-in-spa/teams?name={loginHint}`, GitHub Pages will look for an `index.html` file in a directory called `./teams` which doesn't exist. 
 
 To overcome this issue, we're going to integrate `HashRouter` from `react-router-dom` as [below](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/App.jsx):
 
