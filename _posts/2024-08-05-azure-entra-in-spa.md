@@ -249,7 +249,7 @@ Then we set a full URL of our application home page deployed on GitHub Pages in 
 }
 ```
 
-Now we can run the deploy scripts, `npm install predeploy; npm run deploy` and `gh-pages` will perform the deployment process and 'work' well, however, I suggest not to run this command at the moment. Since the credentials are hardcoded in the code lines, they are going to be included in distribution files, and ultimately get exposed to public when published on web. 
+Now we can run the deploy scripts, `npm install predeploy; npm run deploy` and `gh-pages` will perform the deployment process, however, I suggest not to run this command at the moment. Since the credentials are hardcoded in the code lines, they are going to be included in distribution files, and ultimately get exposed to public when published on web. 
 
 Curbing the enthusiasm, what we are going to do as a final step in deployment is to securely provide such credentials. 
 
@@ -288,6 +288,8 @@ Another thing to address in the workflow is to specify user identity and authent
 {% endraw %}
 
 This command set the remote repository URL to include an access token, allowing the workflow to authenticate when pushing changes. 
+
+We can run the workflow manually on repository Actions tab. Upon completion, you will see a workflow run named `pages-build-deployment` will follow up the workflow we triggered. That's a called workflow by `gh-pages` command, and once it completes successfully, you will see the application deployed on GitHub Pages. 
 
 
 
