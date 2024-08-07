@@ -207,10 +207,46 @@ The Node package [gh-pages](https://www.npmjs.com/package/gh-pages) is a great t
 
 When deployed on GitHub Pages, the base URL of for the web application is set to `http(s)://<username>.github.io/<repository>` by default, so we need to specify the base URL in our [vite configuration](https://github.com/CynicDog/azure-entra-in-spa/blob/main/vite.config.js) accordingly, using `/{PROJECT_REPOSITORY}/#` as the value for the base URL attribute. 
 
+Notice that I suffixed the hash sign on the base URL. Routing in single-page applications (SPAs) can be a bit tricky, especially when deploying on static site hosts like GitHub Pages which is built for static sites, where every HTML, CSS, JS, image, etc., file is expected to be an actual file. On receiving the request of `cynicdog.github.io/azure-entra-in-spa/teams?name={loginHint}`, GitHub Pages will look for an `index.html` file in a directory called `./teams` which doesn't exist. 
 
+To overcome this issue, we're going to integrate `HashRouter` from `react-router-dom` as [below](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/App.jsx):
 
-run gh-pages locally with hardcoded values, 
-providing credentials via github actions. 
+```jsx
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+const App = () => {
+
+  return (
+      <Router>
+          <Routes>
+              <Route path="/" element={<EntryPoint />} />
+              <Route path="/export" element={<ExportView />} />
+              <Route path="/teams" element={<UserProfileOnTeams />} />
+          </Routes>
+      </Router>
+  )
+}
+export default App
+```
+
+`HashRouter` makes it possible to store the current location in the hash portion of the current URL, so it is never sent to the server. For example, when handling a URL entry of `cynicdog.github.io/azure-entra-in-spa/#/teams?name={loginHint}`, everything after the hash (`#/teams?name={loginHint}`) is processed by React, ultimately rendering `UserProfileOnTeams` [component](https://github.com/CynicDog/azure-entra-in-spa/blob/main/src/components/UserProfileOnTeams.jsx). 
+
+Then we set a full URL of our application home page deployed on GitHub Pages in [package.json](https://github.com/CynicDog/azure-entra-in-spa/blob/main/package.json) file and also add scripts to run `gh-pages` commands as below:
+
+```jsonc
+{
+  // ... 
+  "homepage": "https://cynicdog.github.io/azure-entra-in-spa/#",
+  // ...
+  "scripts": {
+    // ...
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+    // ...
+  }
+  // ... 
+}
+```
+
 
 ## 3. Can the Service Principal Speak? 
 
