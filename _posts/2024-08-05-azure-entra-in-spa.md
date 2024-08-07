@@ -249,6 +249,41 @@ Then we set a full URL of our application home page deployed on GitHub Pages in 
 }
 ```
 
+Now we can run the deploy scripts, `npm install predeploy; npm run deploy` and `gh-pages` will perform the deployment process and 'work' well, however, I suggest not to run this command at the moment. Since the credentials are hardcoded in the code lines, they are going to be included in distribution files, and ultimately get exposed to public when published on web. 
+
+Curbing the enthusiasm, what we are going to do as a final step in deployment is to securely provide such credentials. 
+
+Executing CLI commands with securely provided secrets to deploy an application. Now that sounds like the perfect use case for GitHub Actions!
+
+So I wrote a GitHub Action [workflow](https://github.com/CynicDog/azure-entra-in-spa/blob/main/.github/workflows/build-and-deploy.yml) that checks out the repository, install dependencies, then run the `npm run deploy` command as the final step, with providing credentials and configuration values as runtime environment variables. Secrets are stored as repository secrets, and `GITHUB_TOKEN` is given read-and-write permission.   
+
+First thing to point out in the workflow file is that we prefix all the environment variables with `VITE_`, since only variables prefixed with `VITE_` are exposed to vite-processed codes: 
+
+```yml
+ env:
+      VITE_AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+```
+
+These variables will then retrieved in the code like below:
+```jsx
+const config = {
+    auth: {
+        clientId: import.meta.env.VITE_AZURE_CLIENT_ID,
+    },
+};
+```
+
+Another thing to address in the workflow is to specify user identity and authentication details on Git context inside the workflow: 
+```yml
+- name: Configure git to use HTTPS and set credentials
+  run: |
+    git config user.name "${{ github.actor }}"
+    git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+```
+This command set the remote repository URL to include an access token, allowing the workflow to authenticate when pushing changes. 
+
+
 
 ## 3. Can the Service Principal Speak? 
 
