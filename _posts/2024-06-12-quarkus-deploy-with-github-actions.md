@@ -8,7 +8,7 @@ tags: [quarkus, java, gke, githubaction, jib]
 
 > In this post, we'll explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE).
 > 
-> This post will walk you through 1) the development experience in Quarkus, 2) the build and containerization of our Quarkus application with Jib tool, then 3) the deployment on GitHub Actions on GKE, that makes a secured, streamlined CI/CD process all together the factors of Quarkus and Jib.
+> This post will take you through the process of building a solid CI/CD pipeline, starting with the development experience in Quarkus, followed by the build and containerization of our application using Jib, and finally deploying our Quarkus app to Google Kubernetes Engine (GKE) with GitHub Actions.
 
 ## Meet Quarkus: A Modern Java Framework for Cloud-Native Development
 
