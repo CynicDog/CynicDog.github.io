@@ -6,9 +6,38 @@ categories: [Cloud, GKE]
 tags: [quarkus, java, gke, githubaction, jib]                    
 ---
 
-> In this post, we'll explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE). This guide will walk you through each step of the configuration process, ensuring that your Quarkus application is seamlessly deployed to GKE.
+> In this post, we'll explore how to set up a GitHub Actions workflow for continuously deploying a Quarkus application to Google Kubernetes Engine (GKE).
+> 
+> This post will walk you through 1) the development experience in Quarkus, 2) the build and containerization of our Quarkus application with Jib tool, then 3) the deployment on GitHub Actions on GKE, that makes a secured, streamlined CI/CD process all together the factors of Quarkus and Jib.
 
-## Workflow Configuration Overview
+## Meet Quarkus: A Modern Java Framework for Cloud-Native Development
+
+### Introduction to Quarkus
+- Overview of Quarkus
+- Key features: Fast startup time, low memory usage
+
+### Development with Quarkus
+- **Persistence with JPA**: Integrating a PostgreSQL database
+- **Configuration Injection**: Managing application settings
+- **Vert.x Compatibility**: Reactive programming support
+- **GitHub OAuth2 Flow**: Implementing OAuth2 authentication
+- **React Integration**: Using Quinoa for SPA and routing
+
+## Quarkus and Jib: A Dynamic Duo for Modern Java Deployment
+
+### Why Jib?
+- Benefits of using Jib for containerization
+- Integration with Maven for seamless builds
+
+### Jib Containerization Process
+- **Generated Manifests Overview**
+- **Artifacts Overview**
+
+## GitHub Actions: Powering Your Code with Automated Flow
+
+### Introduction to GitHub Actions
+- Overview of GitHub Actions
+- Benefits for CI/CD pipelines
 
 The GitHub Actions workflow is defined in a YAML file. Here’s a breakdown of the key components and steps involved:
 
