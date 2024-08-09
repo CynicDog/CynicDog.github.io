@@ -12,12 +12,18 @@ tags: [quarkus, java, gke, githubaction, jib]
 
 ## Meet Quarkus: A Modern Java Framework for Cloud-Native Development
 
-### Introduction to Quarkus
-- Overview of Quarkus
-- Key features: Fast startup time, low memory usage
+Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/archeio)
 
-### Development with Quarkus
-- **Persistence with JPA**: Integrating a PostgreSQL database
+Quarkus is a Java runtime designed for Kubernetes, supporting MicroProfile and other specifications in microservices architecture. It offers a Java execution environment with built-in tools for developing modern applications. The result is a developer experience that meets the expectations of Kubernetes platform administrators.
+
+Okay, lots of big words here! Let me rephrase the above introduction of Quarkus in my personal understanding: Quarkus is a Kubernetes-native Java execution environment with its native support for packaging an application into an executable image and deploy on Kubernetes engine. There are lots of other features supported by Quarkus but I’ll mainly be highlighting its Kubernetes support in this post. 
+
+Before we check out Quarkus's native Kubernetes support, let’s quickly review the layers of my application, Archeio, which is a simple rich-text note app. The stacks of each layer are the familiar ones for Java developers in the familiar project structure, since Quarkus is effectively a Java runtime that has excellent compatibility. 
+
+### Persistence with JPA 
+
+
+
 - **Configuration Injection**: Managing application settings
 - **Vert.x Compatibility**: Reactive programming support
 - **GitHub OAuth2 Flow**: Implementing OAuth2 authentication
