@@ -10,7 +10,7 @@ tags: [quarkus, java, gke, githubaction, jib]
 > 
 > This post will take you through the process of building a solid CI/CD pipeline, starting with the development experience in Quarkus, followed by the build and containerization of our application using Jib, and finally deploying our Quarkus app to Google Kubernetes Engine (GKE) with GitHub Actions.
 
-## Meet Quarkus: A Modern Java Framework for Cloud-Native Development
+## 0. Meet Quarkus: A Modern Java Framework for Cloud-Native Development
 
 Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/archeio)
 
@@ -105,7 +105,7 @@ Any further business logic after the authentication flow, such as creating a fol
 
 I decided to use React for the UI client because of my familiarity with it ([see the UI directory](https://github.com/CynicDog/archeio/tree/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/webui)), but Quinoa also supports other frontend frameworks and libraries like Angular, Vue, Svelte, and more.  
 
-## Quarkus and Jib: A Dynamic Duo for Modern Java Deployment
+## 1. Quarkus and Jib: A Dynamic Duo for Modern Java Deployment
 
 So far we’ve covered the fluency of Quarkus across various levels—from persistence to RESTful controllers, and finally the UI. Now it’s time to capture our Quarkus application into an executable image and generate the Kubernetes manifests for deployment to our target environment. 
 
@@ -201,7 +201,7 @@ subjects:
 The `ServiceAccount` provides an identity for our Quarkus application, allowing it to authenticate with the Kubernetes API and access resources. The `Role` and two `RoleBindings` define permissions for reading `Secrets` and general read-only access to resources, ensuring secure and effective interaction with the Kubernetes environment.
 
 
-## GitHub Actions: Powering Your Code with Automated Flow
+## 2. GitHub Actions: Powering Your Code with Automated Flow
 
 ### Introduction to GitHub Actions
 - Overview of GitHub Actions
