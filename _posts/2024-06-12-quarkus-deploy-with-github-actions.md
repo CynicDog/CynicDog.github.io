@@ -24,7 +24,7 @@ Before we check out Quarkus's native Kubernetes support, let’s quickly review 
 
 For developer joy, Quarkus provide a zero-config database out of the box in development environment. 
 
-With database extension included in [pom.xml](https://github.com/CynicDog/archeio/blob/master/pom.xml), and no explicit configuration for a database connection, Quarkus runs a container based on the official Docker image of the database. For production, of course, a persistent persistence service is needed, so we're going to configure the connection to the database server: 
+With database extension included in [pom.xml](https://github.com/CynicDog/archeio/blob/master/pom.xml), and no explicit configuration for a database connection, Quarkus runs a container based on the official Docker image of the database. For production, of course, a persistent service is needed, so we're going to configure the connection to the database server: 
 
 {% raw %} 
 ```properties 
@@ -46,7 +46,12 @@ public class FolderRepository {
     // database operations .. 
 }
 ```
-Quarkus is compatible with Spring Data JPA APIs, but I simply love the direct interaction with `EntityManager`.  
+Quarkus is compatible with Spring Data JPA APIs, the reason of using `EntityManager` is that I simply love the direct interaction with it.
+
+For production, we will use a standalone persistence service in our deployment environment. So I came up with a Kubernetes [manifest](https://github.com/CynicDog/archeio/blob/master/postgresql_kubernetes.yml) configuration for Postgres service to deploy on our target engine. 
+
+### Oauth2 Implementation in Vertx and RESTful services in JAX-RS 
+
 
 
 - **Configuration Injection**: Managing application settings
