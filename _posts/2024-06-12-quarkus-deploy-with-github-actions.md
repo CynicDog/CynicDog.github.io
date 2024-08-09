@@ -56,12 +56,46 @@ That covers the persistence implementation of the application. Now, let’s look
 
 Quarkus also supports Vert.x, a low-level toolkit for building RESTful web applications. While Vert.x deserves its own dedicated articles, this post will focus on how it's practically used in my application. 
 
-I directly used the Vert.x instance `vertx` that exposes core APIs without deploying any [Verticles](https://vertx.io/docs/vertx-core/java/#_verticles). Quarkus is capable of managing multiple verticles, however since 
+I directly used the Vert.x instance `vertx` that exposes core APIs without deploying any [Verticles](https://vertx.io/docs/vertx-core/java/#_verticles) as below: 
 
-- **Configuration Injection**: Managing application settings
-- **Vert.x Compatibility**: Reactive programming support
-- **GitHub OAuth2 Flow**: Implementing OAuth2 authentication
-- **React Integration**: Using Quinoa for SPA and routing
+```java
+@ApplicationScoped
+public class RouterRegistry {
+
+    @Inject
+    Vertx vertx;
+
+    public void init(@Observes Router router,
+                    // ... 
+                    ) {
+
+        var githubAPI = new GithubAPI(vertx, clientId, clientSecret, redirectionUrl, host, port);
+
+        router.get("/sign-in").handler(githubAPI::signIn);
+        router.get("/callback").handler(githubAPI::callback);
+    }
+}
+```
+Quarkus is certainly capable of managing multiple Vert.x verticles, but we won’t go into that, as we are using Vert.x to implement the GitHub OAuth2 [authentication flow](). 
+
+Now, let’s take a quick look at the implementation of GitHub OAuth2 in Vert.x. The first step is to set up the OAuth2 client. 
+
+Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI injection, allowing us to provide sensitive information at runtime as environment variables. Alternatively, we can create a Kubernetes `ConfigMap` and have the deployment reference it at runtime as [below](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
+
+```yml
+    - name: Create Kubernetes ConfigMap
+      run: |
+        
+        kubectl create configmap archeio-github-app \
+          --from-literal=archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
+          --from-literal=archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }};
+```
+
+> To enable Quarkus to identify and reference the ConfigMap, we need to activate Kubernetes configuration in the [application.properties](https://github.com/CynicDog/archeio/blob/master/src/main/resources/application.properties#L38) file, along with adding [the necessary extension](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/pom.xml#L81). This is what really defines Quarkus as a Kubernetes-native Java runtime!
+
+Next is to map a [handler](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/java/io/cynicdog/GithubAPI.java#L48) for the `/sign-in` route, where we define the necessary scopes. We will also map the `/callback` [handler](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/java/io/cynicdog/GithubAPI.java#L64) to complete the implementation of Oauth2 flow by verifying the state value and obtaining the access token from GitHub.
+
+
 
 ## Quarkus and Jib: A Dynamic Duo for Modern Java Deployment
 
