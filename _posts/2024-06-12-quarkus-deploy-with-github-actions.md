@@ -151,7 +151,7 @@ Ingress acts as a reverse proxy, using a standardized declarative configuration 
 
 You need an Ingress controller to fulfill an Ingress resource; creating an Ingress on its own won’t accomplish anything. Fortunately, Google Kubernetes Engine (GKE) comes with a built-in and managed Ingress controller called GKE Ingress, so we are good to go. 
 
-Next, we have RBAC (Role-Based Access Control) resources specifications. 
+Next, we have RBAC resources specifications in the generated manifest. 
 
 ```yml
 ---
