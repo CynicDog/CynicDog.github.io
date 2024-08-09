@@ -30,9 +30,9 @@ With database extension included in [pom.xml](https://github.com/CynicDog/archei
 ```properties 
 %prod.quarkus.datasource.jdbc.url=jdbc:postgresql://postgres:5432/${quarkus.application.name}
 ```
-{% end raw %} 
+{% endraw %}
 
-Note that it's prefixed with {% raw %} `%prod` {% end raw %} to single out the production environment, effectively giving no explicit configuration for development so we can use the test container out of the box before production.
+Note that it's prefixed with {% raw %} `%prod` {% endraw %} to single out the production environment, effectively giving no explicit configuration for development so we can use the test container out of the box before production.
 
 - **Configuration Injection**: Managing application settings
 - **Vert.x Compatibility**: Reactive programming support
