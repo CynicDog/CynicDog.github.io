@@ -107,7 +107,7 @@ I decided to use React for the UI client because of my familiarity with it ([see
 
 ## Quarkus and Jib: A Dynamic Duo for Modern Java Deployment
 
-So far we’ve covered the fluency of Quarkus across various levels—from persistence to RESTful endpoints, and finally the UI. Now it’s time to capture our Quarkus application into an executable image and generate the Kubernetes manifests for deployment to our target environment. 
+So far we’ve covered the fluency of Quarkus across various levels—from persistence to RESTful controllers, and finally the UI. Now it’s time to capture our Quarkus application into an executable image and generate the Kubernetes manifests for deployment to our target environment. 
 
 Developing Kubernetes-native applications with Quarkus means packaging the application into an executable container image and generating a Kubernetes manifest automatically, ready to work with Kubernetes as the deployment platform.
 
