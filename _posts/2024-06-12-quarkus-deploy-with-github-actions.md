@@ -82,6 +82,7 @@ Now, let’s take a quick look at the implementation of GitHub OAuth2 in Vert.x.
 
 Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI injection, allowing us to provide sensitive information at runtime as environment variables. Alternatively, we can create a Kubernetes `ConfigMap` and have the deployment reference it at runtime as [below](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
 
+{% raw %} 
 ```yml
     - name: Create Kubernetes ConfigMap
       run: |
@@ -90,6 +91,7 @@ Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI
           --from-literal=archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
           --from-literal=archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }};
 ```
+{% endraw %} 
 
 > To enable Quarkus to identify and reference the ConfigMap, we need to activate Kubernetes configuration in the [application.properties](https://github.com/CynicDog/archeio/blob/master/src/main/resources/application.properties#L38) file, along with adding [the necessary extension](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/pom.xml#L81). This is what really defines Quarkus as a Kubernetes-native Java runtime. 
 
