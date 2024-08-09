@@ -24,7 +24,7 @@ Before we check out Quarkus's native Kubernetes support, let’s quickly review 
 
 For developer joy, Quarkus provide a zero-config database out of the box in development environment. 
 
-With database extension included in [pom.xml](https://github.com/CynicDog/archeio/blob/master/pom.xml), and no explicit configuration for a database connection, Quarkus runs a container based on the official Docker image of the database. For production, of course, a persistent service is needed, so we're going to configure the connection to the database server: 
+With database extension included in [pom.xml](https://github.com/CynicDog/archeio/blob/master/pom.xml), and no explicit configuration for a database connection, Quarkus runs a container based on the official Docker image of the database. My choice for this application was PostgreSQL. For production, of course, a persistent service is needed, so we're going to configure the connection to the database server: 
 
 {% raw %} 
 ```properties 
@@ -46,13 +46,17 @@ public class FolderRepository {
     // database operations .. 
 }
 ```
-Quarkus is compatible with Spring Data JPA APIs, the reason of using `EntityManager` is that I simply love the direct interaction with it.
+Quarkus is compatible with Spring Data JPA APIs, and the reason of using `EntityManager` is that I simply love the direct interaction with it.
 
 For production, we will use a standalone persistence service in our deployment environment. So I came up with a Kubernetes [manifest](https://github.com/CynicDog/archeio/blob/master/postgresql_kubernetes.yml) configuration for Postgres service to deploy on our target engine. 
 
-### Oauth2 Implementation in Vertx and RESTful services in JAX-RS 
+That covers the persistence implementation of the application. Now, let’s look at the application APIs, which combines Vert.x and JAX-RS.
 
+### Oauth2 Implementation in Vert. and RESTful services in JAX-RS 
 
+Quarkus also supports Vert.x, a low-level toolkit for building RESTful web applications. While Vert.x deserves its own dedicated articles, this post will focus on how it's practically used in my application. 
+
+I used the bare `vertx` context Vert.x core API    [Verticles](https://vertx.io/docs/vertx-core/java/#_verticles) 
 
 - **Configuration Injection**: Managing application settings
 - **Vert.x Compatibility**: Reactive programming support
