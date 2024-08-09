@@ -248,7 +248,7 @@ spec:
       serviceAccountName: archeio
 ---
 ```
-> The specified image tag above (`us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT`) is determined by the configuration set in the [application.properties](https://github.com/CynicDog/archeio/blob/746aca0e2316dc7243f89ede2abbd387f8969fcb/src/main/resources/application.properties#L21) file. The image tag corresponds to the container image we push to Google Cloud Platform's Container Registry using the command `mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true`, which will be detailed in the upcoming section of this post.
+> The specified image tag above (`us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT`) is determined by the configuration set in the [application.properties](https://github.com/CynicDog/archeio/blob/746aca0e2316dc7243f89ede2abbd387f8969fcb/src/main/resources/application.properties#L21) file. The image tag corresponds to the container image we push to Google Cloud Platform's Container Registry using the command `mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true`. Deployment to GCP will be detailed in the upcoming section.
 
 While fully grasping the concepts of Service and Deployment deserves a whole separate article, the generated configuration for them is simple and sticks to standard templates: Services expose your application to network traffic, while Deployments manage the rollout and scaling of your application instances. 
 
