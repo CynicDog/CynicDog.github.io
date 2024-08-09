@@ -32,6 +32,8 @@ With database extension included in [pom.xml](https://github.com/CynicDog/archei
 ```
 {% end raw %} 
 
+Note that it's prefixed with {% raw %} `%prod` {% end raw %} to single out the production environment, effectively giving no explicit configuration for development so we can use the test container out of the box before production.
+
 - **Configuration Injection**: Managing application settings
 - **Vert.x Compatibility**: Reactive programming support
 - **GitHub OAuth2 Flow**: Implementing OAuth2 authentication
