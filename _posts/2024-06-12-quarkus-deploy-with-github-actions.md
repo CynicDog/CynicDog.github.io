@@ -116,13 +116,9 @@ By including the `quarkus-kubernetes` extension in our dependencies, running `mv
 With the help of the Jib extension for Quarkus, `quarkus-container-image-jib`, the command `mvn clean package -Dquarkus.container-image.build=true` enables you to build a Docker image along with the deployment manifest file. Jib manages the image creation process by optimizing layers and dependencies, generating the image specified in the Kubernetes manifests. 
 
 
-### Why Jib?
-- Benefits of using Jib for containerization
-- Integration with Maven for seamless builds
 
-### Jib Containerization Process
-- **Generated Manifests Overview**
-- **Artifacts Overview**
+
+
 
 ## GitHub Actions: Powering Your Code with Automated Flow
 
