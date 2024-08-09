@@ -151,7 +151,54 @@ Ingress acts as a reverse proxy, using a standardized declarative configuration 
 
 You need an Ingress controller to fulfill an Ingress resource; creating an Ingress on its own won’t accomplish anything. Fortunately, Google Kubernetes Engine (GKE) comes with a built-in and managed Ingress controller called GKE Ingress, so we are good to go. 
 
+Next, we have RBAC (Role-Based Access Control) resources specifications. 
 
+```yml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: archeio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: view-secrets
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: archeio-view-secrets
+roleRef:
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+  name: view-secrets
+subjects:
+  - kind: ServiceAccount
+    apiGroup: ""
+    name: archeio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: archeio-view
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: archeio
+---
+```
+The `ServiceAccount` provides an identity for our Quarkus application, allowing it to authenticate with the Kubernetes API and access resources. The `Role` and two `RoleBindings` define permissions for reading `Secrets` and general read-only access to resources, ensuring secure and effective interaction with the Kubernetes environment.
 
 
 ## GitHub Actions: Powering Your Code with Automated Flow
