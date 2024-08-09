@@ -34,6 +34,21 @@ With database extension included in [pom.xml](https://github.com/CynicDog/archei
 
 Note that it's prefixed with {% raw %} `%prod` {% endraw %} to single out the production environment, effectively giving no explicit configuration for development so we can use the test container out of the box before production.
 
+In Quarkus, we don't have to write up `persistence.xml` file to configure the JPA driver, since it's configured by Quarkus with sensible defaults. All we need is to wire up `EntityManager` in usage context as [below](https://github.com/CynicDog/archeio/blob/master/src/main/java/io/cynicdog/Folder/FolderRepository.java):
+
+```java
+@ApplicationScoped
+public class FolderRepository {
+
+    @Inject
+    EntityManager em;
+
+    // database operations .. 
+}
+```
+Quarkus is compatible with Spring Data JPA APIs, but I simply love the direct interaction with `EntityManager`.  
+
+
 - **Configuration Injection**: Managing application settings
 - **Vert.x Compatibility**: Reactive programming support
 - **GitHub OAuth2 Flow**: Implementing OAuth2 authentication
