@@ -196,9 +196,62 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: archeio
----
 ```
 The `ServiceAccount` provides an identity for our Quarkus application, allowing it to authenticate with the Kubernetes API and access resources. The `Role` and two `RoleBindings` define permissions for reading `Secrets` and general read-only access to resources, ensuring secure and effective interaction with the Kubernetes environment.
+
+Then we have the Service and Deployment configurations, which are the essential building blocks for orchestrating our Quarkus application within the Kubernetes environment.
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  # ... 
+  name: archeio
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: archeio
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # ... 
+  name: archeio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: archeio
+      app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  template:
+    # ... 
+    spec:
+      containers:
+        - env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          image: us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT
+          imagePullPolicy: Always
+          name: archeio
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+      serviceAccountName: archeio
+---
+```
+> The specified image tag above (`us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT`) is determined by the configuration set in the [application.properties](https://github.com/CynicDog/archeio/blob/746aca0e2316dc7243f89ede2abbd387f8969fcb/src/main/resources/application.properties#L21) file. The image tag corresponds to the container image we push to Google Cloud Platform's Container Registry using the command `mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true`, which will be detailed in the upcoming section of this post.
+
+While fully grasping the concepts of Service and Deployment deserves a whole separate article, the generated configuration for them is simple and sticks to standard templates: Services expose your application to network traffic, while Deployments manage the rollout and scaling of your application instances. 
+
 
 
 ## 2. GitHub Actions: Powering Your Code with Automated Flow
