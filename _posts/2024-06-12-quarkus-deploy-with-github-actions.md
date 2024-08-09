@@ -117,6 +117,41 @@ With the help of the [Jib](https://github.com/GoogleContainerTools/jib) extensio
 
 So, let’s take a look at what the generated manifest looks like.
 
+First configuration we're going to talk about is Ingress resource. The Ingress resource plays a vital role in routing external HTTP traffic to our Quarkus application inside the Kubernetes cluster. It defines rules to control how requests are directed to specific services based on the request path or hostname. 
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    app.quarkus.io/quarkus-version: 3.9.2
+    # ... 
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: archeio-global
+  labels:
+    app.kubernetes.io/name: archeio
+    # ... 
+  name: archeio
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: archeio
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+```
+> Since the application will utilize the DNS name `www.archeio.xyz`, having a static IP (named `archeio-global` in this project) is a good idea since it ensures consistent and reliable mapping of domain names to a fixed server location. For instructions on creating the IP address and linking it to the Quarkus context, refer to the details [here](https://github.com/CynicDog/archeio?tab=readme-ov-file#reserve-static-ip-address-for-the-deployed-app).
+ 
+Ingress acts as a reverse proxy, using a standardized declarative configuration that we are seeing right now to define rules for routing web traffic to services within the cluster. That's the key advantage of using Ingress: its ability to bring together and simplify the management of multiple route(s) and service(s) under a single external IP address.
+
+You need an Ingress controller to fulfill an Ingress resource; creating an Ingress on its own won’t accomplish anything. Fortunately, Google Kubernetes Engine (GKE) comes with a built-in and managed Ingress controller called GKE Ingress, so we are good to go. 
+
+
 
 
 ## GitHub Actions: Powering Your Code with Automated Flow
@@ -124,7 +159,6 @@ So, let’s take a look at what the generated manifest looks like.
 ### Introduction to GitHub Actions
 - Overview of GitHub Actions
 - Benefits for CI/CD pipelines
-
 The GitHub Actions workflow is defined in a YAML file. Here’s a breakdown of the key components and steps involved:
 
 ### 1. Triggering the Workflow
