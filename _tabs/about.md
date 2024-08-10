@@ -15,4 +15,4 @@ order: 4
 <iframe width="100%" height="400" src="https://cynicdog.github.io/commits-spread/#/network" style="margin-top: 15px; border-radius: 10px;"></iframe>
 
 <h1 id="1dfd2a8e-6261-424a-bc18-f0f2b3adb167" class="">Contact</h1>
-- 📧 thecynicdog0328@gmail.com
+thecynicdog0328@gmail.com
