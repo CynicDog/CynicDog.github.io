@@ -130,7 +130,7 @@ const UserProfile = () => {
     }
 }
 ```
-The `useMsal` hook provides access to the MSAL instance, the progress state of authentication processes (`inProgress`), and the user accounts (`accounts`) that MSAL knows about. 
+> The `useMsal` hook provides access to the MSAL instance, the progress state of authentication processes (`inProgress`), and the user accounts (`accounts`) that MSAL knows about. 
 
 The list of scopes specifies the API permissions that the Graph API will acts on. These permissions outline the specific data and functionalities that the application can access on behalf of the user, and the user will need to provide consent for these permissions during the authentication process.
 
