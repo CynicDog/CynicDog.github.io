@@ -385,7 +385,7 @@ Save the string as a repository secret, so a GitHub Action runtime can refer to 
   run: |
     gcloud auth configure-docker
 ```
-> Configure Docker to use the gcloud command-line tool for authentication. This step is needed for us to push the container image that we are going to generate with Jib tool in maven command. 
+> Configure Docker to use the gcloud command-line tool for authentication. This step is needed for us to push the container image that we are going to generate with Jib tool in Maven command. 
 
 ### h. Create Kubernetes ConfigMap
 
