@@ -5,7 +5,7 @@ order: 4
 ---
 
 <h1>Résumé</h1>
-<div>
+<div style="margin-bottom: 25px">
   <a href="https://destiny-haddock-3af.notion.site/About-Me-b6db4a52f3fb49e39468f24e17ae5845?pvs=4">Read on Notion</a>
 </div>
 
