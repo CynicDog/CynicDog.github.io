@@ -111,7 +111,7 @@ So far we’ve covered the fluency of Quarkus across various levels—from persi
 
 Developing Kubernetes-native applications with Quarkus means packaging the application into an executable container image and generating a Kubernetes manifest automatically, ready to work with Kubernetes as the deployment platform.
 
-By including the `quarkus-kubernetes` extension in our dependencies, running `mvn clean install` will produce Service and Deployment manifests for our application in the /target/kubernetes directory. It provides instructions on how the application will be deployed, meaning we still need a pre-built image to deploy it.
+By including the `quarkus-kubernetes` extension in our dependencies, running `mvn clean install` will produce Service and Deployment manifests for our application in the `/target/kubernetes` directory. It provides instructions on how the application will be deployed, meaning we still need a pre-built image to deploy it.
 
 With the help of the [Jib](https://github.com/GoogleContainerTools/jib) extension for Quarkus, `quarkus-container-image-jib`, the command `mvn clean package -Dquarkus.container-image.build=true` enables you to build a Docker image along with the deployment manifest file. Jib manages the process of optimizing layers and dependencies of an application, generating the image specified in the Kubernetes manifest. This is one of the goals that Jib promotes: Daemonless. Jib effectively abstracts Docker CLI interactions, allowing you to manage everything with just a few Maven command lines, which proves especially useful in GitHub Actions where such declarative commands are employed. 
 
