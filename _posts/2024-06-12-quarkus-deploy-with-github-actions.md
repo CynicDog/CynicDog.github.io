@@ -77,7 +77,7 @@ public class RouterRegistry {
     }
 }
 ```
-Quarkus is certainly capable of managing multiple Vert.x verticles, but we won’t go into that, as we are using Vert.x to implement the GitHub OAuth2 [authentication flow](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps). 
+Quarkus is certainly capable of managing multiple Vert.x verticles, but we won’t go into that, as we are using Vert.x only to implement the GitHub OAuth2 [authentication flow](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps). 
 
 Now, let’s take a quick look at the implementation of GitHub OAuth2 in Vert.x. The first step is to set up the OAuth2 client. 
 
