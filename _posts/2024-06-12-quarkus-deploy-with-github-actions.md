@@ -333,7 +333,7 @@ Issue the credentials secret for for the service account:
 gcloud iam service-accounts keys create "key.json" --iam-account "{SERVICE_ACCOUNT_ADDRESS}"
 ```
 
-In order to save the credential, we need to convert the JSON file into a `base64` string and ultimately register it on repository secrets:
+In order to save the credential on GitHub repository, we need to convert the JSON file into a `base64` string and ultimately register it on repository secrets:
 
 ```bash
 GKE_SA_KEY=$(base64 -i key.json)
