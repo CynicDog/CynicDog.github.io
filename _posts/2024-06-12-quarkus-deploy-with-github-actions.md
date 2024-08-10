@@ -436,6 +436,8 @@ With everything in place, this will successfully deploy all the resources we spe
 
 ## 3. Conclusion
 
-In this post, we explored how to set up a CI/CD pipeline to deploy a Quarkus application to Google Kubernetes Engine (GKE). We walked through the process of using Quarkus’s Kubernetes features, building Docker images with Jib, and automating deployments with GitHub Actions. One of the important take-aways was to to create Kubernetes ConfigMaps to manage sensitive information securely while ensuring the application functions correctly on cloud deployment process. 
+In this post, we explored how to set up a CI/CD pipeline to deploy a Quarkus application to Google Kubernetes Engine (GKE). We walked through the process of using Quarkus’s Kubernetes features, building Docker images with Jib, and automating deployments with GitHub Actions.
+
+One of the important take-aways was to to create Kubernetes ConfigMaps to manage sensitive information securely while ensuring the application functions correctly on cloud deployment process. 
 
 This project gave me some valuable insights into coding within a cloud-native platform and deploying a functioning service on Google Kubernetes Engine (GKE). I’ve gained a deep appreciation for the benefits of using GitHub Actions for automation and secured configuration injection, and I surely enjoyed the development experience with Kubernetes-native Quarkus. 
