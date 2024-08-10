@@ -432,7 +432,7 @@ archeio.github.app.client.secret=
 ```
 > Deploy the built Quarkus application to GKE. 
 
-### 3. Conclusion
+## 3. Conclusion
 
 In this post, we explored how to set up a CI/CD pipeline to deploy a Quarkus application to Google Kubernetes Engine (GKE). We walked through the process of using Quarkus’s Kubernetes features, building Docker images with Jib, and automating deployments with GitHub Actions. One of the important take-aways was to to create Kubernetes ConfigMaps to manage sensitive information securely while ensuring the application functions correctly on cloud deployment process. 
 
