@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Azure EntraID in Single Page Application published on Teams for organization.  
+title: Azure EntraID in Single Page Application published on Teams for organization
 date: 2024-08-05 00:00:00 +09:00
 categories: [.NET, EntraID, MSAL, Teams]
 tags: [azure, aspire, ollama, microservices, docker]            
