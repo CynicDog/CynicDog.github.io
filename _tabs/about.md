@@ -16,4 +16,3 @@ order: 4
 
 <h1 id="1dfd2a8e-6261-424a-bc18-f0f2b3adb167" class="">Contact</h1>
 - 📧 thecynicdog0328@gmail.com
-- 📞 010-2075-0245
