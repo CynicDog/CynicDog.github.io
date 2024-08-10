@@ -440,4 +440,4 @@ In this post, we explored how to set up a CI/CD pipeline to deploy a Quarkus app
 
 One of the important take-aways was to to create Kubernetes ConfigMap to manage sensitive information securely while ensuring the application functions correctly on cloud deployment process. 
 
-This project gave me some valuable insights into coding within a cloud-native platform and deploying a functioning service on Google Kubernetes Engine (GKE). I’ve gained a deep appreciation for the benefits of using GitHub Actions for automation and secured configuration injection, and I surely enjoyed the development experience with Kubernetes-native Quarkus. 
+This project offered valuable insights into what it’s like to develop on a cloud-native platform and deploy a public service on Google Kubernetes Engine (GKE). I’ve gained a deep appreciation for the benefits of using GitHub Actions for automation and secured configuration injection, and I surely enjoyed the development experience with Kubernetes-native Quarkus. 
