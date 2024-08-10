@@ -12,7 +12,8 @@ tags: [quarkus, java, gke, githubaction, jib]
 
 ## 0. Meet Quarkus: A Modern Java Framework for Cloud-Native Development
 
-Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/archeio)
+- Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/archeio)
+- GitHub Actions CI/CD workflow to deploy Quarkus app on GKE is at: [deploy-quarkus-to-gke.yml](https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml)
 
 Quarkus is a Java runtime designed for Kubernetes, supporting MicroProfile and other specifications in microservices architecture. It offers a Java execution environment with built-in tools for developing modern applications. The result is a developer experience that meets the expectations of Kubernetes platform administrators.
 
@@ -250,16 +251,16 @@ spec:
 ```
 > The specified image tag above (`us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT`) is determined by the configuration set in the [application.properties](https://github.com/CynicDog/archeio/blob/746aca0e2316dc7243f89ede2abbd387f8969fcb/src/main/resources/application.properties#L21) file. The image tag corresponds to the container image we push to Google Cloud Platform's Container Registry using the command `mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true`. Deployment to GCP will be detailed in the upcoming section.
 
-While fully grasping the concepts of Service and Deployment deserves a whole separate article, the generated configuration for them is simple and sticks to standard templates: Services expose your application to network traffic, while Deployments manage the rollout and scaling of your application instances. 
+The manifest above is a standard, practical configuration generated for Kubernetes. Services expose your application to network traffic, while Deployments manage the rollout and scaling of your application instances. 
 
-
+With the foundational Kubernetes configurations in place, our next step is to automate the deployment process using GitHub Actions for continuous integration and continuous deployment (CI/CD). 
 
 ## 2. GitHub Actions: Powering Your Code with Automated Flow
 
-### Introduction to GitHub Actions
-- Overview of GitHub Actions
-- Benefits for CI/CD pipelines
-The GitHub Actions workflow is defined in a YAML file. Here’s a breakdown of the key components and steps involved:
+The Kubernetes-native features of Quarkus, combined with the effortless, daemonless generation of container images and manifests, make GitHub Actions a perfect fit for automating the deployment of our application to Google Kubernetes Engine (GKE).
+
+GitHub Actions doesn’t just automate your CI/CD pipelines—it supercharges them, making the build, test, and deployment processes feel effortless. Plus, with GitHub Actions, you’re not just getting a powerful automation tool; you’re also ensuring your credentials and sensitive data are handled with the utmost security, all within a runner-provided environment that keeps everything running securely.
+
 
 ### 1. Triggering the Workflow
 
