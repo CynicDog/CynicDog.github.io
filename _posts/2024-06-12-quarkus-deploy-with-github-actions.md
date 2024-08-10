@@ -258,7 +258,7 @@ With the foundational Kubernetes configurations in place, our next step is to au
 
 The Kubernetes-native features of Quarkus, combined with the effortless, daemonless generation of container images and manifests, make GitHub Actions a perfect fit for automating the deployment of our application to Google Kubernetes Engine (GKE).
 
-GitHub Actions doesn’t just automate your CI/CD pipelines—it supercharges them, making the build, test, and deployment processes feel effortless. Plus, with GitHub Actions, you’re not just getting a powerful automation tool; you’re also ensuring your credentials and sensitive data are handled with the utmost security, all within a runner-provided environment that keeps everything running securely.
+GitHub Actions doesn’t just automate your CI/CD pipelines; it also ensures that the credentials and sensitive data are handled with the utmost security, all within a runner-provided environment that keeps everything running securely.
 
 Let's see details of the [workflow](https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml) to deploy a Quarkus application to GKE. 
 
