@@ -262,7 +262,7 @@ GitHub Actions doesn’t just automate your CI/CD pipelines—it supercharges th
 
 Let's see details of the [workflow](https://github.com/CynicDog/archeio/blob/master/.github/workflows/deploy-quarkus-to-gke.yml) to deploy a Quarkus application to GKE. 
 
-### Triggering the Workflow
+### a. Triggering the Workflow
 
 ```yaml
 on:
@@ -270,7 +270,7 @@ on:
 ```
 > By using the `workflow_dispatch` event, you can manually trigger the workflow whenever you need to, giving you control over the deployment process. While you can certainly add other triggers like `push` or `pull_request`, I prefer to keep it straightforward with just `workflow_dispatch` for a more intentional approach to deployments. Of course, as codebase expands, more sophisticated triggering rules will be required.
 
-### Configuring Information for the Target Environment
+### b. Configuring Information for the Target Environment
 
 ```yaml
 env: 
@@ -281,7 +281,7 @@ env:
 ```
 > Environment variables store project-specific information such as the GCP project ID, GKE cluster name, zone, and deployment name. If these values are considered as sensitive information, you may hide them as repository secrets. 
 
-### Defining the Runner and Java Environment 
+### c. Defining the Runner and Java Environment 
 
 ```yaml
 jobs:
@@ -305,7 +305,7 @@ jobs:
 ```
 > This part of the workflow sets up the workflow environment, configures necessary permissions, and establishes the Java setup for building and deploying the application.
 
-### Authenticate with Google Cloud
+### d. Authenticate with Google Cloud
 
 In order to authenticate the GitHub Actions runtime on Google Cloud environment, we need to first create a service account and give required permissions to push the container image and deploy it on GKE. 
 
@@ -351,7 +351,7 @@ Save the string as a repository secret, so a GitHub Action runtime can refer to 
 ```
 {% endraw %}
 
-### Get GKE Cluster Credentials
+### e. Get GKE Cluster Credentials
 
 {% raw %} 
 ```yaml
@@ -365,7 +365,7 @@ Save the string as a repository secret, so a GitHub Action runtime can refer to 
 {% endraw %}
 > This action configures authentication to a GKE cluster. 
 
-### Setup gcloud CLI
+### f. Setup gcloud CLI
 
 {% raw %} 
 ```yaml
@@ -378,7 +378,7 @@ Save the string as a repository secret, so a GitHub Action runtime can refer to 
 {% endraw %}
 > Install the `kubectl` component using the `google-github-actions/setup-gcloud` action. `kubectl` is needed to create a ConfigMap in later step.
 
-### Configure Docker Authentication
+### g. Configure Docker Authentication
 
 ```yaml
 - name: Configure Docker authentication
@@ -387,7 +387,7 @@ Save the string as a repository secret, so a GitHub Action runtime can refer to 
 ```
 > Configure Docker to use the gcloud command-line tool for authentication. This step is needed for us to push the container image that we are going to generate with Jib tool in maven command. 
 
-### Create Kubernetes ConfigMap
+### h. Create Kubernetes ConfigMap
 
 To address Quarkus's static initialization challenges, let's create a Kubernetes ConfigMap to securely store GitHub app credentials. This ensures Quarkus can access necessary configurations at runtime, avoiding issues during application startup.
 
@@ -410,7 +410,7 @@ archeio.github.app.client.id=
 archeio.github.app.client.secret=
 ```
 
-### Build and Push Quarkus App Image
+### i. Build and Push Quarkus App Image
 
 ```yaml
 - name: Build Quarkus App and Push to Image Registry 
@@ -422,7 +422,7 @@ archeio.github.app.client.secret=
 ```
 > This step builds the Quarkus application using Jib and subsequently pushes the Docker image to the Container Registry. The target location for the image push is pre-configured in our application.properties file, directing the image to the specified repository in the Container Registry. 
 
-### Deploy Quarkus App to GKE
+### j. Deploy Quarkus App to GKE
 
 ```yaml
 - name: Deploy Quarkus App to GKE
