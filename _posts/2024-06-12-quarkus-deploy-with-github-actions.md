@@ -19,7 +19,7 @@ Quarkus is a Java runtime designed for Kubernetes, supporting MicroProfile and o
 
 Okay, lots of big words here! Let me rephrase the above introduction of Quarkus in my personal understanding: Quarkus is a Kubernetes-native Java execution environment with its native support for packaging an application into an executable image and deploy on Kubernetes engine. There are lots of other features supported by Quarkus but I’ll mainly be highlighting its Kubernetes support in this post. 
 
-Before we check out Quarkus's native Kubernetes support, let’s quickly review the layers of my application, Archeio, which is a simple rich-text note app. The stacks of each layer are the familiar ones for Java developers in the familiar project structure, since Quarkus is effectively a Java runtime that has excellent compatibility. 
+Before we check out Quarkus's native Kubernetes support, let’s quickly review the layers of my application, Archeio, which is a simple rich-text note app. The stacks of each layer are the familiar ones for Java developers in the familiar project structure, since Quarkus is effectively a Java runtime, which 'happens to have' an excellent compatibility. 
 
 ### Persistence with JPA 
 
