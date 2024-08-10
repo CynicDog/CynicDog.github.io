@@ -7,7 +7,7 @@ order: 4
 <img style="width:720px; border-radius: 7px;" src="https://github.com/user-attachments/assets/3af955a7-457c-455d-aeac-41af00ce6f81"/>
 
 <h1>Résumé</h1>
-<a href="https://destiny-haddock-3af.notion.site/About-Me-1a9ebffe97d6437994ee0208bb92142d">Read on Notion 👀</a>
+<a href="https://destiny-haddock-3af.notion.site/About-Me-b6db4a52f3fb49e39468f24e17ae5845?pvs=4">Read on Notion 👀</a>
 
 <h1>Contribution</h1>
 
