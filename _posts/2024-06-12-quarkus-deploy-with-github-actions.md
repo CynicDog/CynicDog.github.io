@@ -81,7 +81,7 @@ Quarkus is certainly capable of managing multiple Vert.x verticles, but we wonâ€
 
 Now, letâ€™s take a quick look at the implementation of GitHub OAuth2 in Vert.x. The first step is to set up the OAuth2 client. 
 
-Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI, allowing us to provide sensitive information at runtime as environment variables. Alternatively, we can create a Kubernetes `ConfigMap` and have the deployment reference it at runtime as [below](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
+Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI, allowing us to provide sensitive information at runtime as environment variables. Alternatively, we can create a Kubernetes `ConfigMap` and have the deployment environment reference it at runtime as [below](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
 
 {% raw %} 
 ```yml
