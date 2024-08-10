@@ -101,7 +101,7 @@ Any further business logic after the authentication flow, such as creating a fol
 
 ### Quinoa: A Quarkus extension to create Modern UI with no hassle
 
-[Quinoa](https://github.com/quarkiverse/quarkus-quinoa) is a Quarkus extension that simplifies the integration of modern frontend web applications built with Node.js into Quarkus-based backends. The main requirement is that the Node.js project includes a `build` script that outputs static files—like index.html, JavaScript, and CSS—into a build artifact directory. Quinoa packages these static files into the Quarkus application—whether as a JAR, binary, or even within a container image—during the build process, ensuring they are served efficiently when the application runs.
+[Quinoa](https://github.com/quarkiverse/quarkus-quinoa) is a Quarkus extension that simplifies the integration of modern frontend web applications built with Node.js into Quarkus-based backends. The main requirement is that the Node.js project includes a `build` script that outputs static files—like index.html, JavaScript, and CSS—into a build artifact directory. Quinoa packages these static files into the Quarkus application—whether as a JAR, binary, or even into a container image—during the build process, ensuring they are served efficiently when the application runs.
 
 I decided to use React for the UI client because of my familiarity with it ([see the UI directory](https://github.com/CynicDog/archeio/tree/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/webui)), but Quinoa also supports other frontend frameworks and libraries like Angular, Vue, Svelte, and more.  
 
