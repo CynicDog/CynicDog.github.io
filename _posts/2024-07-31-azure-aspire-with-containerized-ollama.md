@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Weaving up Microservices in Azure Aspire, with Containerized Ollama Included Deployed on Local Kubernetes
+title: Deploying Azure Aspire Microservices with Containerized Ollama on Local Kubernetes
 date: 2024-07-31 00:00:00 +09:00
 categories: [.NET, Aspire]
 tags: [azure, aspire, ollama, microservices, docker]            
