@@ -246,7 +246,6 @@ spec:
               name: http
               protocol: TCP
       serviceAccountName: archeio
----
 ```
 > The specified image tag above (`us.gcr.io/encoded-etching-425009-t7/archeio:1.0.0-SNAPSHOT`) is determined by the configuration set in the [application.properties](https://github.com/CynicDog/archeio/blob/746aca0e2316dc7243f89ede2abbd387f8969fcb/src/main/resources/application.properties#L21) file. The image tag corresponds to the container image we push to Google Cloud Platform's Container Registry using the command `mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true`. Deployment to GCP will be detailed in the upcoming section.
 
