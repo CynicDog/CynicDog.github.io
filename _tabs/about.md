@@ -6,10 +6,10 @@ order: 4
 
 <h1>Résumé</h1>
 <div style="margin-bottom: 25px">
-  <a href="https://destiny-haddock-3af.notion.site/About-Me-b6db4a52f3fb49e39468f24e17ae5845?pvs=4">Read on Notion</a>
+  Read on Notion in
+  <a href="https://destiny-haddock-3af.notion.site/d42d22f39aee4329b56a43f2ac077c50?pvs=74"> Korean </a> \ 
+  <a href="https://destiny-haddock-3af.notion.site/Simon-6d654270b5194e23ab012efc3faad397?pvs=74"> English </a>
 </div>
-
-<img style="width:100%; border-radius: 7px;" src="https://github.com/user-attachments/assets/3af955a7-457c-455d-aeac-41af00ce6f81"/>
 
 <h1>Contribution</h1>
 
