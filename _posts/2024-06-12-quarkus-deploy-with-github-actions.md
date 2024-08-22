@@ -53,7 +53,7 @@ For production, we will use a standalone persistence service in our deployment e
 
 That covers the persistence implementation of the application. Now, let’s look at the application APIs, which combines Vert.x and JAX-RS.
 
-### Oauth2 Implementation in Vert. and RESTful services in JAX-RS 
+### Oauth2 Implementation in Vert.x and RESTful services in JAX-RS 
 
 Quarkus also supports Vert.x, a low-level toolkit for building RESTful web applications. While Vert.x deserves its own dedicated articles, this post will focus on how it's practically used in my application. 
 
