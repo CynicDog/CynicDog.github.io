@@ -15,7 +15,6 @@ mermaid: true
 
 ## 0. Project Architecture 
 
-- Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/Azure-ML-automation-research)
 - GitHub Action script: [azure-ml-setup.yml](https://github.com/CynicDog/Azure-ML-automation-research/blob/main/.github/workflows/azure-ml-setup.yml)
 - Azure ML Pipeline script: [scheduled_pipeline_job.yml](https://github.com/CynicDog/Azure-ML-automation-research/blob/main/scripts/scheduled_pipeline_job.yml)
 
