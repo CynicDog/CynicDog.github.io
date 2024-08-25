@@ -31,13 +31,12 @@ C4Context
         Container(acr, "Acure Container Registry")
 
         Deployment_Node(azml, "Azure Machine Learning") {
-            Component(pipeline, "Pipeline")
-
+            
             Component(compute, "Compute Cluster")
             
-            Component(scheduler, "Scheduler")
-
+            Component(pipeline, "Pipeline")
             
+            Component(scheduler, "Scheduler")
         }
     }
 
@@ -51,13 +50,13 @@ C4Context
     UpdateRelStyle(githubaction, scheduler, $textColor="grey", $offsetX="-80", $offsetY="10")
 
     Rel(acr, pipeline, "Provdes containerized Linux environment")
-    UpdateRelStyle(acr, pipeline, $textColor="grey", $offsetX="-10", $offsetY="-80")
+    UpdateRelStyle(acr, pipeline, $textColor="grey", $offsetX="-150", $offsetY="-80")
 
     Rel(scheduler, pipeline, "Triggers on cron event")
-    UpdateRelStyle(scheduler, pipeline, $textColor="grey", $offsetX="10", $offsetY="100")
+    UpdateRelStyle(scheduler, pipeline, $textColor="grey", $offsetX="-100", $offsetY="30")
 
     Rel(compute, pipeline, "Provides compute resource")
-    UpdateRelStyle(compute, pipeline, $textColor="grey", $offsetX="10", $offsetY="30")
+    UpdateRelStyle(compute, pipeline, $textColor="grey", $offsetX="-70", $offsetY="10")
 ```
 
 More of the article is coming up 👨🏻‍💻...
