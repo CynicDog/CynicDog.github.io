@@ -7,7 +7,7 @@ tags: [azure, docker, githubaction, automl]
 mermaid: true
 ---
 
-> In this article, I will walk through the details of an Azure Machine Learning pipeline that automates the entire process of deploying an AutoML model in Azure. The challenges were to set up the execution context for the pipeline tasks within a properly authenticated Linux environment, while also ensuring that all necessary dependencies and configurations were correctly implemented within the containerized environment. 
+> In this article, I will walk through the details of an Azure Machine Learning pipeline that automates the entire process of deploying an AutoML model in Azure. The challenges were to set up the execution context for the pipeline tasks within a properly authenticated Linux environment, while also ensuring that all necessary dependencies and configurations are correctly implemented within the containerized environment. 
 > 
 > The Linux container, containing configuration files for Azure CLI commands and the dataset for AutoML training, is built and pushed to Azure Container Registry using a GitHub Action runner. Additionally, the Azure ML compute environment and scheduling specifications are also set up by the GitHub Action runner. The pipeline tasks are then executed on the Azure ML compute environment, following the behavior defined in its script.
 >
