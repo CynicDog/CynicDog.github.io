@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building an End-to-End Azure Machine Learning Pipeline on a Dockerized Compute Environment 
+title: Building an End-to-End Azure Machine Learning Pipeline with a Docker Environment on Azure 
 date: 2024-08-24 00:00:00 +09:00
 categories: [Cloud, Azure]
 tags: [azure, docker, githubaction, automl]            
