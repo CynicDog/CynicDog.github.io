@@ -47,7 +47,7 @@ public class FolderRepository {
     // database operations .. 
 }
 ```
-> Quarkus is compatible with Spring Data JPA APIs. I used directly the `EntityManager` in the project simply because I love the direct interaction with it.
+> Quarkus is compatible with Spring Data JPA APIs. I used `EntityManager` in the project simply because I love the direct interaction with it.
 
 For production, we will use a standalone persistence service in our deployment environment. For that, we need a Kubernetes [manifest](https://github.com/CynicDog/archeio/blob/master/postgresql_kubernetes.yml) configuration for Postgres service to be deployed on our target engine in future. 
 
