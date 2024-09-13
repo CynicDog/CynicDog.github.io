@@ -81,19 +81,18 @@ Quarkus is certainly capable of managing multiple Vert.x verticles, but we wonâ€
 
 Now, letâ€™s take a quick look at the implementation of GitHub OAuth2 in Vert.x. The first step is to set up the OAuth2 client. 
 
-Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI, allowing us to provide sensitive information at runtime as environment variables. Alternatively, we can create a Kubernetes `ConfigMap` and have the deployment environment reference it at runtime as [below](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
+Quarkus provides `@ConfigProperty`, a MicroProfile Config implementation for CDI, allowing us to provide sensitive information at runtime as environment variables. Quarkus recognizes Kubernetes `ConfigMap` and refers to the credentials at runtime. Such affinity with Kubernetes is what really defines Quarkus as a Kubernetes-native Java runtime. Here's the [example](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/.github/workflows/deploy-quarkus-to-gke.yml#L58): 
 
 {% raw %} 
 ```yml
     - name: Create Kubernetes ConfigMap
       run: |
-        
         kubectl create configmap archeio-github-app \
           --from-literal=archeio.github.app.client.id=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_ID }} \
           --from-literal=archeio.github.app.client.secret=${{ secrets.ARCHEIO_GITHUB_APP_CLIENT_SECRET }};
 ```
 {% endraw %} 
-> To enable Quarkus to identify and reference the ConfigMap, we need to activate Kubernetes configuration in the [application.properties](https://github.com/CynicDog/archeio/blob/master/src/main/resources/application.properties#L38) file, along with adding [an extension](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/pom.xml#L81). Such affinity with Kubernetes is what really defines Quarkus as a Kubernetes-native Java runtime. 
+> To enable Quarkus to identify and reference the ConfigMap, we need to activate Kubernetes configuration in the [application.properties](https://github.com/CynicDog/archeio/blob/master/src/main/resources/application.properties#L38) file, along with adding [an extension](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/pom.xml#L81). 
 
 Next is to map a [handler](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/java/io/cynicdog/GithubAPI.java#L48) for the `/sign-in` route, where we define the scopes of access. We will also map the `/callback` [handler](https://github.com/CynicDog/archeio/blob/3cdb23b4675c72d0a7a4da483e624cf9af7afe4d/src/main/java/io/cynicdog/GithubAPI.java#L64) to complete the implementation of Oauth2 flow by verifying the state value and obtaining the access token from GitHub.
 
