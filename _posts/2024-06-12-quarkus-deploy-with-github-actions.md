@@ -57,7 +57,7 @@ That covers the persistence implementation of the application. Now, let’s look
 
 Quarkus also supports Vert.x, a low-level toolkit for building RESTful web applications. While Vert.x deserves its own dedicated articles, this post will focus on how it's practically used in my application. 
 
-I directly used the Vert.x instance `vertx` that exposes core APIs without deploying any [Verticles](https://vertx.io/docs/vertx-core/java/#_verticles) as below: 
+I directly used the Vert.x instance `vertx` that exposes core APIs without deploying any Verticles as below: 
 
 ```java
 @ApplicationScoped
