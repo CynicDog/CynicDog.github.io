@@ -23,7 +23,7 @@ Before we check out Quarkus's native Kubernetes support, let’s quickly review 
 
 ### Persistence with JPA 
 
-For developer joy, Quarkus provide a zero-config database out of the box in development environment. 
+For developer joy, Quarkus provide a zero-config database out of the box in development environment in a test container. 
 
 With database extension included in [pom.xml](https://github.com/CynicDog/archeio/blob/master/pom.xml), and no explicit configuration for a database connection, Quarkus runs a container based on the official Docker image of the database. My choice for this application was PostgreSQL. For production, of course, a persistent service is needed, so we're going to configure the connection to the database server as below: 
 
