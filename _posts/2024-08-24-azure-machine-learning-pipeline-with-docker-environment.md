@@ -2,7 +2,6 @@
 layout: post
 title: Building an End-to-End Machine Learning Pipeline in Azure ML with a Dockerized Linux Environment
 date: 2024-08-24 00:00:00 +09:00
-categories: [Cloud, Azure]
 tags: [azure, docker, githubaction, automl]            
 mermaid: true
 ---
