@@ -74,7 +74,7 @@ spring:
       default-filters:
         - TokenRelay
 ```
-> Any request that ends with /, /*.css, /*.js, /favicon.ico, /assets/**, /*.svg URI will be routed to the React UI service by the injected URI, and the other will be routed to the remote service at the specified URI, ensuring that any requests matching the path /remote-service/** are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for for the complete configuration.
+> Any request URI for static files used in React rendering, such as `/`, `/*.css`, `/*.js`, and `/assets/**`, will be routed to the React UI service via the injected URI. The rest will be routed to the remote service at the specified URI, ensuring that any requests matching the path `/remote-service/**` are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for for the complete configuration.
 
 You may have noticed the default `TokenRelay` filter configuration applied to every request coming into the BFF service. A Token Relay occurs when an OAuth2 consumer, in our case the BFF service, acts as a client and forwards the incoming token with outgoing resource requests, such as those to the React UI and remote service.
 
@@ -113,5 +113,7 @@ Here, we configure requests routed to the React UI to be permitted, while all ot
 
 Another important take-away from this snippet is the CSRF configuration for single-page applications (SPAs) that enables secure interactions with the server while maintaining usability: 
   - `withHttpOnlyFalse` allows the browser to access cookies using JavaScript code.
-  - `SpaServerCsrfTokenRequestHandler` allows JavaScript applications to access not just the plain token values, but also encoded ones. requiring a custom request handler, which is why we configured.
+  - `SpaServerCsrfTokenRequestHandler` allows JavaScript applications to access not just the plain token values, but also encoded ones. 
 
+!!! info "Info"
+    This is an informational message.
