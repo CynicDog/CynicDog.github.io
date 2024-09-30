@@ -115,5 +115,11 @@ Another important take-away from this snippet is the CSRF configuration for sing
   - `withHttpOnlyFalse` allows the browser to access cookies using JavaScript code.
   - `SpaServerCsrfTokenRequestHandler` allows JavaScript applications to access not just the plain token values, but also encoded ones. 
 
-!!! info "Info"
-    This is an informational message.
+
+{{site.data.alerts.note}}
+<p>This is my note.</p>
+<pre>
+def foo(x):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return x+1
+</pre>
+{{site.data.alerts.end}}
