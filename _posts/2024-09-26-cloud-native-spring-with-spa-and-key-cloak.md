@@ -74,4 +74,6 @@ spring:
       default-filters:
         - TokenRelay
 ```
-> Any request that ends with /, /*.css, /*.js, /favicon.ico, /assets/**, /*.svg URI will be routed to the React UI service by the injected URI, and the other will be routed to the remote service at the specified URI, ensuring that any requests matching the path /remote-service/** are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for for the complete configuration. 
+> Any request that ends with /, /*.css, /*.js, /favicon.ico, /assets/**, /*.svg URI will be routed to the React UI service by the injected URI, and the other will be routed to the remote service at the specified URI, ensuring that any requests matching the path /remote-service/** are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for for the complete configuration.
+
+You may have noticed the default `TokenRelay` filter configuration applied to every request coming into the BFF service. A Token Relay occurs when an OAuth2 consumer, in our case the BFF service, acts as a client and forwards the incoming token with outgoing resource requests, such as those to the React UI and remote service.
