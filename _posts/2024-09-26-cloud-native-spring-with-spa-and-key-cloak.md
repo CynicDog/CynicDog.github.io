@@ -46,3 +46,32 @@ The Backend for Frontend (BFF) pattern serves as an essential edge service that 
 
 When it comes to security management, the BFF is capable of performing a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. The gateway service, with the Spring Security dependency included, will securely manage the interaction between users and the project's features.
 
+Let's start a project with dependencies in place: 
+```gradle
+dependencies { 
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+}
+```
+> See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for for the complete list of dependencies and project configuration details
+
+Since the BFF acts as a gateway for both the React UI and the remote server (referred to as the resource server in the security context), we can configure the security settings accordingly.
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: react-ui-route
+          uri: ${REACT_UI_URL:http://localhost:8880}
+          predicates:
+            - Path=/,/*.css,/*.js,/favicon.ico,/assets/**,/*.svg
+        - id: authenticated-service-route
+          uri: ${REMOTE_SERVICE_URL:http://localhost:9001}/remote-service
+          predicates:
+            - Path=/remote-service/**
+      default-filters:
+        - TokenRelay
+```
+> Any request that ends with /, /*.css, /*.js, /favicon.ico, /assets/**, /*.svg URI will be routed to the React UI service by the injected URI, and the other will be routed to the remote service at the specified URI, ensuring that any requests matching the path /remote-service/** are directed to the appropriate backend resource. 
