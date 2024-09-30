@@ -25,7 +25,7 @@ flowchart TD
     B ---> |"[2] Auth Request"| C(Keycloak Identity Broker)
     C ---> |"[3] Identity Provider Login"| D(Identity Providers - GitHub, Microsoft ...)
     C --> |"[4] Auth Response"| B
-    B ---> |"[5] Fetch Data Request"| E(Remote Service)
+    B ---> |"[5] Fetch Data Request - Token Relay"| E(Remote Service)
     B --> |"[6] Return Data"| A
 
     classDef container stroke:#333,stroke-width:1px;
