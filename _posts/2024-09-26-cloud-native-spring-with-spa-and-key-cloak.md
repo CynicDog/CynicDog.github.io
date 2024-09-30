@@ -16,10 +16,35 @@ mermaid: true
 > 
 > By walking through the details, we will explore Spring's ready-to-use integrations and address some security and networking challenges encountered on the journey of deploying the application in a local Kubernetes context. So let's get started! 
 
-## 0. Backend for Frontend: a Spring Cloud Gateway project   
+## 0. Project Overview 
+Codes of the application are at: [GitHub Repository](https://github.com/CynicDog/spa-spring-keycloak-oauth2)
 
+```mermaid 
+flowchart TD
+    A([React UI Client]) ----> |"[1] Login Request / Data Request"| B(Backend for Frontend)
+    B ---> |"[2] Auth Request"| C(Keycloak Identity Broker)
+    C ---> |"[3] Identity Provider Login"| D(GitHub Identity Provider)
+    C --> |"[4] Auth Response"| B
+    B ---> |"[5] Fetch Data Request"| E(Remote Service)
+    B --> |"[6] Return Data"| A
+
+    classDef container stroke:#333,stroke-width:1px;
+    class B,C,E container;
+
+    classDef react stroke:#BBDEFB,stroke-width:2px;
+    class A react
+
+    classDef service stroke:#A020F0,stroke-width:2px;
+    class D service
+
+    classDef remote stroke:#2962FF,stroke-width:2px;
+    class E remote
+```
+
+## 1. Backend for Frontend: a Spring Cloud Gateway Project 
 The Backend for Frontend (BFF) pattern serves as an essential edge service that interacts with Single Page Applications (SPAs) while handling security concerns. As a gateway, the BFF acts as an intermediary between the SPA and various backend services. It efficiently routes requests from the SPA to the appropriate services.
 
 When it comes to security management, the BFF plays a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. 
 
 Spring Cloud Gateway is an ideal choice for implementing a BFF in this scenario, since it provides a lightweight, scalable, and highly customizable API gateway solution, perfectly suited to act as the edge service for SPAs. Along with Spring Security dependency, the gateway service provides a well-managing interface between a user and the whole features of our project.
+
