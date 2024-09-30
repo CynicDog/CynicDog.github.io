@@ -115,11 +115,5 @@ Another important take-away from this snippet is the CSRF configuration for sing
   - `withHttpOnlyFalse` allows the browser to access cookies using JavaScript code.
   - `SpaServerCsrfTokenRequestHandler` allows JavaScript applications to access not just the plain token values, but also encoded ones. 
 
+There is [one more filter configuration](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9bcc8bbfcce0c77c9c106f42b01601e71cc07b12/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java#L43) to register for handling CSRF tokens since we are using the reactive core of Spring WebFlux for our web server. Reactive repositories won't save the token unless there is a subscription to the result, so we need to subscribe to the token-recognition behavior. 
 
-{{site.data.alerts.note}}
-<p>This is my note.</p>
-<pre>
-def foo(x):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return x+1
-</pre>
-{{site.data.alerts.end}}
