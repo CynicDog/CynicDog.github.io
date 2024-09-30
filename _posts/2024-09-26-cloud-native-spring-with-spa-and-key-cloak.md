@@ -21,7 +21,7 @@ Codes of the application are at: [GitHub Repository](https://github.com/CynicDog
 
 ```mermaid 
 flowchart TD
-    A([React UI Client]) ----> |"[1] Login Request / Data Request"| B(Backend for Frontend)
+    A([React UI Client / Browser ]) ----> |"[1] Login Request / Data Request"| B(Backend for Frontend)
     B ---> |"[2] Auth Request"| C(Keycloak Identity Broker)
     C ---> |"[3] Identity Provider Login"| D(Identity Providers - GitHub, Microsoft ...)
     C --> |"[4] Auth Response"| B
