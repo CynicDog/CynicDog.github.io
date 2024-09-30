@@ -23,7 +23,7 @@ Codes of the application are at: [GitHub Repository](https://github.com/CynicDog
 flowchart TD
     A([React UI Client]) ----> |"[1] Login Request / Data Request"| B(Backend for Frontend)
     B ---> |"[2] Auth Request"| C(Keycloak Identity Broker)
-    C ---> |"[3] Identity Provider Login"| D(GitHub Identity Provider)
+    C ---> |"[3] Identity Provider Login"| D(Identity Providers - GitHub, Microsoft ...)
     C --> |"[4] Auth Response"| B
     B ---> |"[5] Fetch Data Request"| E(Remote Service)
     B --> |"[6] Return Data"| A
