@@ -29,16 +29,16 @@ flowchart TD
     B --> |"[6] Return Data"| A
 
     classDef container stroke:#333,stroke-width:1px;
-    class B,C,E container;
+    class ,E container;
 
     classDef react stroke:#BBDEFB,stroke-width:2px;
     class A react
 
-    classDef service stroke:#A020F0,stroke-width:2px;
-    class D service
+    classDef idp stroke:#A020F0,stroke-width:2px;
+    class C,D idp
 
-    classDef remote stroke:#2962FF,stroke-width:2px;
-    class E remote
+    classDef remote stroke:#01796F,stroke-width:2px;
+    class B,E remote
 ```
 
 ## 1. Backend for Frontend: a Spring Cloud Gateway Project 
