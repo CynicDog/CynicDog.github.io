@@ -44,7 +44,7 @@ flowchart TD
 ## 1. Backend for Frontend: a Spring Cloud Gateway Project 
 As a gateway, the BFF acts as an intermediary between the SPA and various backend services. It efficiently routes requests from the SPA to the appropriate services. Spring Cloud Gateway is an ideal choice for implementing a BFF in this scenario, since it provides a lightweight, scalable, and highly customizable API gateway solution. 
 
-When it comes to security management, the BFF is capable of performing a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. The gateway service, equipped with the Spring Security dependency, will securely handle user interactions with the project's features. I'll use 'gateway' and 'backend-for-frontend' interchangeably to refer to the project.
+When it comes to security management, BFF plays a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. The gateway service, equipped with the Spring Security dependency, will securely handle user interactions with the project's features. I'll use 'gateway' and 'backend-for-frontend' interchangeably to refer to the project.
 
 Let's start a project with dependencies in place: 
 ```gradle
