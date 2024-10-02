@@ -90,22 +90,22 @@ public class SecurityConfig {
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        return http
-                .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/assets/**").permitAll()
-                        .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico", "/*.svg").permitAll()
-                        .anyExchange().authenticated()
-                )
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .oauth2Login(Customizer.withDefaults())
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(new SpaServerCsrfTokenRequestHandler())
-                )
-                .build();
-    }
-    // ...
+      return http
+          .authorizeExchange(exchange -> exchange
+                .pathMatchers("/assets/**").permitAll()
+                .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico", "/*.svg").permitAll()
+                .anyExchange().authenticated()
+          )
+          .exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
+          .oauth2Login(Customizer.withDefaults())
+          .csrf(csrf -> csrf
+                .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRequestHandler(new SpaServerCsrfTokenRequestHandler())
+          )
+          .build();
+      }
+      // ...
 ```
 > In Spring Security 6, the annotations `@EnableWebFluxSecurity` and `@EnableReactiveMethodSecurity` no longer include the `@Configuration` annotation by default. Therefore, whenever you use these annotations in your security configuration, you must explicitly add the `@Configuration` annotation to the class. See [SecurityConfig.java](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java) for for the complete configuration.
 
