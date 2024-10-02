@@ -189,7 +189,7 @@ Then GitHub’s server sends an authorization code to the redirect URI after the
 
 Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/ (Minikube)`. Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server. 
 
-So the browser will navigate to the base URL, we need to come up with a script that checks the authentication status from the gateway server. 
+After the successful authentication the browser will navigate to the base URL. We need to come up with a script that checks the authentication status from the gateway server. 
 
 ```jsx
 export const AuthProvider = ({ children }) => {
