@@ -147,15 +147,15 @@ React is where we write the entrypoint of OAuth2. Here's the very trigger of the
 
 ```jsx
 const LoginButton = () => {
-    return (
-        <>
-            <div style={{margin: "5px"}}>
-                <button onClick={() => { window.open('/oauth2/authorization/keycloak', '_self'); }}>
-                    login
-                </button>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div style={{margin: "5px"}}>
+        <button onClick={() => { window.open('/oauth2/authorization/keycloak', '_self'); }}>
+          login
+        </button>
+      </div>
+    </>
+  )
 }
 ```
 > `window.open('/oauth2/authorization/keycloak', '_self')` opens the URL that initiates the OAuth2 login flow. Since the React project is behind the gateway service, `_self` refers to the gateway's host, where Spring Security handles the `/oauth2/authorization/{REGISTRATION_ID}` endpoint — `keycloak` in our case. Spring Security then delegates to Keycloak, redirecting the browser to a login page where users can choose identity providers.
