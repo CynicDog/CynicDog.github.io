@@ -121,34 +121,10 @@ There is one more filter configuration, [csrfWebFilter](https://github.com/Cynic
 
 ### 2.2. Keycloak as a Identity Brocker  
 
-The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. Run the following commands inside the Keycloak container: 
+The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. For the complete configuration, refer to [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh). Here's one important command in the scripts:   
 
-- Logs into the server as user `cynicdog` of realm master. This is needed to create another realm for our project before any operation.
-  ```bash
-  ./opt/keycloak/bin/kcadm.sh config credentials \
-    --server http://localhost:8080 \
-    --realm master \
-    --user cynicdog \
-    --password cynicdog
-  ```
-- Creates a dedicated realm for our project. 
-  ```bash
-  ./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
-  ```
-
-- Registers the `backend-for-frontend` service as a security client to Keycloak server. 
-  ```bash
-  ./opt/keycloak/bin/kcadm.sh create clients -r cynicdog \
-      -s clientId=backend-for-frontend \
-      -s enabled=true \
-      -s publicClient=false \
-      -s secret=bff_client_secret \
-        -s 'redirectUris=["http://{ENV_HOST}:9000", "http://{ENV_HOST}:9000/login/oauth2/code/*"]'
-  ```
-
-- Registers GitHub identity provider credentials. 
-  ```bash
-  /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
+```bash
+/opt/keycloak/bin/kcadm.sh create identity-provider/instances \
   	-r cynicdog \
   	-s alias=github \
   	-s providerId=github \
@@ -156,12 +132,12 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
   	-s 'config.useJwksUrl="true"' \
   	-s config.clientId={GITHUB_APP_CLIENT_ID} \
   	-s config.clientSecret={GITHUB_APP_CLIENT_SECRET}
-  ```
-  > See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration. Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
+```
+>  Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
 
 Now that we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
-React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI : 
+React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI: 
 
 ```jsx
 const LoginButton = () => {
