@@ -23,7 +23,7 @@ Codes of the application are at: [GitHub Repository](https://github.com/CynicDog
 flowchart TD
     A([React UI Client / Browser ]) ----> |"[1] Login Request / Data Request"| B(Backend for Frontend)
     B ---> |"[2] Auth Request"| C(Keycloak Identity Broker)
-    C ---> |"[3] Identity Provider Login / Consent to Scope"| D(Identity Providers - GitHub, Microsoft ...)
+    C ---> |"[3] Identity Provider Login / Consent to Scopes"| D(Identity Providers - GitHub, Microsoft ...)
     C --> |"[4] Auth Response"| B
     B ---> |"[5] Fetch Data Request - Token Relay"| E(Remote Service)
     B --> |"[6] Return Data"| A
@@ -44,7 +44,7 @@ flowchart TD
 ## 1. Backend for Frontend: a Spring Cloud Gateway Project 
 The Backend for Frontend (BFF) pattern serves as an essential edge service that interacts with Single Page Applications (SPAs) while handling security concerns. As a gateway, the BFF acts as an intermediary between the SPA and various backend services. It efficiently routes requests from the SPA to the appropriate services. Spring Cloud Gateway is an ideal choice for implementing a BFF in this scenario, since it provides a lightweight, scalable, and highly customizable API gateway solution, perfectly suited to act as the edge service for SPAs. 
 
-When it comes to security management, the BFF is capable of performing a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. The gateway service, with the Spring Security dependency included, will securely manage the interaction between users and the project's features.
+When it comes to security management, the BFF is capable of performing a central role in authentication. It can integrate with identity providers, such as Keycloak, to manage user sessions and validate tokens. The gateway service, equipped with the Spring Security dependency, will securely handle user interactions with the project's features. I'll use 'gateway' and 'backend-for-frontend' interchangeably to refer to the project.
 
 Let's start a project with dependencies in place: 
 ```gradle
@@ -188,4 +188,59 @@ It's important to note that the redirect URIs are defined by our own configurati
 
 Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/ (Minikube)`. Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server. 
 
+So the browser will navigate to the base URL, we need to come up with a script that checks the authentication status from the gateway server. 
 
+```javascript
+export const AuthProvider = ({ children }) => {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    useEffect(() => {
+        const authenticate = async () => {
+            try {
+                const userData = await getUser();
+                if (userData) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            }
+        };
+        authenticate();
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, user }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+```
+
+With this context setup in place, we can now differentiate between authenticated and unauthenticated renders in our UI. 
+
+```javascript
+const App = () => {
+    const { isAuthenticated } = useAuth();
+    const { data: remoteData, error, isLoading } = useQuery(
+        ['remoteData'], getRemoteData, {enabled: isAuthenticated}
+    );
+
+    return (
+        <>
+            {isAuthenticated ? (
+                <>
+                    Logged in.
+                    { remoteData && <p>{remoteData}</p> }
+                </>
+            ) : (
+                <LoginButton />
+            )}
+        </>
+    );
+};
+
+```
+
+When the browser serves an authenticated user, it makes a request to the remote server, whose flow we will discuss in the next section. 
+
+## 3. Token Relay 
