@@ -174,3 +174,4 @@ When redirected to a default login page by Keycloak, users will be seeing two lo
 
 On the other hand, when a user selects a social login option such as signing in with GitHub, Keycloak serves as an identity broker, where the identity provider is now external identity providers. When a user clicks the GitHub option, the browser gets redirected to GitHub's consent page, where the user is prompted to authorize the application to access their data.
 
+Then GitHub's server sends a series of requests to the redirect URIs, including an authorization code via a request like `https://github.com/login/oauth/authorize?...`, and, eventually, an access token through a request like `https://github.com/login?...`, allowing the application to retrieve user data based on the user's consent.
