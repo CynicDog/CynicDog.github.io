@@ -132,12 +132,12 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
     --password cynicdog
   ```
 - Creates a dedicated realm for our project. 
-  ```
+  ```bash
   ./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
   ```
 
 - Registers the `backend-for-frontend` service as a security client to Keycloak server. 
-  ```
+  ```bash
   ./opt/keycloak/bin/kcadm.sh create clients -r cynicdog \
       -s clientId=backend-for-frontend \
       -s enabled=true \
@@ -147,7 +147,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
   ```
 
 - Registers GitHub identity provider credentials. 
-  ```
+  ```bash
   /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
   	-r cynicdog \
   	-s alias=github \
