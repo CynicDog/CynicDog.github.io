@@ -123,41 +123,41 @@ There is one more filter configuration, [csrfWebFilter](https://github.com/Cynic
 
 The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. Run the following commands inside the Keycloak container: 
 
-```bash
-./opt/keycloak/bin/kcadm.sh config credentials \
-  --server http://localhost:8080 \
-  --realm master \
-  --user cynicdog \
-  --password cynicdog
-```
-> Logs into the server as user `cynicdog` of realm master. This is needed to create another realm for our project before any operation.
+- Logs into the server as user `cynicdog` of realm master. This is needed to create another realm for our project before any operation.
+  ```bash
+  ./opt/keycloak/bin/kcadm.sh config credentials \
+    --server http://localhost:8080 \
+    --realm master \
+    --user cynicdog \
+    --password cynicdog
+  ```
+- Creates a dedicated realm for our project. 
+  ```
+  ./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
+  ```
 
-```
-./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
-```
-> Creates a dedicated realm for our project. 
+- Registers the `backend-for-frontend` service as a security client to Keycloak server. 
+  ```
+  ./opt/keycloak/bin/kcadm.sh create clients -r cynicdog \
+      -s clientId=backend-for-frontend \
+      -s enabled=true \
+      -s publicClient=false \
+      -s secret=bff_client_secret \
+        -s 'redirectUris=["http://{ENV_HOST}:9000", "http://{ENV_HOST}:9000/login/oauth2/code/*"]'
+  ```
 
-```
-./opt/keycloak/bin/kcadm.sh create clients -r cynicdog \
-    -s clientId=backend-for-frontend \
-    -s enabled=true \
-    -s publicClient=false \
-    -s secret=bff_client_secret \
-      -s 'redirectUris=["http://{ENV_HOST}:9000", "http://{ENV_HOST}:9000/login/oauth2/code/*"]'
-```
-> Registers the `backend-for-frontend` service as a security client to Keycloak server. 
-
-```
-/opt/keycloak/bin/kcadm.sh create identity-provider/instances \
-	-r cynicdog \
-	-s alias=github \
-	-s providerId=github \
-	-s enabled=true  \
-	-s 'config.useJwksUrl="true"' \
-	-s config.clientId={GITHUB_APP_CLIENT_ID} \
-	-s config.clientSecret={GITHUB_APP_CLIENT_SECRET}
-```
-> Registers GitHub identity provider credentials. See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration. Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
+- Registers GitHub identity provider credentials. 
+  ```
+  /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
+  	-r cynicdog \
+  	-s alias=github \
+  	-s providerId=github \
+  	-s enabled=true  \
+  	-s 'config.useJwksUrl="true"' \
+  	-s config.clientId={GITHUB_APP_CLIENT_ID} \
+  	-s config.clientSecret={GITHUB_APP_CLIENT_SECRET}
+  ```
+  > See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration. Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
 
 Now that we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
