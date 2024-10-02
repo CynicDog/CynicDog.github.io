@@ -201,3 +201,5 @@ export const AuthProvider = ({ children }) => {
 With this context set up, we can differentiate between authenticated and unauthenticated renders in our UI. When the browser serves an authenticated user, it makes a request to the remote server, which we will discuss in the next section.
 
 ## 3. Token Relay 
+
+More of the article is coming up 👨🏻‍💻…
