@@ -184,7 +184,7 @@ On the other hand, when a user selects a social login option such as signing in 
 
 Then GitHub's server sends a series of requests to the redirect URIs, including an authorization code via a request (`https://github.com/login/oauth/authorize?...`), and, eventually, an access token through a request (`https://github.com/login?...`), allowing the OAuth2 client (the gateway server) to retrieve user data based on the user's consent.
 
-It's important to note that the redirect URIs are defined by our own configuration, whether as values in the `spring.security.oauth2.client.provider.keycloa.issuer-urik` section of the `application.yml` file, as environment variables like `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI` in Docker Compose, or as entries in the Kubernetes manifest for `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI`. 
+It's important to note that the redirect URIs are defined by our own configuration, whether as values in the [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/backend-for-frontend/src/main/resources/application.yml#L31) , or as environment variables in [Docker Compose](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/docker-compose.yml#L16), or as in the Kubernetes [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/backend-for-frontend.yml#L27). 
 
 Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/ (Minikube)`. Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server. 
 
@@ -215,32 +215,6 @@ export const AuthProvider = ({ children }) => {
     );
 };
 ```
-
-With this context setup in place, we can now differentiate between authenticated and unauthenticated renders in our UI. 
-
-```javascript
-const App = () => {
-    const { isAuthenticated } = useAuth();
-    const { data: remoteData, error, isLoading } = useQuery(
-        ['remoteData'], getRemoteData, {enabled: isAuthenticated}
-    );
-
-    return (
-        <>
-            {isAuthenticated ? (
-                <>
-                    Logged in.
-                    { remoteData && <p>{remoteData}</p> }
-                </>
-            ) : (
-                <LoginButton />
-            )}
-        </>
-    );
-};
-
-```
-
-When the browser serves an authenticated user, it makes a request to the remote server, whose flow we will discuss in the next section. 
+With this context set up, we can differentiate between authenticated and unauthenticated renders in our UI, and when the browser serves an authenticated user, it makes a request to the remote server, which we will discuss in the next section.
 
 ## 3. Token Relay 
