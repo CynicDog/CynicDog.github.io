@@ -94,15 +94,21 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
       return http
           .authorizeExchange(exchange -> exchange
-                .pathMatchers("/assets/**").permitAll()
-                .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico", "/*.svg").permitAll()
-                .anyExchange().authenticated()
+                .pathMatchers("/assets/**")
+                    .permitAll()
+                .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico", "/*.svg")
+                    .permitAll()
+                .anyExchange()
+                    .authenticated()
           )
           .exceptionHandling(exceptionHandling -> exceptionHandling
-                .authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .authenticationEntryPoint(
+                    new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED))
+          )
           .oauth2Login(Customizer.withDefaults())
           .csrf(csrf -> csrf
-                .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRepository(
+                    CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new SpaServerCsrfTokenRequestHandler())
           )
           .build();
