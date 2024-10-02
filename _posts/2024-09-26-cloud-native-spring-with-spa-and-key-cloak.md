@@ -81,6 +81,8 @@ You may have noticed the default `TokenRelay` filter configuration applied to ev
 
 ## 2. Securing OAuth2 Flows in SPAs with Spring Security
 
+### 2.1. Configuring Web Filters on the gateway server 
+
 Now that we have configured the routing conditions on requests, let's apply authentication logics on incoming request to the BFF service. 
 
 ```java
@@ -116,4 +118,25 @@ Another important take-away from this snippet is the CSRF configuration for sing
   - `SpaServerCsrfTokenRequestHandler` allows JavaScript applications to access not just the plain token values, but also encoded ones. 
 
 There is one more filter configuration, [csrfWebFilter](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9bcc8bbfcce0c77c9c106f42b01601e71cc07b12/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java#L43), to be registered for handling CSRF tokens since we are using the reactive core of Spring WebFlux for our web server. Reactive repositories won't save the token unless there is a subscription to the result, so we need to subscribe to the token-recognition behavior. 
+
+Now that we have configured the gateway server, let's move on to the React UI project. 
+
+### 2.2. React: Authentication Flow User Interface  
+
+React is where we write the entrypoint of OAuth2. Here's the script: 
+
+```javascript
+const LoginButton = () => {
+    return (
+        <>
+            <div style={{margin: "5px"}}>
+                <button onClick={() => { window.open('/oauth2/authorization/keycloak', '_self'); }}>
+                    login
+                </button>
+            </div>
+        </>
+    )
+}
+```
+> `window.open('/oauth2/authorization/keycloak', '_self')` opens the URL that initiates the OAuth2 login flow. Since the React project is behind the gateway service, `_self` refers to the gateway's host, where Spring Security handles the `/oauth2/authorization/{REGISTRATION_ID}` endpoint — `keycloak` in our case. Spring Security then delegates to Keycloak, redirecting the browser to a login page where users can choose identity providers.
 
