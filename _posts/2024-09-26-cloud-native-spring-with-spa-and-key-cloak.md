@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Keycloak Identity Brockering Integration in Cloud Native Spring  
+title: Keycloak Identity Brockering Integration in Cloud Native Spring and React 
 date: 2024-09-26 00:00:00 +09:00
 tags: [spring, docker, minikube, jib, keycloak]            
 mermaid: true
