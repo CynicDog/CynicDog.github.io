@@ -121,9 +121,21 @@ There is one more filter configuration, [csrfWebFilter](https://github.com/Cynic
 
 ### 2.2. Keycloak as a Identity Brocker  
 
-The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. 
+The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. Run the following commands inside the Keycloak container: 
 
 ```bash
+./opt/keycloak/bin/kcadm.sh config credentials \
+  --server http://localhost:8080 \
+  --realm master \
+  --user cynicdog \
+  --password cynicdog
+```
+> Logs into the server as user `cynicdog` of realm master. This is needed to create another realm for our project before any operation.
+```
+./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
+```
+> Creates a dedicated realm for our project. 
+```
 /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
 	-r cynicdog \
 	-s alias=github \
@@ -133,7 +145,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 	-s config.clientId={GITHUB_APP_CLIENT_ID} \
 	-s config.clientSecret={GITHUB_APP_CLIENT_SECRET}
 ```
-> See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration
+> Registers a GitHub identity provider credentials. See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration
 
 Now that we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
