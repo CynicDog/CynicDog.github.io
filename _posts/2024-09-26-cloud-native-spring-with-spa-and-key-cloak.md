@@ -163,7 +163,7 @@ Now that we have configured the gateway server and Keycloak server, it's time to
 
 React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI : 
 
-```javascript
+```jsx
 const LoginButton = () => {
     return (
         <>
@@ -193,7 +193,7 @@ Since Keycloak has internally implemented the handling for such requests from id
 
 So the browser will navigate to the base URL, we need to come up with a script that checks the authentication status from the gateway server. 
 
-```javascript
+```jsx
 export const AuthProvider = ({ children }) => {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
