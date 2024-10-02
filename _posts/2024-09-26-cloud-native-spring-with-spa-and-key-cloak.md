@@ -138,6 +138,16 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 > Creates a dedicated realm for our project. 
 
 ```
+./opt/keycloak/bin/kcadm.sh create clients -r cynicdog \
+    -s clientId=backend-for-frontend \
+    -s enabled=true \
+    -s publicClient=false \
+    -s secret=bff_client_secret \
+      -s 'redirectUris=["http://{ENV_HOST}:9000", "http://{ENV_HOST}:9000/login/oauth2/code/*"]'
+```
+> Registers the `backend-for-frontend` service as a security client to Keycloak server. 
+
+```
 /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
 	-r cynicdog \
 	-s alias=github \
@@ -147,7 +157,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 	-s config.clientId={GITHUB_APP_CLIENT_ID} \
 	-s config.clientSecret={GITHUB_APP_CLIENT_SECRET}
 ```
-> Registers a GitHub identity provider credentials. See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration. Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
+> Registers GitHub identity provider credentials. See [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh) for for the complete configuration. Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9e350f824ddba65cf9cc9bacd60978ccbba040e9/README.md?plain=1#L221) for GitHub App registration.  
 
 Now that we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
@@ -176,5 +186,8 @@ On the other hand, when a user selects a social login option such as signing in 
 
 Then GitHub's server sends a series of requests to the redirect URIs, including an authorization code via a request (`https://github.com/login/oauth/authorize?...`), and, eventually, an access token through a request (`https://github.com/login?...`), allowing the OAuth2 client (the gateway server) to retrieve user data based on the user's consent.
 
-It's important to note that the redirect URIs are defined by our own configuration, whether as values in the `spring.security.oauth2.client.provider.keycloa.issuer-urik` section of the `application.yml` file, as environment variables like `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI` in Docker Compose, or as entries in the Kubernetes manifest for `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI`. Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed. 
+It's important to note that the redirect URIs are defined by our own configuration, whether as values in the `spring.security.oauth2.client.provider.keycloa.issuer-urik` section of the `application.yml` file, as environment variables like `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI` in Docker Compose, or as entries in the Kubernetes manifest for `SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI`. 
+
+Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/ (Minikube)`. Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server. 
+
 
