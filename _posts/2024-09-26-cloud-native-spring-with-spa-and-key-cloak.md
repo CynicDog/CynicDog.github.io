@@ -119,11 +119,13 @@ Another important take-away from this snippet is the CSRF configuration for sing
 
 There is one more filter configuration, [csrfWebFilter](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9bcc8bbfcce0c77c9c106f42b01601e71cc07b12/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java#L43), to be registered for handling CSRF tokens since we are using the reactive core of Spring WebFlux for our web server. Reactive repositories won't save the token unless there is a subscription to the result, so we need to subscribe to the token-recognition behavior. 
 
-Now that we have configured the gateway server, let's move on to the React UI project. 
+### 2.2. Keycloak as a Identity Brocker  
 
-### 2.2. React: Authentication Flow User Interface  
+Now that we have configured the gateway server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
-React is where we write the entrypoint of OAuth2. Here's the script: 
+The first stop is the React UI project. 
+
+React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI : 
 
 ```javascript
 const LoginButton = () => {
@@ -139,4 +141,6 @@ const LoginButton = () => {
 }
 ```
 > `window.open('/oauth2/authorization/keycloak', '_self')` opens the URL that initiates the OAuth2 login flow. Since the React project is behind the gateway service, `_self` refers to the gateway's host, where Spring Security handles the `/oauth2/authorization/{REGISTRATION_ID}` endpoint — `keycloak` in our case. Spring Security then delegates to Keycloak, redirecting the browser to a login page where users can choose identity providers.
+
+When redirected to a default login page by Keycloak, users will be seeing two login options: a credential-based authentication and social login. If a user opts to login using their credentials, Keycloak acts as the identity provider. On the other hand, when a user selects a social login option such as signing in with GitHub, Keycloak serves as an identity broker, where the identity provider is now external identity providers. 
 
