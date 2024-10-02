@@ -131,10 +131,12 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
   --password cynicdog
 ```
 > Logs into the server as user `cynicdog` of realm master. This is needed to create another realm for our project before any operation.
+
 ```
 ./opt/keycloak/bin/kcadm.sh create realms -s realm=cynicdog -s enabled=true 
 ```
 > Creates a dedicated realm for our project. 
+
 ```
 /opt/keycloak/bin/kcadm.sh create identity-provider/instances \
 	-r cynicdog \
