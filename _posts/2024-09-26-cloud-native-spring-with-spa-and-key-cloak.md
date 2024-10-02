@@ -177,6 +177,7 @@ After the successful authentication the browser will navigate to the base URL. W
 export const AuthProvider = ({ children }) => {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     useEffect(() => {
         const authenticate = async () => {
             try {
