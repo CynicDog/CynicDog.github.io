@@ -220,7 +220,7 @@ For authenticated users, the React UI makes a remote call to the `backend-for-fr
 
 As both a security client and a gateway server, the `backend-for-frontend` server then parses the URI to identify the request's destination and determines the appropriate security behavior. This includes deciding whether to relay the authenticated user's credentials (JWT token) based on the security configuration for that destination. Since we have configured the server to require authentication for any requests other than those for React UI rendering resources, it will forward the remote call request to the `remote-service` with the necessary authentication requirements. 
 
-One important takeaway is that CSRF protection on the gateway is essential for token relay to function correctly, as it helps maintain sessions for the authorization code flow to succeed. This is why we have configured two settings for CSRF protection in the beginning of the project. 
+One important takeaway is that CSRF protection on the gateway is essential for token relay to function correctly, as it helps securely maintain sessions for the authorization code flow to succeed. This is why we have configured two settings for CSRF protection in the beginning of the project. 
 
 The response from the `remote-service` is a simple text that reads: `Awesome 👍🏻, here's the reply from the remote service.`. With everything in place, React will finally render the successful response message on the browser for authenticated users. 
 
