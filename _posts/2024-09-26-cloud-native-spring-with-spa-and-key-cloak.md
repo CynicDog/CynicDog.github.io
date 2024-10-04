@@ -225,7 +225,6 @@ spring:
   cloud:
     gateway:
       routes:
-        ...
         - id: remote-service-route
           uri: ${REMOTE_SERVICE_URL:http://localhost:9001}/remote-service
           predicates:
