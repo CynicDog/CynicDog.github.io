@@ -141,7 +141,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 ```
 >  Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2?tab=readme-ov-file#create-github-identity-provider-github-apps) for GitHub App registration.  
 
-Now that we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
+So we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
 React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI: 
 
