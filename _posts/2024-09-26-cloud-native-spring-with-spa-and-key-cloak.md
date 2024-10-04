@@ -244,3 +244,5 @@ The response from the `remote-service` is a simple text. With everything in plac
 Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. 
 
 Jib integrates smoothly with Gradle, allowing you to build images directly from your build scripts. This means you can define your image configuration in your build.gradle file, keeping everything in one place. 
+
+More of the article is coming up 👨🏻‍💻...
