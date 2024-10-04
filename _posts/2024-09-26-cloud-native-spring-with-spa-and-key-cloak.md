@@ -6,13 +6,11 @@ tags: [spring, docker, minikube, jib, keycloak]
 mermaid: true
 ---
 
-> In this article, we are going to explore the implementation of identity providers' OAuth2 flow in a cloud-native Spring development.
+> In this article, we are going to explore the implementation of identity providers' OAuth2 flow in a cloud-native Spring development. Although there are numerous competent solutions to requirements of cloud-native development nowadays, Spring remains a vital framework even in this landscape.
 >
-> In a cloud-native development environment, there’s a lot to consider from secure resource/configs management to precise integration of various services. Tools with a strong cloud affinity like Jib and GitHub Actions simplifiy the development process much smoother, helping you easily manage containerization and automate deployments. Keycloak also stands out with its great portability and compatibility, ensuring fluent integration of authentication services into applications regardless of the infrastructure used.
+> In a cloud-native development environment, there’s a lot to consider from secure resource/configs management to precise integration of various services. Keycloak stands out with its great portability and compatibility, ensuring fluent integration of authentication services into applications regardless of the infrastructure used. Tools with a strong cloud affinity like Jib and GitHub Actions also simplifiy the development process much smoother, helping you easily manage containerization and automate deployments. 
 >
-> Although there are numerous competent solutions to requirements of cloud-native development nowadays, Spring remains a vital framework even in this landscape.
->
-> This project involves a **React UI**, a **Spring-based Backend for Frontend (BFF)**, and **Keycloak** as an identity broker integrated with **GitHub** as the identity provider (IdP). The goal is to log in via GitHub through Keycloak and display simple text data from a **remote service** on the React UI. The focus is on implementing OAuth2 authentication using Keycloak and understanding identity brokering.
+> This project involves a **React UI**, a **Spring-based Backend for Frontend (BFF)**, and **Keycloak** as an identity broker integrated with **GitHub** as the identity provider (IdP). The goal is to social-log in via GitHub through Keycloak and display simple text data from a **remote service** on the React UI. The focus is on implementing OAuth2 authentication using Keycloak as identity broker.
 > 
 > By walking through the details, we will explore Spring's ready-to-use integrations and address some security and networking challenges encountered on the journey of deploying the application in a local Kubernetes context. So let's get started! 
 
