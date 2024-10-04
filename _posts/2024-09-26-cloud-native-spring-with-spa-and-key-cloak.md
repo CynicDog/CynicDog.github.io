@@ -169,7 +169,9 @@ Then GitHub’s server sends an authorization code to the redirect URI after the
 > It's important to note that the redirect URIs are defined by our own configuration, whether as values in the [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/backend-for-frontend/src/main/resources/application.yml#L31) , or as environment variables in [Docker Compose](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/docker-compose.yml#L16), or as in the Kubernetes [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/backend-for-frontend.yml#L27). 
 {: .prompt-info }
 
-Keycloak also involves browser redirections, exposing request URIs such as `http://host.docker.internal` in a Docker Compose context and `http://keycloak` when deployed in Kubernetes. The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs in Kubernetes, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
+Keycloak also involves browser redirections, exposing request URIs such as `http://host.docker.internal` in a Docker Compose context and `http://keycloak` when deployed in Kubernetes. The browser lacks literacy for these URIs without the help of local DNS resolution, so let's fix that. 
+
+The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs in Kubernetes, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
 
 - On Linux/MacOS: 
   ```
@@ -180,7 +182,7 @@ Keycloak also involves browser redirections, exposing request URIs such as `http
   $ Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
   ```
 
-Since Keycloak has internally implemented the handling for such requests from identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/` (Minikube). Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server in the Keycloak configuration script. 
+Since Keycloak has internally implemented the handling for such requests by identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/` (Minikube). Note that these are the redirect URI values we configured when we registered the `backend-for-frontend` service as a security client to Keycloak server in the Keycloak configuration script. 
 
 After the successful authentication the browser will navigate to the base URL. We need to come up with a script that checks the authentication status from the gateway server. 
 
