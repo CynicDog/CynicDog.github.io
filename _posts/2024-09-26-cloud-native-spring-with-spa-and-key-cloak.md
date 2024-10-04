@@ -171,7 +171,7 @@ Then GitHub’s server sends an authorization code to the redirect URI after the
 
 Keycloak also involves browser redirections, exposing request URIs such as `http://host.docker.internal` in a Docker Compose context and `http://keycloak` when deployed in Kubernetes. The browser lacks literacy for these URIs without the help of local DNS resolution, so let's fix that. 
 
-The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs in Kubernetes, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
+The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs when applications are deployed in Kubernetes, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
 
 - On Linux/MacOS: 
   ```bash
