@@ -160,7 +160,7 @@ const LoginButton = () => {
 
 When redirected to a default login page by Keycloak, users will be seeing two login options: a credential-based authentication and social login. If a user opts to login using their credentials, Keycloak acts as the identity provider. 
 
-On the other hand, when a user selects a social login option such as signing in with GitHub, Keycloak serves as an identity broker, where the identity provider is now external identity providers. The browser will navigate to GitHub's consent page, where the user is prompted to authorize the application to access their data.
+On the other hand, when a user selects a social login option such as signing in with GitHub, Keycloak serves as an identity broker, where the identity provider is now external identity providers such as GitHub and Azure. The browser will navigate to GitHub's consent page, where the user is prompted to authorize the application to access their data.
 
 Then GitHub’s server sends an authorization code to the redirect URI after the user consents via a request (`https://github.com/login/oauth/authorize?...`). Subsequently, the identity brocker (Keycloak) sends a request to GitHub's token endpoint to exchange the authorization code for an access token, allowing it to fetch user data based on the user’s consent over the access scopes.
 
