@@ -174,11 +174,11 @@ Keycloak also involves browser redirections, exposing request URIs such as `http
 The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs in Kubernetes, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
 
 - On Linux/MacOS: 
-  ```
+  ```bash
   $ echo "<ip-address> keycloak" | sudo tee -a /etc/hosts
   ```
 - On Window (As administrator):
-  ```
+  ```powershell
   $ Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
   ```
 
