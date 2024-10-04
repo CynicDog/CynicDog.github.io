@@ -215,7 +215,7 @@ export const AuthProvider = ({ children }) => {
 
 With this context set up, we can differentiate between authenticated and unauthenticated renders in our UI. When the browser serves an authenticated user, it will make a request to the remote server, which we will discuss in the next section.
 
-## 3. Token Relay 
+## 3. Token Relay and CSRF
 
 For authenticated users, the React UI makes a remote call to the `backend-for-frontend` server at the URI `/remote-service/check`.
 
