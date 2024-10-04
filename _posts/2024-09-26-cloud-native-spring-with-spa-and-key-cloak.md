@@ -216,4 +216,9 @@ With this context set up, we can differentiate between authenticated and unauthe
 
 ## 3. Token Relay 
 
+For authenticated users, the React UI makes a remote call to the `backend-for-frontend` server at the URI `/remote-service/check`.
+
+As both a security client and a gateway server, the `backend-for-frontend` server then parses the URI to identify the request's destination and determines the appropriate security behavior. This includes deciding whether to relay the authenticated user's credentials (JWT token) based on the security configuration for that destination. Since we have configured the server to require authentication for any requests other than those for React UI rendering resources, it will forward the remote call request to the `remote-service` with the necessary authentication requirements. 
+
+
 More of the article is coming up 👨🏻‍💻…
