@@ -224,3 +224,8 @@ One important takeaway is that CSRF protection on the gateway is essential for t
 
 The response from the `remote-service` is a simple text that reads: `Awesome 👍🏻, here's the reply from the remote service.`. With everything in place, React will finally render the successful response message on the browser for authenticated users. 
 
+## 4. Containerize Spring in a Cloud Native Way: Jib and Gradle 
+
+Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. 
+
+Jib integrates smoothly with Gradle, allowing you to build images directly from your build scripts. This means you can define your image configuration in your build.gradle file, keeping everything in one place. 
