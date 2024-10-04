@@ -184,6 +184,7 @@ Since Keycloak has internally implemented the handling for such requests by iden
 
 After the successful authentication the browser will navigate to the base URL. We need to come up with a script that checks the authentication status from the gateway server. 
 
+{% raw %}
 ```jsx
 export const AuthProvider = ({ children }) => {
 
@@ -210,6 +211,8 @@ export const AuthProvider = ({ children }) => {
     );
 };
 ```
+{% endraw %}
+
 With this context set up, we can differentiate between authenticated and unauthenticated renders in our UI. When the browser serves an authenticated user, it will make a request to the remote server, which we will discuss in the next section.
 
 ## 3. Token Relay 
