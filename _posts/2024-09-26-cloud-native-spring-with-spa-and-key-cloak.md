@@ -173,11 +173,11 @@ The first configuration for Docker hostname resolution has already been done whe
 
 - On Linux/MacOS: 
   ```bash
-  $ echo "<ip-address> keycloak" | sudo tee -a /etc/hosts
+  echo "<ip-address> keycloak" | sudo tee -a /etc/hosts
   ```
 - On Window (As administrator):
   ```powershell
-  $ Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
+  Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
   ```
 
 Since Keycloak has internally implemented the handling for such requests by identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/` (Minikube). 
