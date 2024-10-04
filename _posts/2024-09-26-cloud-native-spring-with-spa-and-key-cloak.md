@@ -79,7 +79,7 @@ spring:
 You may have noticed the default `TokenRelay` filter configuration applied to every request coming into the BFF service. A Token Relay occurs when an OAuth2 consumer, in our case the BFF service, acts as a client and forwards the incoming token with outgoing resource requests, such as those to the React UI and remote service.
 
 
-## 2. Securing OAuth2 Flows in SPAs with Spring Security
+## 2. Securing OAuth2 Flows in SPA with Spring Security
 
 ### 2.1. Configuring Web Filters on the gateway server 
 
