@@ -243,7 +243,7 @@ The response from the `remote-service` is a simple text. With everything in plac
 
 Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. Jib makes building Docker images easier by integrating directly with your Maven or Gradle build process. You don’t need to write a Dockerfile, run a Docker daemon, or bundle everything into a single JAR file. Since Jib works closely with your Java build, it automatically packages your application with all the necessary components. 
 
-As a plugin for Gradle, you can write the build script in a `build.gradle` file with Groovy as the scripting language. We can then write the build configuration such as base image, build platforms, image registry location and credentials, and environment variables. Here's the configuration of the `backend-for-frontend` service for our project: 
+We can write the Jib build script in the `build.gradle` file using Groovy as the scripting language. This script configures the build settings, including the base image, target platforms, image registry location, credentials, and environment variables. Here's the configuration for the `backend-for-frontend` service in our project:
 
 ```gradle
 jib {
