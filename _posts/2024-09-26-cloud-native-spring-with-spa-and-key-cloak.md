@@ -281,3 +281,27 @@ jib {
 ```
 > The configuration uses the `eclipse-temurin:20` as base image and supports both `linux/arm64` and `linux/amd64` platforms (Multi-platform build). It sets environment variables for the container, using values from the system or falling back to defaults if they’re not provided. See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for for the complete configuration.
 
+With the build script in place, the next step is to trigger the build behavior. We'll use GitHub Actions as our continuous integration platform. The process is straightforward, as the build scripts are already defined in `build.gradle`. The workflow simply checks out the repository and runs the Gradle build command using the included Gradle wrapper. Here's some of the notable steps of the workflow: 
+
+```yaml
+      # Grant execute permission for Gradle wrapper
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x backend-for-frontend/gradlew
+
+      # Set up JDK 20
+      - name: Set up JDK 20
+        uses: actions/setup-java@v4.2.2
+        with:
+          distribution: 'temurin'
+          java-version: '20'
+
+      # Build and push Docker image using Jib
+      - name: Build and push Docker image
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GHCR_PAT_TWO }}
+        run: cd backend-for-frontend && ./gradlew jib
+```
+> Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the write:packages scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials.  
+
