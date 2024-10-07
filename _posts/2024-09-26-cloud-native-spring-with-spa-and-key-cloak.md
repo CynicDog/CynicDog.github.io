@@ -303,5 +303,5 @@ With the build script in place, the next step is to trigger the build behavior. 
           GITHUB_TOKEN: ${{ secrets.GHCR_PAT_TWO }}
         run: cd backend-for-frontend && ./gradlew jib
 ```
-> Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the write:packages scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials.  
+> Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the `write:packages` scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials.  
 
