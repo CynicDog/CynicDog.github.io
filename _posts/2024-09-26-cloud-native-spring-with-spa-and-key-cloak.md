@@ -239,7 +239,7 @@ One important takeaway is that CSRF protection on the gateway is essential for t
 
 The response from the `remote-service` is a simple text. With everything in place, React will finally render the successful response message on the browser for authenticated users. 
 
-## 4. Containerize Spring in a Cloud Native Way: Jib and Gradle 
+## 4. Containerize Spring in a Cloud Native Way: Jib, Gradle and GitHub Action  
 
 Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. Jib makes building Docker images easier by integrating directly with your Maven or Gradle build process. You don’t need to write a Dockerfile, run a Docker daemon, or bundle everything into a single JAR file. Since Jib works closely with your Java build, it automatically packages your application with all the necessary components. 
 
