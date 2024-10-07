@@ -261,8 +261,7 @@ jib {
         }
     }
     to {
-        image = "ghcr.io/${System.getenv('GITHUB_REPOSITORY')?.toLowerCase() ?:
-          'default_repo'}/backend-for-frontend-service:latest"
+        image = "ghcr.io/${System.getenv('GITHUB_REPOSITORY')?.toLowerCase() ?: 'default_repo'}/backend-for-frontend-service:latest"
         auth {
             username = "${System.getenv('GITHUB_ACTOR')?.toLowerCase() ?: 'default_actor'}"
             password = "${System.getenv('GITHUB_TOKEN') ?: 'default_token'}"
@@ -272,9 +271,7 @@ jib {
         environment = [
                 'REACT_UI_URL': System.getenv('REACT_UI_URL') ?: 'http://localhost:5174',
                 'REMOTE_SERVICE_URL': System.getenv('REMOTE_SERVICE_URL') ?: 'http://localhost:9001',
-                'SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI':
-                    System.getenv('SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI') ?:
-                    'http://localhost:8080/realms/cynicdog'
+                'SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI': System.getenv('SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI') ?: 'http://localhost:8080/realms/cynicdog'
         ]
     }
 }
