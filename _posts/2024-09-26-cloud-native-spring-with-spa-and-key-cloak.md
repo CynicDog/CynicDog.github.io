@@ -241,8 +241,43 @@ The response from the `remote-service` is a simple text. With everything in plac
 
 ## 4. Containerize Spring in a Cloud Native Way: Jib and Gradle 
 
-Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. 
+Jib is a powerful tool that simplifies the process of building Docker images for Java applications without requiring a Docker daemon. Jib makes building Docker images easier by integrating directly with your Maven or Gradle build process. You don’t need to write a Dockerfile, run a Docker daemon, or bundle everything into a single JAR file. Since Jib works closely with your Java build, it automatically packages your application with all the necessary components. 
 
-Jib integrates smoothly with Gradle, allowing you to build images directly from your build scripts. This means you can define your image configuration in your build.gradle file, keeping everything in one place. 
+As a plugin for Gradle, you can write the build script in a `build.gradle` file with Groovy as the scripting language. We can then write the build configuration such as base image, build platforms, image registry location and credentials, and environment variables. Here's the configuration of the `backend-for-frontend` service for our project: 
 
-More of the article is coming up 👨🏻‍💻...
+```gradle
+jib {
+    from {
+        image = 'eclipse-temurin:20'
+        platforms {
+            platform {
+                os = "linux"
+                architecture = "arm64"
+            }
+            platform {
+                os = "linux"
+                architecture = "amd64"
+            }
+        }
+    }
+    to {
+        image = "ghcr.io/${System.getenv('GITHUB_REPOSITORY')?.toLowerCase() ?:
+          'default_repo'}/backend-for-frontend-service:latest"
+        auth {
+            username = "${System.getenv('GITHUB_ACTOR')?.toLowerCase() ?: 'default_actor'}"
+            password = "${System.getenv('GITHUB_TOKEN') ?: 'default_token'}"
+        }
+    }
+    container {
+        environment = [
+                'REACT_UI_URL': System.getenv('REACT_UI_URL') ?: 'http://localhost:5174',
+                'REMOTE_SERVICE_URL': System.getenv('REMOTE_SERVICE_URL') ?: 'http://localhost:9001',
+                'SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI':
+                    System.getenv('SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI') ?:
+                    'http://localhost:8080/realms/cynicdog'
+        ]
+    }
+}
+```
+> The configuration uses the `eclipse-temurin:20` as base image and supports both `linux/arm64` and `linux/amd64` platforms (Multi-platform build). It sets environment variables for the container, using values from the system or falling back to defaults if they’re not provided. See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for for the complete configuration.
+
