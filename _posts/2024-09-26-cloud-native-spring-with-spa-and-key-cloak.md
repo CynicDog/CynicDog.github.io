@@ -363,14 +363,4 @@ spec:
 ```
 > Note that since this Ingress resource is for the `backend-for-frontend` server, there's no specific path configuration for API endpoints; it simply routes all traffic from the root path (`/`) to the `backend-for-frontend` service on port 80. This setup enables the Ingress controller to route incoming requests to the gateway server, which then handles further routing.
 
-That's it! We have reviewed all the notable configurations, and we can deploy applications by applying the manifest files. 
-
-## 6. Closing 
-
-Integrating Keycloak as an identity broker in a cloud-native Spring and React environment provides a flexible and scalable solution for managing authentication flows. 
-
-With OAuth2 support, seamless integration with external identity providers like GitHub is achievable, enhancing user experience and security. 
-
-Using tools like Jib, Docker Compose, and Minikube further simplifies containerization and deployment, making this setup well-suited for modern cloud-native applications. 
-
-By following these steps, you can create a secure, cloud-ready application architecture that supports both local and production environments efficiently. Happy coding!  
+We have reviewed all the notable configurations, and we can deploy applications by applying the manifest files. 
