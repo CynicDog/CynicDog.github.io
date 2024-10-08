@@ -302,7 +302,7 @@ With the build script in place, the next step is to trigger the build behavior. 
 ```
 > Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the `write:packages` scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials. See [backend-for-frontend-build.yaml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/.github/workflows/backend-for-frontend-build.yml) for for the complete configuration. 
 
-## 5. Deploy on Minikube
+## 5. Final Step: Deploy on Minikube
 
 With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the `backend-for-frontend` project and another for the `Keycloak` host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube: 
 
