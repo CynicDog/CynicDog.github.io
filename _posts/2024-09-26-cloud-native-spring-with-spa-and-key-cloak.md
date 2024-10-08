@@ -167,9 +167,9 @@ Then GitHub’s server sends an authorization code to the redirect URI after the
 > It's important to note that the redirect URIs are defined based on our configuration, whether as hard-coded values in the [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/backend-for-frontend/src/main/resources/application.yml#L31) , or as passed-in environment variables in [Docker Compose](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/docker-compose.yml#L16), or as in the Kubernetes [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/backend-for-frontend.yml#L27). 
 {: .prompt-info }
 
-Keycloak also involves browser redirections, exposing request URIs such as `http://host.docker.internal` in a Docker Compose context and `http://keycloak` when deployed in minikube. The browser lacks literacy for these URIs without the help of local DNS resolution, so let's fix that. 
+Keycloak also involves browser redirections, exposing request URIs such as `http://host.docker.internal` in a Docker Compose context and `http://keycloak` when deployed in Minikube. The browser lacks literacy for these URIs without the help of local DNS resolution, so let's fix that. 
 
-The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs when applications are deployed in minikube, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
+The first configuration for Docker hostname resolution has already been done when installing Docker on local machine, so we are good to go. To enable the browser to resolve these URIs when applications are deployed in Minikube, however, we need to add entries for the local IP address and service name to the DNS hosts file. Run the following command depending on the operating system that applications are running on: 
 
 - On Linux/MacOS: 
   ```bash
@@ -304,4 +304,16 @@ With the build script in place, the next step is to trigger the build behavior. 
 
 ## 5. Deploy on Minikube
 
-With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the backend-for-frontend project and another for the Keycloak host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml).
+With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the backend-for-frontend project and another for the Keycloak host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube. 
+
+```bash
+minikube start --cpus 2 --memory 2g 
+```
+> This command provisions the compute resources for your Minikube cluster, allocating 2 CPUs and 2 GB of memory. Since our project doesn't require heavy computational resources, this will be sufficient.
+
+To enable the NGINX Ingress controller, run the following command:
+
+```bash
+minikube addons enable ingress
+```
+
