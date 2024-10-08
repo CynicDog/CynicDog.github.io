@@ -316,7 +316,7 @@ To enable the NGINX Ingress controller, run the following command:
 ```bash
 minikube addons enable ingress
 ```
-> Network connectivity is limited when using the Docker driver on macOS (Darwin), preventing direct access to the Node IP. To get ingress to work you’ll need to open a new terminal and run `minikube tunnel`, then you can access to the cluster.
+> Network connectivity is limited when using the Docker driver on macOS (Darwin), preventing direct access to the Node IP. To get ingress to work you’ll need to open a new terminal and run `minikube tunnel`, then you can access to the cluster via `127.0.0.1`.
 
 After enabling the NGINX Ingress controller, we can proceed to define the access rules for our services. The `ingress-bff.yml` and `ingress-keycloak.yml` files will set up routing for the `backend-for-frontend` project and `Keycloak`, respectively. Let's look into the configuration for `Keycloak` first: 
 
