@@ -139,7 +139,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 ```
 >  Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2?tab=readme-ov-file#create-github-identity-provider-github-apps) for GitHub App registration.  
 
-So we have configured the gateway server and Keycloak server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
+So we have configured the gateway server and `Keycloak` server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
 React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI: 
 
@@ -156,7 +156,7 @@ const LoginButton = () => {
   )
 }
 ```
-> `window.open('/oauth2/authorization/keycloak', '_self')` opens the URL that initiates the OAuth2 login flow. Since the React project is behind the gateway service, `_self` refers to the gateway's host, where Spring Security handles the `/oauth2/authorization/{REGISTRATION_ID}` endpoint — `keycloak` in our case. Spring Security then delegates to Keycloak, redirecting the browser to a login page where users can choose identity providers.
+> `window.open('/oauth2/authorization/keycloak', '_self')` opens the URL that initiates the OAuth2 login flow. Since the React project is behind the gateway service, `_self` refers to the gateway's host, where Spring Security handles the `/oauth2/authorization/{REGISTRATION_ID}` endpoint — `keycloak` in our case. Spring Security then delegates to `Keycloak`, redirecting the browser to a login page where users can choose identity providers.
 
 When redirected to a default login page by Keycloak, users will be seeing two login options: a credential-based authentication and social login. If a user opts to login using their credentials, Keycloak acts as the identity provider. 
 
@@ -304,7 +304,7 @@ With the build script in place, the next step is to trigger the build behavior. 
 
 ## 5. Deploy on Minikube
 
-With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the backend-for-frontend project and another for the Keycloak host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube: 
+With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the `backend-for-frontend` project and another for the `Keycloak` host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube: 
 
 ```bash
 minikube start --cpus 2 --memory 2g 
@@ -318,7 +318,7 @@ minikube addons enable ingress
 ```
 > Network connectivity is limited when using the Docker driver on macOS (Darwin), preventing direct access to the Node IP. To get ingress to work you’ll need to open a new terminal and run `minikube tunnel`, then you can access to the cluster.
 
-After enabling the NGINX Ingress controller, we can proceed to define the access rules for our services. The `ingress-bff.yml` and `ingress-keycloak.yml` files will set up routing for the backend-for-frontend project and Keycloak, respectively. Let's look into the configuration for Keycloak: 
+After enabling the NGINX Ingress controller, we can proceed to define the access rules for our services. The `ingress-bff.yml` and `ingress-keycloak.yml` files will set up routing for the `backend-for-frontend` project and `Keycloak`, respectively. Let's look into the configuration for `Keycloak` first: 
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -340,5 +340,37 @@ spec:
                 port:
                   number: 80
 ```
-> Keycloak performs a browser redirect using a URI that exposes the service name as the host. Since Minikube is tunneled through `127.0.0.1` and the deployed Keycloak service name matches the one configured in the hosts file, the browser redirects will resolve correctly.
+> Keycloak performs a browser redirect using a URI that exposes the service name as the host. Since Minikube is tunneled through `127.0.0.1` and the deployed `Keycloak` service name matches the one configured in the hosts file, the browser redirects will resolve correctly.
 
+The other ingress rules instruction for `backend-for-frontend` service looks as below: 
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bff-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-for-frontend
+                port:
+                  number: 80
+```
+> Note that since this Ingress resource is for the `backend-for-frontend` server, there's no specific path configuration for API endpoints; it simply routes all traffic from the root path (`/`) to the `backend-for-frontend` service on port 80. This setup enables the Ingress controller to route incoming requests to the gateway server, which then handles further routing.
+
+That's it! We have reviewed all the notable configurations, and we can deploy applications by applying the manifest files. 
+
+## 6. Closing 
+
+Integrating Keycloak as an identity broker in a cloud-native Spring and React environment provides a flexible and scalable solution for managing authentication flows. 
+
+With OAuth2 support, seamless integration with external identity providers like GitHub is achievable, enhancing user experience and security. 
+
+Using tools like Jib, Docker Compose, and Minikube further simplifies containerization and deployment, making this setup well-suited for modern cloud-native applications. 
+
+By following these steps, you can create a secure, cloud-ready application architecture that supports both local and production environments efficiently. Happy coding!  
