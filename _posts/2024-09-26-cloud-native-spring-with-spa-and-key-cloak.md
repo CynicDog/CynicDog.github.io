@@ -173,7 +173,7 @@ The first configuration for Docker hostname resolution has already been done whe
 
 - On Linux/MacOS: 
   ```bash
-  echo "<ip-address> keycloak" | sudo tee -a /etc/hosts
+  echo "127.0.0.1 keycloak" | sudo tee -a /etc/hosts
   ```
 - On Window (As administrator):
   ```powershell
@@ -304,7 +304,7 @@ With the build script in place, the next step is to trigger the build behavior. 
 
 ## 5. Deploy on Minikube
 
-With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the backend-for-frontend project and another for the Keycloak host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube. 
+With each service image in place, all that's left to deploy the project are the Kubernetes resource manifests. The manifest files in the project's [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/tree/main/manifests) directory are standard and straightforward, with no special configurations. Since we'll deploy the applications on Minikube using two Ingresses with the Minikube Nginx Ingress Controller — one for the backend-for-frontend project and another for the Keycloak host — we need to define the access rules for our services within the cluster using [ingress-bff.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-bff.yml) and [ingress-keycloak.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/ingress-keycloak.yml). Let's start with starting Minikube: 
 
 ```bash
 minikube start --cpus 2 --memory 2g 
@@ -316,4 +316,29 @@ To enable the NGINX Ingress controller, run the following command:
 ```bash
 minikube addons enable ingress
 ```
+> Network connectivity is limited when using the Docker driver on macOS (Darwin), preventing direct access to the Node IP. To get ingress to work you’ll need to open a new terminal and run `minikube tunnel`, then you can access to the cluster.
+
+After enabling the NGINX Ingress controller, we can proceed to define the access rules for our services. The `ingress-bff.yml` and `ingress-keycloak.yml` files will set up routing for the backend-for-frontend project and Keycloak, respectively. Let's look into the configuration for Keycloak: 
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-ingress
+  labels:
+    app: keycloak
+spec:
+  rules:
+    - host: keycloak
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak
+                port:
+                  number: 80
+```
+> Keycloak performs a browser redirect using a URI that exposes the service name as the host. Since Minikube is tunneled through `127.0.0.1` and the deployed Keycloak service name matches the one configured in the hosts file, the browser redirects will resolve correctly.
 
