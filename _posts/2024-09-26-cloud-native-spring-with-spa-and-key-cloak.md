@@ -141,7 +141,7 @@ The Spring Gateway project needs the Spring Security OAuth2 Client dependency to
 
 So we have configured the gateway server and `Keycloak` server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
 
-React is where we write the entrypoint of OAuth2. Here's the very trigger of the authentication flow, where users click a login button on UI: 
+React is where we write the entrypoint of OAuth2. Here's the very first entry of the authentication flow, where users click a login button on UI: 
 
 ```jsx
 const LoginButton = () => {
