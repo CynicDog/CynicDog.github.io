@@ -180,7 +180,7 @@ The first configuration for Docker hostname resolution has already been done whe
   Add-Content C:\Windows\System32\drivers\etc\hosts "127.0.0.1 keycloak"
   ```
 
-Since Keycloak has internally implemented the handling for such requests by identity providers, we are all set to proceed to the entry point of our application, whether it's `http://localhost:9000` (Docker Compose) or `http://127.0.0.1/` (Minikube). 
+Since Keycloak has internally implemented the handling for such requests by identity providers, we are all set to proceed to the entry point of our application. 
 
 After the successful authentication the browser will navigate to the base URL. We need to come up with a script that checks the authentication status from the gateway server. 
 
