@@ -8,7 +8,7 @@ order: 4
 <iframe width="100%" height="240" src="https://cynicdog.github.io/commits-spread/" style="margin-top: 15px; border-radius: 10px;"></iframe>
 <iframe width="100%" height="400" src="https://cynicdog.github.io/commits-spread/#/network" style="border-radius: 10px;"></iframe>
 
-<h1>Online Résumé</h1>
+<h1>Résumé</h1>
 <div style="margin-bottom: 25px">
   Read on Notion in
   <a href="https://destiny-haddock-3af.notion.site/d42d22f39aee4329b56a43f2ac077c50?pvs=74"> Korean </a> \ 
