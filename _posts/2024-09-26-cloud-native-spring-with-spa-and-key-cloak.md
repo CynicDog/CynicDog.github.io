@@ -363,4 +363,10 @@ spec:
 ```
 > Note that since this Ingress resource is for the `backend-for-frontend` server, there's no specific path configuration for API endpoints; it simply routes all traffic from the root path (`/`) to the `backend-for-frontend` service on port 80. This setup enables the Ingress controller to route incoming requests to the gateway server, which then handles further routing.
 
-We have reviewed all the notable configurations, and we can deploy applications by applying the manifest files. 
+We can now deploy applications by applying the manifest files by runnning the following command:
+
+```bash
+kubectl apply -f ./manifests 
+```
+
+That's it! With the services up and running, you should be able to log in and see the remote resources correctly fetched and displayed on the UI. 
