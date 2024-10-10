@@ -125,7 +125,7 @@ There is one more filter configuration, [csrfWebFilter](https://github.com/Cynic
 
 ### 2.2. Keycloak as an Identity Brocker  
 
-The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. For the complete configuration, refer to [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh). Make sure you run one of these scripts based on your execution environment before running `backend-for-frontend` service container. 
+The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. For the complete configuration, refer to [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh). Make sure you run one of these scripts based on your execution context before running `backend-for-frontend` service container. 
 
 Here's a notable command in the scripts:   
 
