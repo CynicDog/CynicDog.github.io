@@ -57,7 +57,7 @@ The React UI client also has a simple visual representation of weather data that
 
 What's happening behind the UI is a bit more complicated, and that's where the aspiring features of Azure Aspire help in. A key point is that it provides network configurations for service bindings and connections through the use of environment variables.
 
-## 1. Development: Charms of Azure Aspire.  
+## 1. Development: Charms of Azure Aspire
 
 One of the most striking advantages I came across in Azure Aspire is its networking support. Simply put, it helps multiple projects communicate seamlessly with each other through automated configuration. Aspire simplifies the integration of multiple projects by exposing the service locations, such as URLs or connection strings, into the configuration of each project. This allows different services to easily connect and interact with each other. 
 
@@ -175,7 +175,7 @@ In the local deployment context, the React UI service is exposed to users as a N
 
 Once the reverse proxy receives requests, it hands them over to the final receiver, a service. If there are replica sets of pods (which is not the case in this project), random ports will be assigned accordingly, and the proxy will perform load balancing over the replicas.
 
-## 2. Deployment: Standing on the shoulders of Giants.
+## 2. Deployment: Standing on the shoulders of Giants
 
 As we've been discussing, the project of this article is deployed on Kubernetes within local context. There are many options when it comes to deployment on local environment, such as K3s, Kind, Minikube and list goes on. I chose to go with Docker Desktop's standalone Kubernetes server, because of the easy access and its built-in set up. Kubernetes manifests for the projects are generated using [Aspirate](https://prom3theu5.github.io/aspirational-manifests/getting-started.html), an open-source tool that creates deployment YAML files based on the .NET Aspire app host manifest, which is created by running the next command in the AppHost project directory:
 
