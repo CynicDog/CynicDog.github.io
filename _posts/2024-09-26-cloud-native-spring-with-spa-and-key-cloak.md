@@ -52,7 +52,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 }
 ```
-> See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for for the complete list of dependencies and project configuration details
+> See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for the complete list of dependencies and project configuration details
 
 Since the BFF acts as a gateway for both the React UI and the remote server (referred to as the resource server in the security context), we can configure the security settings accordingly.
 
@@ -72,7 +72,7 @@ spring:
       default-filters:
         - TokenRelay
 ```
-> Any request URI for static files used in React rendering, such as `/`, `/*.css`, `/*.js`, and `/assets/**`, will be routed to the React UI service via the injected URI. The rest will be routed to the remote service at the specified URI, ensuring that any requests matching the path `/remote-service/**` are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for for the complete configuration.
+> Any request URI for static files used in React rendering, such as `/`, `/*.css`, `/*.js`, and `/assets/**`, will be routed to the React UI service via the injected URI. The rest will be routed to the remote service at the specified URI, ensuring that any requests matching the path `/remote-service/**` are directed to the appropriate backend resource. See [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/resources/application.yml) for the complete configuration.
 
 You may have noticed the default `TokenRelay` filter configuration applied to every request coming into the BFF service. A Token Relay occurs when an OAuth2 consumer, in our case the BFF service, acts as a client and forwards the incoming token with outgoing resource requests, such as those to the React UI and remote service.
 
@@ -113,7 +113,7 @@ public class SecurityConfig {
       }
       // ...
 ```
-> In Spring Security 6, the annotations `@EnableWebFluxSecurity` and `@EnableReactiveMethodSecurity` no longer include the `@Configuration` annotation by default. Therefore, whenever you use these annotations in your security configuration, you must explicitly add the `@Configuration` annotation to the class. See [SecurityConfig.java](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java) for for the complete configuration.
+> In Spring Security 6, the annotations `@EnableWebFluxSecurity` and `@EnableReactiveMethodSecurity` no longer include the `@Configuration` annotation by default. Therefore, whenever you use these annotations in your security configuration, you must explicitly add the `@Configuration` annotation to the class. See [SecurityConfig.java](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java) for the complete configuration.
 
 Here, we configure requests routed to the React UI to be permitted, while all other requests, such as those to the remote service, require authentication, which will be handled by Token Relay.
 
@@ -278,7 +278,7 @@ jib {
     }
 }
 ```
-> The configuration uses the `eclipse-temurin:20` as base image and supports both `linux/arm64` and `linux/amd64` platforms (Multi-platform build). It sets environment variables for the container, using values from the system or falling back to defaults if they’re not provided. See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for for the complete configuration.
+> The configuration uses the `eclipse-temurin:20` as base image and supports both `linux/arm64` and `linux/amd64` platforms (Multi-platform build). It sets environment variables for the container, using values from the system or falling back to defaults if they’re not provided. See [build.gradle](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/backend-for-frontend/build.gradle) for the complete configuration.
 
 With the build script in place, the next step is to trigger the build behavior. We'll use GitHub Actions as our continuous integration platform. The process is straightforward, as the build scripts are already defined in `build.gradle`. The workflow simply checks out the repository and runs the Gradle build command using the included Gradle wrapper. Here's some of the notable steps of the workflow: 
 
@@ -302,7 +302,7 @@ With the build script in place, the next step is to trigger the build behavior. 
           GITHUB_TOKEN: ${{ secrets.GHCR_PAT_TWO }}
         run: cd backend-for-frontend && ./gradlew jib
 ```
-> Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the `write:packages` scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials. See [backend-for-frontend-build.yaml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/.github/workflows/backend-for-frontend-build.yml) for for the complete configuration. 
+> Make sure that the JDK set for workflow matches the one for development and Jib base image to avoid potential issues related to differences in Java versions. Since a new image will be pushed to GitHub Container Registry, we need a Personal Access Token with the `write:packages` scope, which should be registered as a repository secret. The workflow then securely retrieves this token and passes it to the Gradle build context as credentials. See [backend-for-frontend-build.yaml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/.github/workflows/backend-for-frontend-build.yml) for the complete configuration. 
 
 ## 5. Final Step: Deploy on Minikube
 
