@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Keycloak Identity Brockering Integration in Cloud Native Spring and React 
+title: Keycloak Identity Brokering Integration in Cloud Native Spring and React 
 date: 2024-09-26 00:00:00 +09:00
 tags: [spring, docker, minikube, jib, keycloak]            
 mermaid: true
@@ -123,7 +123,7 @@ Another important takeaway from this snippet is the CSRF configuration for singl
 
 There is one more filter configuration, [csrfWebFilter](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/9bcc8bbfcce0c77c9c106f42b01601e71cc07b12/backend-for-frontend/src/main/java/io/cynicdog/backendforfrontend/config/SecurityConfig.java#L43), to be registered for handling CSRF tokens since we are using the reactive core of Spring WebFlux for our web server. Reactive repositories won't save the token unless there is a subscription to the result, so we need to subscribe to the token-recognition behavior. 
 
-### 2.2. Keycloak as an Identity Brocker  
+### 2.2. Keycloak as an Identity Broker  
 
 The Spring Gateway project needs the Spring Security OAuth2 Client dependency to support OAuth2 functionality for successful startup, which means that the Keycloak identity server must be up and running with a configuration that registers the gateway project as a security client. For the complete configuration, refer to [keycloak-config-docker.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-docker.sh) and [keycloak-config-minikube.sh](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/main/manifests/keycloak-config-minikube.sh). Make sure you run one of these scripts based on your execution context before running `backend-for-frontend` service container. 
 
@@ -141,7 +141,7 @@ Here's a notable command in the scripts:
 ```
 >  Since we are using GitHub as one of the identity providers for our application, we also need to create a GitHub App on GitHub's server to obtain the client ID and client secret necessary for OAuth2 authentication. Follow the instruction [here](https://github.com/CynicDog/spa-spring-keycloak-oauth2?tab=readme-ov-file#create-github-identity-provider-github-apps) for GitHub App registration.  
 
-So we have configured the gateway server and `Keycloak` server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity brocker. 
+So we have configured the gateway server and `Keycloak` server, it's time to follow and understand the journey of OAuth2 authentication flow with Keycloak as a identity broker. 
 
 React is where we write the entrypoint of OAuth2. Here's the very first entry of the authentication flow, where users click a login button on UI: 
 
@@ -164,7 +164,7 @@ When redirected to a default login page by Keycloak, users will be seeing two lo
 
 On the other hand, when a user selects a social login option such as signing in with GitHub, Keycloak serves as an identity broker, where the identity provider is now external identity providers such as GitHub and Azure. The browser will navigate to GitHub's consent page, where the user is prompted to authorize the application to access their data.
 
-Then GitHub’s server sends an authorization code to the redirect URI after the user consents via a request (`https://github.com/login/oauth/authorize?...`). Subsequently, the identity brocker (Keycloak) sends a request to GitHub's token endpoint to exchange the authorization code for an access token, allowing it to fetch user data based on the user’s consent over the access scopes.
+Then GitHub’s server sends an authorization code to the redirect URI after the user consents via a request (`https://github.com/login/oauth/authorize?...`). Subsequently, the identity broker (Keycloak) sends a request to GitHub's token endpoint to exchange the authorization code for an access token, allowing it to fetch user data based on the user’s consent over the access scopes.
 
 > It's important to note that the redirect URIs are defined based on our configuration, whether as hard-coded values in the [application.yml](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/backend-for-frontend/src/main/resources/application.yml#L31) , or as passed-in environment variables in [Docker Compose](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/docker-compose.yml#L16), or as in the Kubernetes [manifest](https://github.com/CynicDog/spa-spring-keycloak-oauth2/blob/2538c8bcbdb6b1ed9ba4ecdeed29efda31a6cf28/manifests/backend-for-frontend.yml#L27). 
 {: .prompt-info }
