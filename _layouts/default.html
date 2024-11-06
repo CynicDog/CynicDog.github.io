@@ -39,6 +39,10 @@ layout: compress
               {% assign _include_path = _include | append: '.html' %}
               {% include {{ _include_path }} lang=lang %}
             {% endfor %}
+            
+            {% if layout.panel_includes.size == 0 %}
+              {% include_cached update-list.html lang=lang %}
+            {% endif %}
           </aside>
         </div>
 
