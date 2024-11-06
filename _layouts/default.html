@@ -41,7 +41,9 @@ layout: compress
             {% endfor %}
             
             {% if layout.panel_includes.size == 0 %}
-              {% include_cached update-list.html lang=lang %}
+              <div class="access">
+                {% include_cached update-list.html lang=lang %}
+              </div>
             {% endif %}
           </aside>
         </div>
