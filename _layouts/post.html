@@ -87,6 +87,16 @@ tail_includes:
 
           <!-- read time -->
           {% include read-time.html content=content prompt=true lang=lang %}
+
+          {% unless site.theme_mode %} 
+            <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> 
+              <i class="fas fa-adjust"></i> 
+            </button> 
+            {% if site.data.contact.size > 0 %} 
+              <span class="icon-border"></span> 
+            {% endif %} 
+          {% endunless %}
+          
         </div>
       </div>
     </div>
