@@ -73,5 +73,14 @@
     <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">
       {{- site.data.locales[include.lang].search.cancel -}}
     </button>
+
+    {% unless site.theme_mode %} 
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle"> 
+        <i class="fas fa-adjust"></i> 
+      </button> 
+      {% if site.data.contact.size > 0 %} 
+        <span class="icon-border"></span> 
+      {% endif %} 
+    {% endunless %}
   </div>
 </header>
