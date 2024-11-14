@@ -143,7 +143,7 @@ spec:
             path: /
             pathType: Prefix
 ```
-> Since the application will utilize the DNS name `www.archeio.xyz`, having a static IP (named `archeio-global` for this project) is a necessity, since it ensures a consistent and reliable connection between the domain name and a specific endpoint in the cloud. For instructions on creating the IP address and linking it to the Quarkus context, refer to the details [here](https://github.com/CynicDog/archeio?tab=readme-ov-file#reserve-static-ip-address-for-the-deployed-app).
+> Having a static IP (named `archeio-global` for this project) is a necessity, since it ensures a consistent and reliable connection between the domain name and a specific endpoint in the cloud. For instructions on creating the IP address and linking it to the Quarkus context, refer to the details [here](https://github.com/CynicDog/archeio?tab=readme-ov-file#reserve-static-ip-address-for-the-deployed-app).
 
 Ingress acts as a reverse proxy, using a standardized declarative configuration that we are seeing right now to define rules for routing web traffic to services within the cluster. That's the key advantage of using Ingress: its ability to bring together and simplify the management of multiple route(s) and service(s) under a single external IP address.
 
